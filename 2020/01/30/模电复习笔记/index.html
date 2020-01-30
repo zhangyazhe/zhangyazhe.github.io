@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, CSP, 随笔, 转载文章, git">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    模电复习笔记 |
+    
+    知 昂 张</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="知 昂 张" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-模电复习笔记" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      模电复习笔记
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/30/%E6%A8%A1%E7%94%B5%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2020-01-30T11:13:03.000Z" itemprop="datePublished">2020-01-30</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>这篇博文是大二的时候学习模拟电子技术时候期末复习的笔记，适用于华中科技大学的学弟学妹们，结合华中科技大学mooc模电课程效果更佳</p>
+<a id="more"></a>
+
+<h1 id="模拟电子技术基础期末复习"><a href="#模拟电子技术基础期末复习" class="headerlink" title="模拟电子技术基础期末复习"></a>模拟电子技术基础期末复习</h1><h2 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h2><ul>
+<li>描述放大电路输出量与输入量之间关系的曲线称为传输特性曲线。<h2 id="第二章-运算放大器"><a href="#第二章-运算放大器" class="headerlink" title="第二章 运算放大器"></a>第二章 运算放大器</h2></li>
+<li>开环电压增益即运放由输出端到输入端无外接反馈元件事的电压增益，运放电路的功能是用来放大两个输入信号的差值。</li>
+<li>运放的增益越高，线性区的直线越陡，输入电压的线性范围越小。</li>
+<li>如果直接将电压源接在运放的两端，基本都会超过线性区而导致失真，这才引入了负反馈，主要目的是通过负反馈来减小加载输入端的信号从而保证工作在线性区。这时的线性工作区会明显变大，这时的增益成为闭环增益Av。</li>
+<li>电压跟随器可以增大输出电阻，帮助负载抢夺电压，提高了电路的带负载能力。</li>
+<li>运放只有工作在线性区，虚短才成立。因为只有在线性区才有开环电压增益为无穷大，才能根据输出电压有限推出输出电压近似为零。</li>
+<li>深度负反馈是虚短的条件</li>
+<li>实际运放由负反馈链接的线路也可以得到虚短和虚断的概念，与理想运放特性相同</li>
+<li>运放构成的放大电路的指标与运算放大器本身的指标含义是不同的。</li>
+<li>反馈电阻必须加在反向端与输出端之间，否则不是负反馈。</li>
+<li>对于虚地，只是表明这个节点的电压可以近似视为零，但它并不是真的接地。<h2 id="第三章-二极管及其基本电路"><a href="#第三章-二极管及其基本电路" class="headerlink" title="第三章 二极管及其基本电路"></a>第三章 二极管及其基本电路</h2></li>
+<li>本征激发，温度引起。</li>
+<li>电场导致的是漂移，浓度导致的是扩散。</li>
+<li>P区点位高于N区点位时，称之为正向偏置。</li>
+<li><code>反向电流IR，反向饱和电流Is,VT温度电压当量，常温下为26mv，VBR为反向击穿电压，Vth开启电压</code></li>
+<li>二极管大信号模型：理想模型、恒压降模型、折现模型。</li>
+<li><code>通常，小信号模型中，二极管两端电流为ID，二极管两端电压VD，二极管动态电阻rd。其中，rd=VT/ID。</code></li>
+<li>在二极管小信号模型中，微变电阻rd=VT/ID。其中VT=26mv，ID由静态工作点决定</li>
+<li>在已知特性曲线的前提下，可以使用图解法建立小信号模型。<h2 id="第四章-场效应三极管及其放大电路"><a href="#第四章-场效应三极管及其放大电路" class="headerlink" title="第四章 场效应三极管及其放大电路"></a>第四章 场效应三极管及其放大电路</h2></li>
+<li>由于vgs可以控制漏极电流，所以常常将GS作为输入端口，将DS作为输出端口。</li>
+<li>场效应管的放大作用就是通过vgs对漏极电流的控制实现的，所以用场效应管放大信号时，需要让场效应管工作在饱和区。对于vgs和漏极电流之间的关系的研究在使用场效应管对信号进行放大的过程中十分重要。</li>
+<li>考虑沟道长度调制效应时，饱和区的输出特性曲线是倾斜的，其斜率就是输出端口的电阻rds的倒数。rds也称为动态电阻或交流电阻。根据表达式，vgs确定后，rds也就确定了。</li>
+<li>转移特性直接反映了输入电压对输出电流的控制作用，由于用于放大信号的场效应管必须工作在饱和区，所以我们只对饱和区进行讨论。根据饱和区电流计算公式，即可画出转移特性曲线。在曲线上某一点Q做切线，切线的斜率就是电导，由于这个是联系输入端口电压和输出端口电流，所以又称为跨导或互导。用gm表示。可以发现，Q点位置不同，gm也不同。跨导将输入端口电压vgs与漏极电流id联系了起来。</li>
+<li>（图4.2.1）通常来讲，输入的vGS是交流量和直流量的叠加，所以漏极电流和漏源电压也是直流量和交流量的叠加。</li>
+<li>iD=ID+id。三者的大小写字母匹配为：总量=直流量+交流量。</li>
+<li>（图4.2.1）由漏极回路看出，漏极电流方向不会反转，当电流id减小到0时，输出电压达到最大值，等于VDD。当电流id增大，可以使得输出电压接近于零，所以输出电压vds一定是在0到VDD之间。如果VGG或者Rd选择不恰当，使得vDSQ过高或者过低，都会导致输出波形明显失真。（图4.3.5、图4.3.6）</li>
+<li>必须让MOSFET工作在饱和区，别且有合适的静态偏置。</li>
+<li>信号经常又被叫做交流量或者变化量。</li>
+<li>输出信号的幅值受输出回路电源电压的限制。</li>
+<li>直流电源既是MOSFET正常工作的前提条件，优势信号放大的能量供给者。</li>
+<li>求出静态指标后，需要校验是否满足饱和区的工作条件。</li>
+<li>解题时一般先假设工作在饱和区，利用饱和区特性方程求解，最后验证是否工作在饱和区。<h4 id="图解法"><a href="#图解法" class="headerlink" title="图解法"></a>图解法</h4></li>
+<li>求交流负载线方程时，首先根据交流通路图写出交流量之间的关系，接着利用‘交流量=总量-直流量’这个关系待入交流量的方程，即可得到vDS与iD之间的关系，就可以画在输出特性图里面了。（书P111）<h4 id="小信号模型分析法"><a href="#小信号模型分析法" class="headerlink" title="小信号模型分析法"></a>小信号模型分析法</h4></li>
+<li>由于栅极是绝缘的，所以栅源之间的端口是开路状态。如果考虑沟道长度调制效应，那么在输出端口就有一个输出电阻rds。</li>
+<li>跨导是转移特性曲线上Q点切线的斜率。输出电阻是传输特性曲线上Q点斜率的倒数。</li>
+<li>受控源的电流方向和控制电压的极性是关联的，改变其中一个，另外一个也要改变。<h4 id="共源极、共栅极、共漏极放大电路"><a href="#共源极、共栅极、共漏极放大电路" class="headerlink" title="共源极、共栅极、共漏极放大电路"></a>共源极、共栅极、共漏极放大电路</h4></li>
+<li>计算放大电路输入电阻时，不考虑信号源内阻。</li>
+<li>放大电路的组态与静态偏置无关，所以不同的组态具有不同的动态指标，而相同的组态，即使静态偏置方式不同，他们的动态指标也是基本相同的。<h4 id="多级放大电路"><a href="#多级放大电路" class="headerlink" title="多级放大电路"></a>多级放大电路</h4></li>
+<li>前级的开路电压是后级的信号源电压</li>
+<li>前级的输出电阻是后级的信号源内阻</li>
+<li>对于共源-共漏放大电路，虽然共漏的增益约等于一，但是由于其输入电阻很大，可以使得前一级增益变大，同时由于共漏的输出电阻很小，两级总增益还是会比单共源提高不少<h4 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h4></li>
+<li>判断电路对信号是否有放大作用，首先判断静态偏置是否合理，是否满足线性区的要求。其次判断交流通路。最后总的观察通路是否畅通或是否短路。<h2 id="第五章-双极结型三极管及其放大电路"><a href="#第五章-双极结型三极管及其放大电路" class="headerlink" title="第五章 双极结型三极管及其放大电路"></a>第五章 双极结型三极管及其放大电路</h2><h4 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h4></li>
+<li>PN结外加正向电压时，耗尽区变窄，外加反向电压时，耗尽区变宽</li>
+<li>发射结电压与集电极电流的控制关系：发射结电压与发射极电流的关系就是之前的PN结正偏时的电压电流关系（近似指数），发射结电压增大后，发射极电流也增大，会有更多的电子进入到基区，进而导致更多的电子进入到集电区，而集电极电流主要就是由这部分电子形成，所以发射结电压能够控制集电极电流</li>
+<li>ICBO是在PN结外加反向电压形成的，即为反向饱和电流，电流较小</li>
+<li>一旦三极管制成，α和β的值就确定了</li>
+<li>BJT工作的外部条件：发射结正偏，集电结反偏</li>
+<li>用BJT放大信号时，一般是通过改变发射结正偏电压，来改变基极电流或发射极电流，从而控制集电极电流，所以通常发射极和基极作为输入端，集电极总是在输出回路中</li>
+<li>在BJT中，电子和空穴都参与了导电，所以称为双极结型</li>
+<li>BJT的输出特性曲线：当vCE固定时，若iB增加，意味着一定是因为发射结电压增加，必然同时引起发射极电流增加，从而会导致集电极电流增加</li>
+<li>截止区的形成是因为发射结的正向偏置电压小于开启电压</li>
+<li>由于基区宽度调制效应，vCE增加会导致基区有效宽度减小，载流子在基区复合的机会变小，使得电流放大系数β增加，所以输出特性曲线上翘</li>
+<li>描述静态工作点时，通常使用IBQ ICQ VCEQ<h4 id="BJT的静态偏置和放大电路构成"><a href="#BJT的静态偏置和放大电路构成" class="headerlink" title="BJT的静态偏置和放大电路构成"></a>BJT的静态偏置和放大电路构成</h4></li>
+<li>一般硅管VBEQ=0.7V，锗管VBEQ=0.2V<h4 id="BJT的小信号等效模型"><a href="#BJT的小信号等效模型" class="headerlink" title="BJT的小信号等效模型"></a>BJT的小信号等效模型</h4></li>
+<li>（图5.3.11）受控源βib的电流方向和控制电流ib的方向是关联的</li>
+<li>因为bjt小信号模型反映的是电压电流变化量之间的关系，所以与NPN或者PNP型无关</li>
+<li>（图5.4.2）计算Re输入等效电阻，使用p186的方法</li>
+<li>（图5.4.2）引入Re后，增益会下降，但是可以减小非线性失真，增大放大电路的频带宽度（实际是负反馈）<h4 id="MOS与BJT的比较"><a href="#MOS与BJT的比较" class="headerlink" title="MOS与BJT的比较"></a>MOS与BJT的比较</h4></li>
+<li>两种三极管的六种组态可以分为三类：反向电压放大器（增益高、输入电阻大）、电压跟随器（输入电阻高、输出电阻低）、电流跟随器（输入电阻小）<h4 id="习题-1"><a href="#习题-1" class="headerlink" title="习题"></a>习题</h4></li>
+<li>交流通路中，将二极管用小信号模型等效，再去掉直流电源，最终只剩下rd。计算方法见p66<h2 id="第六章-放大电路的频率响应"><a href="#第六章-放大电路的频率响应" class="headerlink" title="第六章 放大电路的频率响应"></a>第六章 放大电路的频率响应</h2><h4 id="单时间常数RC电路的频率响应"><a href="#单时间常数RC电路的频率响应" class="headerlink" title="单时间常数RC电路的频率响应"></a>单时间常数RC电路的频率响应</h4></li>
+<li>AVM中的M指的是中频区<h4 id="三极管放大电路的高频响应"><a href="#三极管放大电路的高频响应" class="headerlink" title="三极管放大电路的高频响应"></a>三极管放大电路的高频响应</h4></li>
+<li>当MOS管和信号源确定后，增益带宽积为定值<h2 id="第七章-模拟集成电路"><a href="#第七章-模拟集成电路" class="headerlink" title="第七章 模拟集成电路"></a>第七章 模拟集成电路</h2><h4 id="集成电路中的直流偏置——电流源电路"><a href="#集成电路中的直流偏置——电流源电路" class="headerlink" title="集成电路中的直流偏置——电流源电路"></a>集成电路中的直流偏置——电流源电路</h4></li>
+<li>在集成电路中，一个三极管比一个电阻所占用的面积更小，所以一般不采用电阻来作为偏置，而是采用三极管构成直流电流源，为放大管提供静态偏置</li>
+<li>三极管做电流源时，vGS始终是恒定的，对应一条不变的输出特性曲线，当负载改变时，负载线的斜率发生变化，但是交点始终在输出特性曲线上，漏极电流是不会改变的，便达到恒流效果</li>
+<li>根据以上可以看出，MOS做电流源时，必须满足两个条件：一是vGS保持不变，二是MOS必须工作在饱和区（这样才能保证静态工作点在输出特性曲线的水平部分移动）</li>
+<li>饱和区输出特性曲线的斜率的倒数，实际上就是电流源的内阻。忽略沟道长度调制效应时，内阻为无穷大<h4 id="差分式放大电路"><a href="#差分式放大电路" class="headerlink" title="差分式放大电路"></a>差分式放大电路</h4></li>
+<li>只有直接耦合放大电路才会有零点漂移问题<h4 id="MOSFET源极耦合差分式放大电路"><a href="#MOSFET源极耦合差分式放大电路" class="headerlink" title="MOSFET源极耦合差分式放大电路"></a>MOSFET源极耦合差分式放大电路</h4></li>
+<li>双端输出是单端输出幅值的两倍</li>
+<li>单端输入时的差模情况等效于双端输入</li>
+<li>无论何种输出方式，共模增益都远小于差模增益。这是因为ro的影响</li>
+<li>差分式放大电路的输入电阻分为两类，差模输入电阻和共模输入电阻</li>
+<li>差分式放大电路对共模信号有很强的放大能力而对差摸信号有很强的抑制能力，产生这种作用的根本原因是源极公共支路，方法差摸信号时，源极公共支路相当于短路，而放大共模信号时，公共支路不再短路，支路上的电阻会明显影响增益的大小<h4 id="BJT差分式放大电路"><a href="#BJT差分式放大电路" class="headerlink" title="BJT差分式放大电路"></a>BJT差分式放大电路</h4></li>
+<li>由于BJT的基极不再像栅极那样是绝缘的，所以输入电阻不再是无穷大<h4 id="集成运算放大器简介"><a href="#集成运算放大器简介" class="headerlink" title="集成运算放大器简介"></a>集成运算放大器简介</h4></li>
+<li>一般都可以分为输入级、中间级、输出级。输入级通常是高共模抑制比的差分式放大电路，输出级主要特点是具有较强的驱动负载的能力</li>
+<li>高增益是集成运放的最基本特征<h4 id="集成运放的主要参数"><a href="#集成运放的主要参数" class="headerlink" title="集成运放的主要参数"></a>集成运放的主要参数</h4></li>
+<li>三极管一定需要有直流通路，这样三极管才能有合适的静态工作点。如此一来，运放的两输入端就会有一定的静态电流。</li>
+<li>失调电流、偏置电流等并不影响虚短和虚断的正常使用 </li>
+<li>运放的输入端必须要有直流通路，运放里面的差分放大电流才能有合适的偏置<h2 id="第八章-反馈放大电路"><a href="#第八章-反馈放大电路" class="headerlink" title="第八章 反馈放大电路"></a>第八章 反馈放大电路</h2><h4 id="反馈的基本概念与分类"><a href="#反馈的基本概念与分类" class="headerlink" title="反馈的基本概念与分类"></a>反馈的基本概念与分类</h4></li>
+<li>没有明显反馈线的负反馈：例如图4.5.1（a）。源极电阻就是反馈通路，漏极电流就是输出电流，他会在源极电阻上产生压降，这个压降会影响g与s之间的电压，进而影响到漏极电流，所以构成了反馈通路</li>
+<li>根据反馈到输入端信号的性质，来区分交流反馈还是直流反馈</li>
+<li>理想情况下，电源线和地线不是反馈通路，因为他们上面的电压始终是恒定的。</li>
+<li>对于电流信号源，使用并联反馈效果更明显。对于电压信号源，使用串联反馈效果更明显。原因都在于，反馈电压或电流的变化可以直接影响经输入电压或电流的变化</li>
+<li>判断依据：并联反馈的特点是，输入信号和反馈信号接在同一个输入端上。而串联反馈输入信号和反馈信号一般接在不同输入端上</li>
+<li>串联反馈的输入端口以电压形式求和，并联反馈的输入端口以电流形式求和</li>
+<li>是电流反馈还是电压反馈由反馈网络的输入端口在放大电路的输出端口取样的对象来决定</li>
+<li>直接判断是电压反馈还是电流反馈比较困难，所以使用输出短路法来进行判断</li>
+<li>负反馈会使电路的增益下降</li>
+<li>BJT的集电极与基极信号的相位是相反的，因为共射极放大电路的增益为负</li>
+<li>（图8.1.5a）反馈回路是由Re1组成的，由与射极与基极一同组成了输入端口的同时，还与集电极一同组成了输出端口，所以位于射极上的Re1依然处于输出之中，从而可以将输出的一部分回送到输出</li>
+<li>串联与并联看的是输入端口，（取样）电压与（取样）电流看的是输出端口</li>
+<li>单纯的直流反馈主要用于稳定静态工作点，交流反馈或直流反馈用于对信号放大产生影响<h4 id="负反馈对放大电路性能的影响"><a href="#负反馈对放大电路性能的影响" class="headerlink" title="负反馈对放大电路性能的影响"></a>负反馈对放大电路性能的影响</h4></li>
+<li>引入负反馈可以稳定增益。反馈的组态不同，稳定的增益也不同。例如电压串联负反馈只能稳定闭环电压增益，电流串联负反馈只能稳定闭环互导增益</li>
+<li>负反馈只能减小反馈环内产生的失真</li>
+<li>只有在放大电路的带宽可以近似为上限频率并且只有一个上限转折频率的情况下，增益带宽积为常数的结论才成立<h4 id="负反馈放大电路的稳定性"><a href="#负反馈放大电路的稳定性" class="headerlink" title="负反馈放大电路的稳定性"></a>负反馈放大电路的稳定性</h4></li>
+<li>在没有任何输入信号的情况下，放大电路的输出端仍会连续不断地产生某种频率和幅度的输出信号。这种现象就是自激振荡<h2 id="第十章-信号处理与信号产生电路"><a href="#第十章-信号处理与信号产生电路" class="headerlink" title="第十章 信号处理与信号产生电路"></a>第十章 信号处理与信号产生电路</h2><h4 id="高阶有源滤波器"><a href="#高阶有源滤波器" class="headerlink" title="高阶有源滤波器"></a>高阶有源滤波器</h4></li>
+<li>滤波特性取决于传递函数，不同的电路可以有相同的传递函数<h4 id="正弦波震荡电路"><a href="#正弦波震荡电路" class="headerlink" title="正弦波震荡电路"></a>正弦波震荡电路</h4></li>
+<li>如果希望w0的正弦波震荡输出，就只能允许w0的正弦波既满足振幅平衡条件又满足相位条件。所以需要选频网络</li>
+<li>自激振荡的信号源头是电路中的噪声等，他们的频率分布很广，其中必然包含频率为wo的信号，选频网络将他选出，在环路中形成正反馈。但是他的幅值很小，不能满足要求，所以必须对他进行放大，这个过程称为起振，在这个过程中，需要AF绝对值大于一，从而对信号进行放大，放大到一定程度后，进行稳幅，使得AF稳定为1。所以振荡电路应该包括选频——起振——稳幅环节。所以振荡电路就会由以下部分组成：放大、正反馈、选频和稳幅<h4 id="电压比较器"><a href="#电压比较器" class="headerlink" title="电压比较器"></a>电压比较器</h4></li>
+<li>如果是同向输入，传输曲线向一三方向延伸，如果是反向输入，传输曲线向二四方向延伸</li>
+<li>在反向迟滞比较器中，只要输入大于上门限，输出就为低电平；只要输入小于下门限，输出就为高电平。同向迟滞比较器与之刚好相反</li>
+<li>输入介于上下门限之间时，输出不变</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/30/%E6%A8%A1%E7%94%B5%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ck60n75wt0001lfiefunq96r5"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">CSP零碎知识点整理</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 知 昂 张</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="知 昂 张"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

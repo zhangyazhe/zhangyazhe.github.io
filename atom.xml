@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-30T11:15:29.736Z</updated>
+  <updated>2020-01-30T11:21:53.013Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git笔记</title>
+    <link href="http://yoursite.com/2020/01/30/git%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/01/30/git%E7%AC%94%E8%AE%B0/</id>
+    <published>2020-01-30T11:19:33.000Z</published>
+    <updated>2020-01-30T11:21:53.013Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;依据廖雪峰的教程和网上其他一些博客的内容整理，涵盖了平时比较常用的指令和操作，适合于零基础的同学。可能会有表述不合适的地方，欢迎指正。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="git" scheme="http://yoursite.com/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>模电复习笔记</title>

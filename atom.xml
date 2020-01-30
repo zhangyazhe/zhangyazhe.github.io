@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-30T03:56:01.440Z</updated>
+  <updated>2020-01-30T08:39:05.058Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/"/>
     <id>http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</id>
     <published>2020-01-30T03:54:35.000Z</published>
-    <updated>2020-01-30T03:56:01.440Z</updated>
+    <updated>2020-01-30T08:39:05.058Z</updated>
     
     <summary type="html">
     
@@ -29,16 +29,20 @@
       
         
         
-          &lt;ul&gt;
+          &lt;p&gt;摘要…&lt;/p&gt;
+&lt;p&gt;记录准备CSP期间学会的点滴，持续更新中…&lt;/p&gt;
+&lt;p&gt;正文…&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;判断整数是奇数还是偶数时，可以让这个数与1进行按位与，即num&amp;amp;1，如果结果为1，则num为奇数，否则为偶数&lt;/li&gt;
-&lt;li&gt;进行整数向浮点数的转换时，可以乘以1.0&lt;/li&gt;
-&lt;li&gt;C++ vector容器浅析 &lt;a
+&lt;li&gt;进行整数向浮点数的转换时
         
       
     
     </summary>
     
     
+    
+      <category term="CSP" scheme="http://yoursite.com/tags/CSP/"/>
     
   </entry>
   

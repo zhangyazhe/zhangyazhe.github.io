@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, CSP, 随笔, 转载文章, git">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    csp 201812_2小明放学（C++）AC代码 |
+    
+    知 昂 张</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="知 昂 张" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-csp-201812-2小明放学（C-）AC代码" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      csp 201812_2小明放学（C++）AC代码
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/01/31/csp-201812-2%E5%B0%8F%E6%98%8E%E6%94%BE%E5%AD%A6%EF%BC%88C-%EF%BC%89AC%E4%BB%A3%E7%A0%81/" class="article-date">
+  <time datetime="2020-01-31T03:18:47.000Z" itemprop="datePublished">2020-01-31</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>汉东省政法大学附属中学所在的光明区最近实施了名为“智慧光明”的智慧城市项目。具体到交通领域，通过“智慧光明”终端，可以看到光明区所有红绿灯此时此刻的状态。小明的学校也安装了“智慧光明”终端，小明想利用这个终端给出的信息，估算自己放学回到家的时间。</p>
+<a id="more"></a>
+
+<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>汉东省政法大学附属中学所在的光明区最近实施了名为“智慧光明”的智慧城市项目。具体到交通领域，通过“智慧光明”终端，可以看到光明区所有红绿灯此时此刻的状态。小明的学校也安装了“智慧光明”终端，小明想利用这个终端给出的信息，估算自己放学回到家的时间。</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>　　一次放学的时候，小明已经规划好了自己回家的路线，并且能够预测经过各个路段的时间。同时，小明通过学校里安装的“智慧光明”终端，看到了出发时刻路上经过的所有红绿灯的指示状态。请帮忙计算小明此次回家所需要的时间。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>　　输入的第一行包含空格分隔的三个正整数 r、y、g，表示红绿灯的设置。这三个数均不超过 10^6^。<br>　　输入的第二行包含一个正整数 n，表示小明总共经过的道路段数和路过的红绿灯数目。<br>　　接下来的 n 行，每行包含空格分隔的两个整数 k、t。k=0 表示经过了一段道路，将会耗时 t 秒，此处 t 不超过 10^6^；k=1、2、3 时，分别表示出发时刻，此处的红绿灯状态是红灯、黄灯、绿灯，且倒计时显示牌上显示的数字是 t，此处 t 分别不会超过 r、y、g。<br>输出格式<br>　　输出一个数字，表示此次小明放学回家所用的时间。</p>
+<h2 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h2><p>30 3 30<br>8<br>0 10<br>1 5<br>0 11<br>2 2<br>0 6<br>0 3<br>3 10<br>0 3</p>
+<h2 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h2><p>46</p>
+<h2 id="样例说明"><a href="#样例说明" class="headerlink" title="样例说明"></a>样例说明</h2><p>　　小明先经过第一段路，用时 10 秒。第一盏红绿灯出发时是红灯，还剩 5 秒；小明到达路口时，这个红绿灯已经变为绿灯，不用等待直接通过。接下来经过第二段路，用时 11 秒。第二盏红绿灯出发时是黄灯，还剩两秒；小明到达路口时，这个红绿灯已经变为红灯，还剩 11 秒。接下来经过第三、第四段路，用时 9 秒。第三盏红绿灯出发时是绿灯，还剩 10 秒；小明到达路口时，这个红绿灯已经变为红灯，还剩两秒。接下来经过最后一段路，用时 3 秒。共计 10+11+11+9+2+3 = 46 秒。<br>评测用例规模与约定<br>　　有些测试点具有特殊的性质：<br>　　* 前 2 个测试点中不存在任何信号灯。<br>　　测试点的输入数据规模：<br>　　* 前 6 个测试点保证 n ≤ 10^3^。<br>　　* 所有测试点保证 n ≤ 10^5^。</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>1.由于每个信号灯的类型会随着时间的推移而改变，所以定义信号灯结构体，结构体中包含目前信号灯的类型以及距离下一次信号类型发生改变剩余的时间。<br>2.问题的核心在于，求出经过t时间后，小明达到某个红绿灯时，红绿灯的类型以及剩余时间。只需要记录好小明到达某个红绿灯时已经使用的时间，即可推算此时红绿灯是什么类型。由于红绿灯是每经过(r+g+y)s就会循环一次，故使用t%(r+g+y)来推断红绿灯类型，如果不这样做会超时<br>3.需要注意，题目中已经说明，经过一段路所需时间和红绿灯等待时间均最多为10^6^s，道路的段数n最大为10^5^，那么小明回家所需时间最大就有可能是10^11^，此时已经超过int型数据所能表示的范围，故代码中的整数均直接定义成long long类型。<br>4.要注意黄灯结束后紧接着是红灯，依然需要等待</p>
+<h2 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">//容易出错的点</span></span><br><span class="line"><span class="comment">//1.由于数据量大，t需要定义成long longl类型</span></span><br><span class="line"><span class="comment">//2.黄灯结束后，还需要紧接着等红灯</span></span><br><span class="line"><span class="comment">//3.小心超时</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">//定义结构体，其中包含类型和时间两个信息。</span></span><br><span class="line"><span class="comment">// 另外构造一个函数，用于计算某一个红绿灯经过t时间后是什么类型的灯以及剩余多少时间</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">sig</span>&#123;</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> type;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> time_left;</span><br><span class="line">&#125;sig;</span><br><span class="line"><span class="function">sig <span class="title">next_state</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> y, <span class="keyword">int</span> g, sig p, <span class="keyword">long</span> <span class="keyword">long</span> t)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r, y, g, n, i;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> t = <span class="number">0</span>;</span><br><span class="line">    sig p, ret_sig;</span><br><span class="line">    <span class="built_in">vector</span>&lt;sig&gt; state;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; r &gt;&gt; y &gt;&gt; g;</span><br><span class="line">    <span class="built_in">cin</span>.get();</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="built_in">cin</span>.get();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; p.type &gt;&gt; p.time_left;</span><br><span class="line">        <span class="built_in">cin</span>.get();</span><br><span class="line">        state.push_back(p);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">        p = state[i];</span><br><span class="line">        <span class="keyword">if</span>(p.type == <span class="number">0</span>)&#123;</span><br><span class="line">            t+=p.time_left;</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">            ret_sig = next_state(r, y, g, state[i], t);</span><br><span class="line">            <span class="keyword">if</span>(ret_sig.type == <span class="number">1</span>)&#123;</span><br><span class="line">                t+=ret_sig.time_left;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ret_sig.type == <span class="number">2</span>)&#123;</span><br><span class="line">            	t+=ret_sig.time_left;</span><br><span class="line">            	t+=r;</span><br><span class="line">			&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; t;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">sig <span class="title">next_state</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> y, <span class="keyword">int</span> g, sig p, <span class="keyword">long</span> <span class="keyword">long</span> t)</span></span>&#123;</span><br><span class="line">    sig ret_sig;</span><br><span class="line">    <span class="keyword">int</span> time[<span class="number">4</span>];</span><br><span class="line">    time[<span class="number">1</span>]=r;</span><br><span class="line">    time[<span class="number">2</span>]=y;</span><br><span class="line">    time[<span class="number">3</span>]=g;</span><br><span class="line">    ret_sig.type = p.type;</span><br><span class="line">    ret_sig.time_left = p.time_left;</span><br><span class="line">    <span class="keyword">if</span>(t&gt;r+g+y)&#123;</span><br><span class="line">    	t=t%(r+g+y);<span class="comment">//important point to optimize the time cost</span></span><br><span class="line">	&#125;</span><br><span class="line">    ret_sig.time_left-=t;</span><br><span class="line">    <span class="keyword">if</span>(ret_sig.time_left&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            ret_sig.type--;</span><br><span class="line">            <span class="keyword">if</span>(ret_sig.type == <span class="number">0</span>) ret_sig.type=<span class="number">3</span>;</span><br><span class="line">            ret_sig.time_left+=time[ret_sig.type];</span><br><span class="line">        &#125;<span class="keyword">while</span> (ret_sig.time_left&lt;<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret_sig;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/csp-201812-2%E5%B0%8F%E6%98%8E%E6%94%BE%E5%AD%A6%EF%BC%88C-%EF%BC%89AC%E4%BB%A3%E7%A0%81/" data-id="ck61ln0yi00017bieb8lv5z9n"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSP/" rel="tag">CSP</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/01/30/git%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">git笔记</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 知 昂 张</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="知 昂 张"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

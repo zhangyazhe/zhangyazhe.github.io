@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-06T09:05:02.226Z</updated>
+  <updated>2020-02-06T09:19:23.454Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/"/>
     <id>http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/</id>
     <published>2020-02-06T05:32:17.000Z</published>
-    <updated>2020-02-06T09:05:02.226Z</updated>
+    <updated>2020-02-06T09:19:23.454Z</updated>
     
     <summary type="html">
     
@@ -32,7 +32,7 @@
     
     
     
-      <category term="CSP, bfs, 最短路径" scheme="http://yoursite.com/tags/CSP-bfs-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
+      <category term="CSP" scheme="http://yoursite.com/tags/CSP/"/>
     
   </entry>
   
@@ -41,7 +41,7 @@
     <link href="http://yoursite.com/2020/02/05/csp-201403-4-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/"/>
     <id>http://yoursite.com/2020/02/05/csp-201403-4-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/</id>
     <published>2020-02-05T09:31:12.000Z</published>
-    <updated>2020-02-06T05:30:17.305Z</updated>
+    <updated>2020-02-06T09:19:31.397Z</updated>
     
     <summary type="html">
     
@@ -52,7 +52,7 @@
     
     
     
-      <category term="CSP, BFS, 最短路径" scheme="http://yoursite.com/tags/CSP-BFS-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
+      <category term="CSP" scheme="http://yoursite.com/tags/CSP/"/>
     
   </entry>
   

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, CSP, 随笔, 转载文章, git, BFS, DFS, 最短路径">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    csp 201409_4 最优配餐 |
+    
+    知 昂 张</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="知 昂 张" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-csp-201409-4-最优配餐" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      csp 201409_4 最优配餐
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/" class="article-date">
+  <time datetime="2020-02-06T05:32:17.000Z" itemprop="datePublished">2020-02-06</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>　　栋栋最近开了一家餐饮连锁店，提供外卖服务。随着连锁店越来越多，怎么合理的给客户送餐成为了一个急需解决的问题。<br>　　栋栋的连锁店所在的区域可以看成是一个n×n的方格图（如下图所示），方格的格点上的位置上可能包含栋栋的分店（绿色标注）或者客户（蓝色标注），有一些格点是不能经过的（红色标注）。<br>　　方格图中的线表示可以行走的道路，相邻两个格点的距离为1。栋栋要送餐必须走可以行走的道路，而且不能经过红色标注的点。</p>
+<a id="more"></a>
+
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>　　栋栋最近开了一家餐饮连锁店，提供外卖服务。随着连锁店越来越多，怎么合理的给客户送餐成为了一个急需解决的问题。<br>　　栋栋的连锁店所在的区域可以看成是一个n×n的方格图（如下图所示），方格的格点上的位置上可能包含栋栋的分店（绿色标注）或者客户（蓝色标注），有一些格点是不能经过的（红色标注）。<br>　　方格图中的线表示可以行走的道路，相邻两个格点的距离为1。栋栋要送餐必须走可以行走的道路，而且不能经过红色标注的点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@p41.png" alt="题目"></p>
+<p>送餐的主要成本体现在路上所花的时间，每一份餐每走一个单位的距离需要花费1块钱。每个客户的需求都可以由栋栋的任意分店配送，每个分店没有配送总量的限制。<br>　　现在你得到了栋栋的客户的需求，请问在最优的送餐方式下，送这些餐需要花费多大的成本。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>　　输入的第一行包含四个整数n, m, k, d，分别表示方格图的大小、栋栋的分店数量、客户的数量，以及不能经过的点的数量。<br>　　接下来m行，每行两个整数xi, yi，表示栋栋的一个分店在方格图中的横坐标和纵坐标。<br>　　接下来k行，每行三个整数xi, yi, ci，分别表示每个客户在方格图中的横坐标、纵坐标和订餐的量。（注意，可能有多个客户在方格图中的同一个位置）<br>　　接下来d行，每行两个整数，分别表示每个不能经过的点的横坐标和纵坐标。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>　　输出一个整数，表示最优送餐方式下所需要花费的成本。</p>
+<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><p>10 2 3 3<br>1 1<br>8 8<br>1 5 1<br>2 3 3<br>6 7 2<br>1 2<br>2 2<br>6 8</p>
+<p>###样例输出</p>
+<p>29</p>
+<p>###评测用例规模与约定</p>
+<p>　　前30%的评测用例满足：1&lt;=n &lt;=20。<br>　　前60%的评测用例满足：1&lt;=n&lt;=100。<br>　　所有评测用例都满足：1&lt;=n&lt;=1000，1&lt;=m, k, d&lt;=n^2。可能有多个客户在同一个格点上。每个客户的订餐量不超过1000，每个客户所需要的餐都能被送到。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这种给出格点给出坐标然后求最短路径的问题，第一反应是用bfs，仔细看完题目之后发现这道题是多源最短路径，其实只要bfs稍微变一变就ok。方法就是，初始化的时候将所有的起点都入队列，然后多个起点同时开始bfs。对于每一个起点来说，每一轮循环都会使他们向前探索一步，所以他们入队列的顺序并不会对结果产生影响。</p>
+<p>有一个坑需要注意，就是评测用例规模：“1&lt;=n&lt;=1000，1&lt;=m, k, d&lt;=n^2。可能有多个客户在同一个格点上。每个客户的订餐量不超过1000，每个客户所需要的餐都能被送到。”，考虑一种容易考虑的情况，即若左下角(1,1)有唯一一家分店，右上角(1000,1000)有1000,000个顾客，每个顾客的订餐量为1000，无禁止通过的点。那么，从分店(1,1)走到顾客所在的点(1000,1000)需要<strong>2000</strong>步左右；然后1000,000个顾客，每人订餐量1000，总订餐量10^9，总共花费2000 * 10^9 = 2 * 10^12，显然这超出了int的范围，所以要使用long long类型。</p>
+<h2 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX_SIZE = <span class="number">1000</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point_info</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> step;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Legal</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x&lt;<span class="number">1</span>||x&gt;n||y&lt;<span class="number">1</span>||y&gt;n)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> customer_need[MAX_SIZE+<span class="number">1</span>][MAX_SIZE+<span class="number">1</span>] = &#123;<span class="number">0L</span>L&#125;;<span class="comment">//记录一个点所有顾客的总需求 </span></span><br><span class="line"><span class="keyword">int</span> customers[MAX_SIZE+<span class="number">1</span>][MAX_SIZE+<span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;<span class="comment">//记录同一点有几个顾客 </span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,m,k,d,x,y;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">0</span>,value;</span><br><span class="line">	<span class="built_in">queue</span>&lt;point_info&gt; q;</span><br><span class="line">	<span class="keyword">bool</span> ban[MAX_SIZE+<span class="number">1</span>][MAX_SIZE+<span class="number">1</span>] = &#123;<span class="literal">false</span>&#125;; <span class="comment">//  不能走的位置</span></span><br><span class="line">	point_info front,t;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> move[][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">-1</span>&#125;,&#123;<span class="number">-1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d %d %d %d"</span>,&amp;n,&amp;m,&amp;k,&amp;d);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        <span class="comment">//初始化时，将所有的起点全部入队列</span></span><br><span class="line">		point_info start;</span><br><span class="line">		start.step = <span class="number">0L</span>L;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;start.x,&amp;start.y);</span><br><span class="line">		ban[start.x][start.y] = <span class="literal">true</span>;   <span class="comment">//餐厅的位置不能走</span></span><br><span class="line">		q.push(start);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;i++)&#123;</span><br><span class="line">        <span class="comment">//同一个位置不论有多少客户或者多少需求，都一定是由距离最近的那个餐厅进行配送，所以直接将需求加在一起就行</span></span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d %d %lld"</span>,&amp;x,&amp;y,&amp;value);</span><br><span class="line">		customer_need[x][y] += value;</span><br><span class="line">		customers[x][y]++; </span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(d--)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;x,&amp;y);</span><br><span class="line">		ban[x][y] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">		front = q.front();</span><br><span class="line">		q.pop();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(customer_need[front.x][front.y]!=<span class="number">0L</span>L)&#123;</span><br><span class="line">			k -= customers[front.x][front.y];</span><br><span class="line">			ans += front.step * customer_need[front.x][front.y];</span><br><span class="line">			<span class="keyword">if</span>(k==<span class="number">0</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">			x = front.x+move[i][<span class="number">0</span>];</span><br><span class="line">			y = front.y+move[i][<span class="number">1</span>];</span><br><span class="line">			<span class="keyword">if</span>(Legal(x,y,n)&amp;&amp;!ban[x][y])&#123;</span><br><span class="line">				t.x = x;</span><br><span class="line">				t.y = y;</span><br><span class="line">				t.step = front.step + <span class="number">1</span>;</span><br><span class="line">				ban[x][y] = <span class="literal">true</span>;</span><br><span class="line">				q.push(t);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/" data-id="ck6ai7sgm0002xgie7yoi9u92"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSP-bfs-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">CSP, bfs, 最短路径</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/02/05/csp-201403-4-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">csp 201403_4 无线网络</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 知 昂 张</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="知 昂 张"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

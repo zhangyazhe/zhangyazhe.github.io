@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-06T05:30:17.305Z</updated>
+  <updated>2020-02-06T08:53:30.720Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>csp 201409_4 最优配餐</title>
+    <link href="http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/"/>
+    <id>http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/</id>
+    <published>2020-02-06T05:32:17.000Z</published>
+    <updated>2020-02-06T08:53:30.720Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;　　栋栋最近开了一家餐饮连锁店，提供外卖服务。随着连锁店越来越多，怎么合理的给客户送餐成为了一个急需解决的问题。&lt;br&gt;　　栋栋的连锁店所在的区域可以看成是一个n×n的方格图（如下图所示），方格的格点上的位置上可能包含栋栋的分店（绿色标注）或者客户（蓝色标注），有一些格点是不能经过的（红色标注）。&lt;br&gt;　　方格图中的线表示可以行走的道路，相邻两个格点的距离为1。栋栋要送餐必须走可以行走的道路，而且不能经过红色标注的点。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="CSP, bfs, 最短路径" scheme="http://yoursite.com/tags/CSP-bfs-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
+    
+  </entry>
   
   <entry>
     <title>csp 201403_4 无线网络</title>

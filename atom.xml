@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-06T09:19:23.454Z</updated>
+  <updated>2020-02-07T05:05:09.948Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>csp 201412_4 最优灌溉</title>
+    <link href="http://yoursite.com/2020/02/07/csp-201412-4-%E6%9C%80%E4%BC%98%E7%81%8C%E6%BA%89/"/>
+    <id>http://yoursite.com/2020/02/07/csp-201412-4-%E6%9C%80%E4%BC%98%E7%81%8C%E6%BA%89/</id>
+    <published>2020-02-07T04:53:23.000Z</published>
+    <updated>2020-02-07T05:05:09.948Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;最小生成树 prim算法&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>csp 201409_4 最优配餐</title>

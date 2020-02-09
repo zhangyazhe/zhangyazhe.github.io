@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>csp 201503_4 网络延迟</title>
+    <url>/2020/02/09/csp-201503-4-%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F/</url>
+    <content><![CDATA[<p>摘要：</p>
+<p>树的直径 dfs</p>
+<a id="more"></a>
+
+<p>##问题描述</p>
+<p>　　给定一个公司的网络，由<em>n</em>台交换机和<em>m</em>台终端电脑组成，交换机与交换机、交换机与电脑之间使用网络连接。交换机按层级设置，编号为1的交换机为根交换机，层级为1。其他的交换机都连接到一台比自己上一层的交换机上，其层级为对应交换机的层级加1。所有的终端电脑都直接连接到交换机上。<br>　　当信息在电脑、交换机之间传递时，每一步只能通过自己传递到自己所连接的另一台电脑或交换机。请问，电脑与电脑之间传递消息、或者电脑与交换机之间传递消息、或者交换机与交换机之间传递消息最多需要多少步。</p>
+<p>##输入格式</p>
+<p>　　输入的第一行包含两个整数<em>n</em>, <em>m</em>，分别表示交换机的台数和终端电脑的台数。<br>　　第二行包含<em>n</em> - 1个整数，分别表示第2、3、……、<em>n</em>台交换机所连接的比自己上一层的交换机的编号。第<em>i</em>台交换机所连接的上一层的交换机编号一定比自己的编号小。<br>　　第三行包含<em>m</em>个整数，分别表示第1、2、……、<em>m</em>台终端电脑所连接的交换机的编号。</p>
+<p>##输出格式</p>
+<p>　　输出一个整数，表示消息传递最多需要的步数。</p>
+<p>###样例输入</p>
+<p>4 2<br>1 1 3<br>2 1</p>
+<p>###样例输出</p>
+<p>4</p>
+<p>###样例说明</p>
+<p>电脑1与交换机4之间的消息传递花费的时间最长，为4个单位时间。</p>
+<p>###样例输入</p>
+<p>4 4<br>1 2 2<br>3 4 4 4</p>
+<p>###样例输出</p>
+<p>4</p>
+<p>###样例说明</p>
+<p>电脑1与电脑4之间的消息传递花费的时间最长，为4个单位时间。</p>
+<p>##评测用例规模与约定</p>
+<p>　　前30%的评测用例满足：<em>n</em> ≤ 5, <em>m</em> ≤ 5。<br>　　前50%的评测用例满足：<em>n</em> ≤ 20, <em>m</em> ≤ 20。<br>　　前70%的评测用例满足：<em>n</em> ≤ 100, <em>m</em> ≤ 100。<br>　　所有评测用例都满足：1 ≤ <em>n</em> ≤ 10000，1 ≤ <em>m</em> ≤ 10000。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这道题是经典的求树的直径的问题，这种问题一般有两种解法，一种是dfs一种是dp，我使用的是dfs的方法。树的直径有一个性质：对于树中的任意一个结点，找到距离它最远的那个点，记为点u。再寻找树中距离点u最远的那个点，记为点v，那么点u与点v之间的距离，即为树的直径。这个性质在这里不再证明，网上可以查到证明过程。有了这个性质，我们的思路就是，先随便找一个点进行dfs，找到距离这个点最远的点u，再从u开始dfs找到树的直径。</p>
+<h2 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">20005</span>; <span class="comment">//因为n m 相加需要20000</span></span><br><span class="line"><span class="keyword">int</span> vis[maxn];</span><br><span class="line"><span class="keyword">int</span> maxCost,number;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; G[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;maxn; i++)</span><br><span class="line">        G[i].clear();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> cost)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vis[u]=<span class="number">1</span>; <span class="comment">//是否通过</span></span><br><span class="line">    <span class="keyword">if</span>(maxCost&lt;cost)</span><br><span class="line">    &#123;</span><br><span class="line">        maxCost=cost; <span class="comment">//记录最长路径距离 因为有回溯所以需要全局变量</span></span><br><span class="line">        number=u;  <span class="comment">//记录最长距离的最后一个点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;G[u].size(); i++) <span class="comment">//对U的每一个邻接点遍历</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!vis[G[u][i]])  <span class="comment">//若该邻接点未标记，则距离加1，继续递归调用</span></span><br><span class="line">            dfs(G[u][i],cost+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m,x,i;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    init();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">2</span>; i&lt;=n+m; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;x;</span><br><span class="line">        G[i].push_back(x);<span class="comment">//第i个的前一个  机器顺延交换机顺序</span></span><br><span class="line">        G[x].push_back(i);<span class="comment">//无向图</span></span><br><span class="line">    &#125;</span><br><span class="line">    maxCost=<span class="number">-1</span>;  <span class="comment">//每次调用dfs函数时，首先要对最大值初始化为-1，且vis初始化为0</span></span><br><span class="line">    <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));<span class="comment">//访问变量初始化</span></span><br><span class="line">    dfs(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    maxCost=<span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">    dfs(number,<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;maxCost&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>CSP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>通过编译linux内核增加具有拷贝功能的系统调用</title>
     <url>/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
     <content><![CDATA[<p>摘要：</p>

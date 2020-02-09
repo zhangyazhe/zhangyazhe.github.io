@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-07T05:05:50.750Z</updated>
+  <updated>2020-02-08T11:16:41.524Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>通过编译linux内核增加具有拷贝功能的系统调用</title>
+    <link href="http://yoursite.com/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
+    <id>http://yoursite.com/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</id>
+    <published>2020-02-08T09:02:35.000Z</published>
+    <updated>2020-02-08T11:16:41.524Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;我要做的事情是，通过编译linux内核的方式，增加一个新的系统调用。另外编写一个应用程序来测试和使用新增加的系统调用。其中，新增加的系统调用具有文件拷贝功能。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>csp 201412_4 最优灌溉</title>
@@ -141,7 +161,7 @@
     <link href="http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/"/>
     <id>http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</id>
     <published>2020-01-30T03:54:35.000Z</published>
-    <updated>2020-02-07T05:36:26.402Z</updated>
+    <updated>2020-02-09T03:02:30.782Z</updated>
     
     <summary type="html">
     

@@ -80,7 +80,7 @@
 
       
         <p>摘要：</p>
-<p>我要做的事情是，通过编译linux内核的方式，增加一个新的系统调用。另外编写一个应用程序来测试和使用新增加的系统调用。其中，新增加的系统调用具有文件拷贝功能。</p>
+<p>通过编译linux内核的方式，增加一个新的系统调用。另外编写一个应用程序来测试和使用新增加的系统调用。其中，新增加的系统调用具有文件拷贝功能。</p>
 <a id="more"></a>
 
 <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>我们都知道，很多我们习以为常的C语言标准函数，在linux平台的实现都是通过系统调用完成的，例如我们在用户程序中使用open()或者write()函数时，函数执行过程中会通过中断进入到系统内核中，在Intel CPU中，这个由中断INT0x80实现。跳转到的内核位置叫做sysem_call。检查系统调用号，这个号码代表进程请求哪种服务。然后，它查看系统调用表(sys_call_table)找到所调用的内核函数入口地址。接着，就调用内核函数来实现open()或者write()等函数的功能。我们要做的，就是在内核中增加一个内核函数，相应地也在系统调用表中增加一个表项，使得我们增加的功能永远的留存在系统中。</p>
@@ -134,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" data-id="ck6g9gwyc000lknieea2kfahm"
+      <a data-url="http://yoursite.com/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" data-id="ck6g9j8w0000cniie92mtfquw"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>

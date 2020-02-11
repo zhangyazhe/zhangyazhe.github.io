@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ubuntu下qt环境配置</title>
+    <url>/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>摘要：</p>
+<p>第一次使用qt，亲自踩坑整理出来的，记录一下</p>
+<a id="more"></a>
+
+<h2 id="下载QT"><a href="#下载QT" class="headerlink" title="下载QT"></a>下载QT</h2><p>点击<a href="https://download.qt.io/archive/qt/" target="_blank" rel="noopener">这里</a>下载即可，我下载的是qt-opensource-linux-x64-5.7.1.run。</p>
+<p>下载下来之后运行安装即可，QT库和QT creator都会被安装。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>如果我们不进行配置，直接新建一个工程来运行的话，我这边会报错说“Error while building/deploying project XXX when executing step ‘qmake’”。我分析的原因有两个，一个是ubuntu系统本身自带qt库，我们还没有指定qt creator去使用我们新安装的qt库；另一个原因是我们还没有配置qmake的路径，qt creator找不到qmake。解决方法如下。</p>
+<ol>
+<li><p>首先打开终端输入下面的指令安装qtchooser</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt install qtchooser</span><br></pre></td></tr></table></figure>
+
+<p>安装它是因为我们希望借助这个工具来指定我们当前想要使用的qt版本。</p>
+</li>
+<li><p>增加我们新下载的那个qt环境。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">qtchooser -install qt5.7 &#x2F;home&#x2F;zhangyazhe&#x2F;Qt5.7.1&#x2F;5.7&#x2F;gcc_64&#x2F;bin&#x2F;qmake</span><br></pre></td></tr></table></figure>
+
+<p>qt5.7是这个环境的name，可以随意起。后面的路径是qmake的路径。</p>
+</li>
+<li><p>设置下环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export QT_SELECT&#x3D;qt5.7</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>经过上面的操作，qmake就配置好了，可以执行qmake -v来查看版本。这个时候再运行工程，不会再显示qmake出错，而是开始显示make出错，这时候执行下面的命令。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libqt4-dev</span><br></pre></td></tr></table></figure>
+
+<p>之后再尝试运行就ok了。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>csp 201503_4 网络延迟</title>
     <url>/2020/02/09/csp-201503-4-%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F/</url>
     <content><![CDATA[<p>摘要：</p>

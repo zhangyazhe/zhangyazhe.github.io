@@ -100,7 +100,7 @@
 <p>接下来需要重点说一下函数定义该怎么写，即拷贝系统调用如何实现。</p>
 <p>首先需要注意的是，在内核中，我们只能使用内核函数，比如open()、write()函数都不能用了，需要用ksys_open()和ksys_write()。</p>
 <p>ksys_open()函数的原型为</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">ksys_open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> __user *filename, <span class="keyword">int</span> flags, <span class="keyword">int</span> mode)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">ksys_open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> __user *filename, <span class="keyword">int</span> flags, <span class="keyword">int</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>flags定义文件打开方式，O_RDONLY表示以只读方式打开，O_WRONLY表示可读可写方式打开，O_CREAT表示要打开的文件不存在时自动创建文件。</p>
 <p>mode定义权限，S_IRUSR表示允许用户读文件，S_IWUSR表示允许用户写文件。</p>
@@ -134,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" data-id="ck6hx4erw000ih1iehrtydagz"
+      <a data-url="http://yoursite.com/2020/02/08/%E9%80%9A%E8%BF%87%E7%BC%96%E8%AF%91linux%E5%86%85%E6%A0%B8%E5%A2%9E%E5%8A%A0%E5%85%B7%E6%9C%89%E6%8B%B7%E8%B4%9D%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" data-id="ck6m5s4q2000msciedhx18ze6"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>

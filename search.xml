@@ -86,7 +86,7 @@
 <p>接下来需要重点说一下函数定义该怎么写，即拷贝系统调用如何实现。</p>
 <p>首先需要注意的是，在内核中，我们只能使用内核函数，比如open()、write()函数都不能用了，需要用ksys_open()和ksys_write()。</p>
 <p>ksys_open()函数的原型为</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">ksys_open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> __user *filename, <span class="keyword">int</span> flags, <span class="keyword">int</span> mode)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">ksys_open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> __user *filename, <span class="keyword">int</span> flags, <span class="keyword">int</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>flags定义文件打开方式，O_RDONLY表示以只读方式打开，O_WRONLY表示可读可写方式打开，O_CREAT表示要打开的文件不存在时自动创建文件。</p>
 <p>mode定义权限，S_IRUSR表示允许用户读文件，S_IWUSR表示允许用户写文件。</p>

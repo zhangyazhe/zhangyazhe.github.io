@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, CSP, 随笔, 转载文章, git, linux, Qt">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    csp 201604_2 俄罗斯方块 |
+    
+    知 昂 张</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="知 昂 张" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-csp-201604-2-俄罗斯方块" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      csp 201604_2 俄罗斯方块
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/02/17/csp-201604-2-%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97/" class="article-date">
+  <time datetime="2020-02-17T02:29:10.000Z" itemprop="datePublished">2020-02-17</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>注意细节！注意审题！</p>
+<a id="more"></a>
+
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>　　俄罗斯方块是俄罗斯人阿列克谢·帕基特诺夫发明的一款休闲游戏。<br>　　游戏在一个15行10列的方格图上进行，方格图上的每一个格子可能已经放置了方块，或者没有放置方块。每一轮，都会有一个新的由4个小方块组成的板块从方格图的上方落下，玩家可以操作板块左右移动放到合适的位置，当板块中某一个方块的下边缘与方格图上的方块上边缘重合或者达到下边界时，板块不再移动，如果此时方格图的某一行全放满了方块，则该行被消除并得分。<br>　　在这个问题中，你需要写一个程序来模拟板块下落，你不需要处理玩家的操作，也不需要处理消行和得分。<br>　　具体的，给定一个初始的方格图，以及一个板块的形状和它下落的初始位置，你要给出最终的方格图。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>　　输入的前15行包含初始的方格图，每行包含10个数字，相邻的数字用空格分隔。如果一个数字是0，表示对应的方格中没有方块，如果数字是1，则表示初始的时候有方块。输入保证前4行中的数字都是0。<br>　　输入的第16至第19行包含新加入的板块的形状，每行包含4个数字，组成了板块图案，同样0表示没方块，1表示有方块。输入保证板块的图案中正好包含4个方块，且4个方块是连在一起的（准确的说，4个方块是四连通的，即给定的板块是俄罗斯方块的标准板块）。<br>　　第20行包含一个1到7之间的整数，表示板块图案最左边开始的时候是在方格图的哪一列中。注意，这里的板块图案指的是16至19行所输入的板块图案，如果板块图案的最左边一列全是0，则它的左边和实际所表示的板块的左边是不一致的（见样例）</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>　　输出15行，每行10个数字，相邻的数字之间用一个空格分隔，表示板块下落后的方格图。注意，你不需要处理最终的消行。</p>
+<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><p>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 1 0 0<br>0 0 0 0 0 0 1 0 0 0<br>0 0 0 0 0 0 1 0 0 0<br>1 1 1 0 0 0 1 1 1 1<br>0 0 0 0 1 0 0 0 0 0<br>0 0 0 0<br>0 1 1 1<br>0 0 0 1<br>0 0 0 0<br>3</p>
+<h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><p>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 0 0 0<br>0 0 0 0 0 0 0 1 0 0<br>0 0 0 0 0 0 1 0 0 0<br>0 0 0 0 0 0 1 0 0 0<br>1 1 1 1 1 1 1 1 1 1<br>0 0 0 0 1 1 0 0 0 0</p>
+<h2 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="comment">//#define LOCAL</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">15</span>][<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> block[<span class="number">4</span>][<span class="number">4</span>];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; line;<span class="comment">//四个方块的坐标</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; col;</span><br><span class="line"><span class="keyword">int</span> icol;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">        freopen(<span class="string">"201604_2.txt"</span>, <span class="string">"r"</span>, <span class="built_in">stdin</span>);</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    <span class="keyword">int</span> dline=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">15</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;<span class="number">10</span>; j++)&#123;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; <span class="built_in">map</span>[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;<span class="number">4</span>; j++)&#123;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; block[i][j];</span><br><span class="line">            <span class="keyword">if</span>(block[i][j] == <span class="number">1</span>)&#123;</span><br><span class="line">                line.push_back(i);</span><br><span class="line">                col.push_back(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; icol;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">map</span>[dline+line[<span class="number">0</span>]+<span class="number">1</span>][col[<span class="number">0</span>]+icol<span class="number">-1</span>]^block[line[<span class="number">0</span>]][col[<span class="number">0</span>]] &amp;&amp; <span class="built_in">map</span>[dline+line[<span class="number">1</span>]+<span class="number">1</span>][col[<span class="number">1</span>]+icol<span class="number">-1</span>]^block[line[<span class="number">1</span>]][col[<span class="number">1</span>]] &amp;&amp; <span class="built_in">map</span>[dline+line[<span class="number">2</span>]+<span class="number">1</span>][col[<span class="number">2</span>]+icol<span class="number">-1</span>]^block[line[<span class="number">2</span>]][col[<span class="number">2</span>]] &amp;&amp; <span class="built_in">map</span>[dline+line[<span class="number">3</span>]+<span class="number">1</span>][col[<span class="number">3</span>]+icol<span class="number">-1</span>]^block[line[<span class="number">3</span>]][col[<span class="number">3</span>]])&#123;</span><br><span class="line">        dline++;</span><br><span class="line">        <span class="keyword">if</span>(dline+line[<span class="number">0</span>]==<span class="number">14</span> || dline+line[<span class="number">1</span>]==<span class="number">14</span> || dline+line[<span class="number">2</span>]==<span class="number">14</span> || dline+line[<span class="number">3</span>]==<span class="number">14</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)&#123;</span><br><span class="line">        <span class="built_in">map</span>[dline+line[i]][col[i]+icol<span class="number">-1</span>] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">15</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;<span class="number">10</span>; j++)&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="built_in">map</span>[i][j] &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">            <span class="keyword">if</span>(j == <span class="number">9</span>) <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这道题思路不难，但是0分了好久才最后AC，原因在于我一开始输出的时候没有注意到所有的数字需要用空格隔开，修复了这个bug之后马上就AC了，这种情况如果出现在真正的考试中绝对血亏，相当于白给100分，之后在做题过程中一定要注意，审清题目，看好输出的格式和要求。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/02/17/csp-201604-2-%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97/" data-id="ck6puir9300028tiefi8m7rrg"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSP/" rel="tag">CSP</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">ubuntu下qt环境配置</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 知 昂 张</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="知 昂 张"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

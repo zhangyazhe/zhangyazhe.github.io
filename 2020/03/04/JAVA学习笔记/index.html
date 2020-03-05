@@ -103,9 +103,9 @@
 <ul>
 <li><p>final修饰类时：当用final去修饰一个类的时候，表示这个类不能被继承。注意：a. 被final修饰的类，final类中的成员变量可以根据自己的实际需要设计为fianl。b. final类中的成员方法都会被隐式的指定为final方法。说明：在自己设计一个类的时候，要想好这个类将来是否会被继承，如果可以被继承，则该类不能使用fianl修饰，在这里呢，一般来说工具类我们往往都会设计成为一个fianl类。在JDK中，被设计为final类的有String、System等。</p>
 </li>
-<li><p>final修饰方法时：被final修饰的方法不能被重写。</p>
+<li><p>final修饰方法时：被final修饰的方法不能被重写，即不能被子类override。</p>
 <p><strong>a. 一个类的private方法会隐式的被指定为final方法。</strong></p>
-<p>**b. 如果父类中有final修饰的方法，那么子类不能去重写。</p>
+<p>b. 如果父类中有final修饰的方法，那么子类不能去重写。</p>
 </li>
 <li><p>final修饰成员变量时，必须初始化而且只能初始化一次。如果成员变量是引用变量，那么相当于和被引用的对象绑定，不能再引用其他对象，被引用对象的值可以改变。</p>
 </li>
@@ -247,13 +247,312 @@
 <p> circleArray[i] = new Circle( );  //这时才构造Circle对象，可使用有参构造函数</p>
 <p>}</p>
 </li>
-<li></li>
+<li><p>构造函数</p>
+<ul>
+<li><p><strong>无返回类型</strong>，名字同类名，用于初始化对象。</p>
+</li>
+<li><p>注意JAVA如果定义void className(…),被认为是普通方法</p>
+</li>
+</ul>
+<p>只在new时被自动执行。</p>
+<ul>
+<li><p>必须是实例方法（无static），可为公有、保护、私有和包级权限。</p>
+</li>
+<li><p>类的变量为引用(相当于C指针)，指向实例化好的对象。</p>
+</li>
+</ul>
+<p>Circle c2=new Circle(5.0);//调用时必须有括弧,可带参初始化</p>
+<ul>
+<li>缺省构造函数(同C++)</li>
+</ul>
+<p>如果类未定义任何构造函数，编译器会自动提供一个不带参数的默认构造函数。</p>
+<p>如果已自定义构造函数，则不会提供默认构造函数</p>
+</li>
+<li><p>Java无类似C++的&amp;或C#的ref来修饰方法参数，只能靠形参的声明类型来区分是传值还是传引用，因此一定要注意区分</p>
+</li>
+<li><p>包</p>
+<ul>
+<li><p>包是一组相关的类和接口的集合。将类和接口分装在不同的包中，可以避免重名类的冲突，更有效地管理众多的类和接口。因此package就是C++里的namespace</p>
+</li>
+<li><p>包的定义通过关键字package来实现的 ，package语句的一般形式：</p>
+<p>  package 包名; </p>
+<p>package语句必须出现在.java文件第一行，前面不能有注释行也不能有空白行，该.java文件里定义的所有内容（类、接口、枚举）都属于package所定义的包里。如果.java文件第一行没有package语句，则该文件定义的所有内容位于default包（缺省名字空间），但不推荐。</p>
+<p>不同.java文件里的内容都可以属于同一个包，只要它们第一条package语句的包名相同</p>
+</li>
+<li><p>package本质上就是C++里的namespace，因此</p>
+<p>在同一个package里不能定义同名的标识符（类名，接口名，枚举名）。例如一个类名和一个接口名不能相同</p>
+<p>如果要使用其它包里标识符，有二个办法：</p>
+<p>用完全限定名，例如要调用java.util包里的Arrays类的sort方法： java.util.Arrays.sort(list)；</p>
+<p>在package语句后面，先引入要使用其它包里的标识符，再使用：</p>
+<p> import java.util.Arrays; //或者： import java.util.*; </p>
+<p> Arrays.sort(list)；</p>
+<p>import语句可以有多条，分别引入多个包里的名字</p>
+</li>
+</ul>
+</li>
+<li><p>包的命名习惯: 将Internet域名作为包名 （但级别顺序相反），这样的好处是避免包名的重复</p>
+<p>org.apache.tools.zip</p>
+<p>cn.edu.hust.cs.javacourse.ch1</p>
+<p>如果所有程序员都遵循这种包命名的约定，包名重复的可能性就非常小</p>
+</li>
+<li><p>数据成员的封装</p>
+<ul>
+<li><p>面向对象的封装性要求最好把实例成员变量设为私有的或保护的</p>
+</li>
+<li><p>同时为私有、保护的实例成员变量提供公有的get和set方法。get和set方法遵循JavaBean的命名规范</p>
+</li>
+<li><p>设成员为DateType propertyName。</p>
+</li>
+<li><p>get用于获取成员值：public DateType getPropertyName( ); </p>
+</li>
+<li><p>set用于设置成员值：public void setPropertyName(DateType value)</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">double</span> radius=<span class="number">1.0</span>;    <span class="comment">//数据成员设为私有</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Circle</span><span class="params">( )</span></span>&#123; radius=<span class="number">1.0</span>; &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">( )</span></span>&#123; <span class="keyword">return</span> radius; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRadius</span><span class="params">(<span class="keyword">double</span> r)</span></span>&#123; radius=r; &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line">    <span class="comment">/** 私有静态变量，记录当前内存里被实例化的Circle对象个数*/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> numberOfObjects = <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Circle</span><span class="params">()</span> </span>&#123; radius = <span class="number">1.0</span>; numberOfObjects++; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> newRadius)</span> </span>&#123; radius = newRadius; numberOfObjects++; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> radius;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRadius</span><span class="params">(<span class="keyword">double</span> newRadius)</span> </span>&#123; radius = newRadius;&#125;</span><br><span class="line">    <span class="comment">/** 公有静态方法，获取私有静态变量内容*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getNumberOfObjects</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> numberOfObjects;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Return the area of this circle */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findArea</span><span class="params">()</span> </span>&#123;  <span class="keyword">return</span> radius * radius * Math.PI; &#125;</span><br><span class="line">  <span class="comment">/*覆盖从Object继承的finalize方法，该方法在对象被回收时调用，方法里对象计数器-1。注意该方法调用时机不可控制。 @Override是注解(annotation)</span></span><br><span class="line"><span class="comment">告诉编译器这里是覆盖父类的方法。</span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        numberOfObjects--; <span class="comment">//对象被析构时，计数器减1</span></span><br><span class="line">        <span class="keyword">super</span>.finalize();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法重载（overload)、方法重写（override）、方法隐藏</p>
+<ul>
+<li><p>方法重载：同一个类中、或者父类子类中的多个方法具有相同的名字，但这些方法具有不同的参数列表(不含返回类型，即无法以返回类型作为方法重载的区分标准）</p>
+</li>
+<li><p>方法重写和方法隐藏：发生在父类和子类之间，前提是继承。子类中定义的方法与父类中的方法具有相同的方法名字、相同的参数列表、相同的返回类型（也允许子类中方法的返回类型是父类中方法返回类型的子类）</p>
+</li>
+<li><p>方法重写：实例方法</p>
+</li>
+<li><p>方法隐藏：静态方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//下面语句报错m(int,int)已经定义, 重载函数不能通过返回类型区分</span></span><br><span class="line"><span class="comment">//    public int m(int x, int y) &#123; return 0;&#125;; </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123; <span class="comment">//B继承了A</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y)</span> </span>&#123; &#125; <span class="comment">//重载了父类的m(int,int)和m(double,double)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;&#125; <span class="comment">//覆盖了父类的void m(int,int)，注意连返回类型都必须一致</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//注意下面这个语句报错，既不是覆盖（与父类的void m(int,int)返回类型不一样）</span></span><br><span class="line">    <span class="comment">// 也不是合法的重载（和父类的m(int,int)参数完全一样，只是返回类型不一致</span></span><br><span class="line"><span class="comment">//    public int m(int x, int y) &#123;&#125; //错误</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//子类定义了新的重载函数int m()</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">m</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>可见性修饰符</p>
+<ul>
+<li><p>Java继承时无继承控制(见继承，即都是公有继承，和C++不同)，故父类成员继承到派生类时访问权限保持不变。</p>
+</li>
+<li><p>成员访问控制符的作用：</p>
+<ul>
+<li><p>private： 只能被当前类定义的函数访问。</p>
+</li>
+<li><p>包级：无修饰符的成员，只能被同一包中的类访问。</p>
+</li>
+<li><p>protected：子类、同一包中的类的函数可以访问。</p>
+</li>
+<li><p>public： 所有类的函数都可以访问。</p>
+</li>
+<li><p>注意：若不加访问控制符，则默认为包级，而包级只能被同一包中的类访问，不能被子类访问</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="继承和多态"><a href="#继承和多态" class="headerlink" title="继承和多态"></a>继承和多态</h2><ul>
+<li><p>如果class C1 extends C2，则称C1为子类(subclass)，C2为父类(superclass)。</p>
+</li>
+<li><p>子类继承了父类中可访问的数据和方法，子类也可添加新的数据和方法</p>
+</li>
+<li><p>子类不继承父类的构造函数。</p>
+</li>
+<li><p>一个类只能有一个直接父类（Java不支持多重继承，因为Java的设计者认为没有必要）</p>
+</li>
+<li><p>Java的继承都是公有继承，因此被继承的就是父类，继承的类就是子类。因此父类的成员如果被继承到子类，访问权限不变</p>
+</li>
+<li><p>例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GeometricObject</span> </span>&#123; <span class="comment">//等价于public class GeometricObject extends Object</span></span><br><span class="line">    <span class="keyword">private</span> String color = <span class="string">"white"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> filled;</span><br><span class="line">    <span class="keyword">private</span> Date dateCreated; <span class="comment">//java.util.Date是JDK定义的类，表示日期和时间</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GeometricObject</span><span class="params">()</span> </span>&#123; dateCreated = <span class="keyword">new</span> Date();&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getColor</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> color; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(String color)</span> </span>&#123; <span class="keyword">this</span>.color = color;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFilled</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> filled; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFilled</span><span class="params">(<span class="keyword">boolean</span> filled)</span> </span>&#123; <span class="keyword">this</span>.filled = filled;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getDateCreated</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> dateCreated;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//覆盖Object类的toString()方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">( )</span> </span>&#123; <span class="comment">//还应考虑equals，clone</span></span><br><span class="line">	<span class="keyword">return</span> <span class="string">"created on "</span> + dateCreated + <span class="string">"\n\tcolor: "</span> + color</span><br><span class="line">				+ <span class="string">" and filled: "</span> + filled;</span><br><span class="line">   &#125;<span class="comment">//toString方法应该返回一个描述当前对象的有意义的字符串</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">extends</span> <span class="title">GeometricObject</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">double</span> radius; <span class="comment">//新增属性</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Circle</span><span class="params">()</span> </span>&#123; &#125;   </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123; <span class="keyword">this</span>.radius = radius; &#125; </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> radius; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRadius</span> <span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123; <span class="keyword">this</span>.radius = radius; &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getArea</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> radius * radius * Math.PI;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getDiameter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span> * radius;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getPerimeter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span> * radius * Math.PI;</span><br><span class="line">	&#125;</span><br><span class="line">       <span class="comment">//还应考虑equals，clone，toString等函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">extends</span> <span class="title">GeometricObject</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">double</span> width;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">double</span> height;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Rectangle</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Rectangle</span><span class="params">(<span class="keyword">double</span> width, <span class="keyword">double</span> height)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.width = width;</span><br><span class="line">		<span class="keyword">this</span>.height = height;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getWidth</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> width; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWidth</span> <span class="params">(<span class="keyword">double</span> width)</span> </span>&#123; <span class="keyword">this</span>.width = width;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> height;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeight</span> <span class="params">(<span class="keyword">double</span> height)</span> </span>&#123; <span class="keyword">this</span>.height = height;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getArea</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> width * height;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getPerimeter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span> * (width + height);</span><br><span class="line">	&#125;</span><br><span class="line">         <span class="comment">//还应考虑equals，clone，toString等函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实例初始化模块</p>
+<ul>
+<li><p>初始化块是Java类中可以出现的第四种成员（前三种包括属性、方法、构造函数），分为实例初始化块和静态初始化块。</p>
+</li>
+<li><p>实例初始化模块（instance initialization block，IIB）是一个用大括号括住的语句块，直接嵌套于类体中，不在方法内。</p>
+</li>
+<li><p>它的作用就像把它放在了类中每个构造方法的最开始位置。用于初始化对象。实例初始化块先于构造函数执行</p>
+</li>
+<li><p>作用：如果多个构造方法共享一段代码，并且每个构造方法不会调用其他构造方法，那么可以把这段公共代码放在初始化模块中。</p>
+</li>
+<li><p>一个类可以有多个初始化模块，模块按照在类中出现的顺序执行</p>
+</li>
+<li><p>下面的两段代码等价</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> numOfObjects;</span><br><span class="line">  <span class="keyword">private</span> String title</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(String title)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.title = title;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    numOfObjects++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> numOfObjects;</span><br><span class="line">  <span class="keyword">private</span> String title</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(String title)</span></span>&#123;</span><br><span class="line">    numOfObjects++;</span><br><span class="line">    <span class="keyword">this</span>.title = title;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">    numOfObjects++;</span><br><span class="line">    <span class="keyword">this</span>.id = id</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>实例初始化模块最重要的作用是当我们需要写一个内部匿名类时：匿名类不可能有构造函数，这时可以用实例初始化块来初始化数据成员.•实例初始化模块还有个作用是可以截获异常</p>
+</li>
+<li><p>实例初始化模块只有在创建类的实例时才会被调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> id = <span class="number">0</span>;		<span class="comment">//执行次序：1</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;		<span class="comment">//执行次序：4</span></span><br><span class="line">    <span class="keyword">this</span>.id = id		</span><br><span class="line">  &#125;</span><br><span class="line">  &#123;</span><br><span class="line">     <span class="comment">//实例初始化块			//执行次序：2</span></span><br><span class="line">  &#125;</span><br><span class="line">  &#123;</span><br><span class="line">     <span class="comment">//实例初始化块			//执行次序：3</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>静态初始化模块</p>
+<ul>
+<li><p>•静态初始化模块是由static修饰的初始化模块{}，只能访问类的静态成员，<strong>并且在JVM的Class Loader将类装入内存时调用</strong>。（类的装入和类的实例化是两个不同步骤，<strong><em>首先是将类装入内存，然后再实例化类的对象</em></strong>）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> id = <span class="number">0</span>;	<span class="comment">//执行次序：1</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">	 <span class="keyword">this</span>.id = id 		    		</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">     <span class="comment">//静态初始化块			//执行次序：2</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">     <span class="comment">//静态初始化块			//执行次序：3</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>初始化模块执行顺序</strong></p>
+<ul>
+<li><p>第一次使用类时装入类</p>
+<ul>
+<li><p>如果父类没装入则首先装入父类，这是个递归的过程，直到继承链上所有祖先类全部装入</p>
+</li>
+<li><p>装入一个类时，类的静态数据成员和静态初始化模块按它们在类中出现的顺序执行</p>
+</li>
+</ul>
+</li>
+<li><p>实例化类的对象</p>
+<ul>
+<li>首先构造父类对象，这是个递归过程，直到继承链上所有祖先类的对象构造好</li>
+<li>构造一个类的对象时，按在类中出现的顺序执行实例数据成员的初始化及实例初始化模块</li>
+<li>执行构造函数函数体</li>
+</ul>
+</li>
+<li><p>例子（输出为012345678）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InitDemo</span></span>&#123;</span><br><span class="line">    InitDemo()&#123;</span><br><span class="line">        <span class="keyword">new</span> M();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	  System.out.println(<span class="string">"(1) "</span>);</span><br><span class="line">	  <span class="keyword">new</span> InitDemo();</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"(2) "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"(0) "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">N</span></span>&#123;</span><br><span class="line">    N()&#123; 	System.out.println(<span class="string">"(6) "</span>); &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"(5) "</span>); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"(3) "</span>); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">M</span> <span class="keyword">extends</span> <span class="title">N</span></span>&#123;</span><br><span class="line">    M()&#123; 	System.out.println(<span class="string">"(8) "</span>); &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"(7) "</span>); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"(4) "</span>); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>super关键字</p>
+<ul>
+<li><p>利用super可以显式调用父类的构造函数</p>
+<ul>
+<li><p>super(parametersopt)调用父类的的构造函数。</p>
+</li>
+<li><p>必须是子类构造函数的第1条且仅1条语句(先构造父类)。</p>
+</li>
+<li><p>如果子类构造函数中没有显式地调用父类的构造函数，那么将自动调用父类不带参数的构造函数。</p>
+</li>
+<li><p>父类的构造函数在子类构造函数之前执行。</p>
+</li>
+</ul>
+</li>
+<li><p>调用父类的成员（这时super类似于this引用，只不过是指向父类对象）</p>
+<ul>
+<li><p>super.data（如果父类属性在子类可访问）</p>
+</li>
+<li><p>super.method(parameters)（如果父类方法在子类可访问）</p>
+</li>
+<li><p>Circle代码里可以写getDataCreated()或super.getDataCreated()</p>
+</li>
+<li><p>不能使用super.super.p()这样的super链</p>
+</li>
+</ul>
+</li>
+<li><p>编译器在为子类添加无参构造函数时，函数体里会用super( )默认调用父类的无参构造函数，如果找不到父类无参构造函数，则编译器为子类添加无参构造函数失败，编译报错。如果一个类定义了带参数的构造函数，<strong>一定别忘了定义一个无参的构造函数</strong>，原因是：由于系统不会再自动加上无参构造函数，就造成该类没有无参构造函数，那么在被继承时如果子类构造函数没有显式调用父类的带参构造函数，就会自动执行父类的无参构造函数，但是父类没有无参构造函数，这时就会出错</p>
+</li>
+</ul>
+</li>
+<li><p>多态</p>
+<ul>
+<li><p>多态：通过引用变量调用实例函数时，根据所引用的实际对象的类型，执行该类型的相应实例方法，从而表现出不同的行为称为多态。通过继承时覆盖父类的实例方法实现多态。多态实现的原理：在运行时根据引用变量指向对象的实际类型，重新计算调用方法的入口地址（晚期绑定）。</p>
+</li>
+<li><p>例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;  <span class="function"><span class="keyword">void</span> <span class="title">Greeting</span><span class="params">( )</span></span>&#123; System.out.println(“Best wish from a person!<span class="string">"); &#125; &#125;</span></span><br><span class="line"><span class="string">class Employee extends Person</span></span><br><span class="line"><span class="string">	      &#123;	void Greeting( )&#123; System.out.println(“Best wish from a employee!"</span>);&#125; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span></span>&#123; </span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Greeting</span><span class="params">( )</span></span>&#123; System.out.println(“Best wish from a manager!<span class="string">");&#125; &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">public class GreetingTest1&#123;</span></span><br><span class="line"><span class="string">    public static void main(String[] args)&#123;</span></span><br><span class="line"><span class="string">       //父类引用变量可以引用本类和子类对象，p1,p2,p3的声明类型都是Person(父类型），p2,p3执行子类对象</span></span><br><span class="line"><span class="string">       Person p1= new Person( ),p2= new Employee( ),p3= new Manager( );      </span></span><br><span class="line"><span class="string">	p1.Greeting( ); //调用Person的Greeting()    ，由于实际指向对象类型是Person</span></span><br><span class="line"><span class="string"> 	p2.Greeting( ); //调用Employee的Greeting()  ，由于实际指向对象类型是Employee</span></span><br><span class="line"><span class="string"> 	p3.Greeting( ); //调用Manager的Greeting()   ，由于实际指向对象类型是Manager</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>另一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GreetingSender</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newYearGreeting</span> <span class="params">(Person p)</span></span>&#123; p.Greeting(); <span class="comment">//编译时应该是Person的Greeing&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreetingTest1</span></span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	GreetingSender g = <span class="keyword">new</span> GreetingSender();</span><br><span class="line">       	g.newYearGreeting(<span class="keyword">new</span> Person()); 	<span class="comment">//调用Person的Greeting()</span></span><br><span class="line">       	g.newYearGreeting(<span class="keyword">new</span> Employee());	<span class="comment">//调用Employee的Greeting()</span></span><br><span class="line">       	g.newYearGreeting(<span class="keyword">new</span> Manager());	<span class="comment">//调用Manager的Greeting()</span></span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*以最后一条语句为例来解释多态特性：</span></span><br><span class="line"><span class="comment">当实参new Manager()传给形参Person p时，等价于Person p = new Manager(), 因此执行p.Greeting()语句时根据形参p指向的对象的实际类型动态计算Greeting方法的入口地址，调用了Manager的Greeting()*/</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>这段程序的微妙之处在于：</p>
+<p>GreetingSender类的newYearGreeting方法的参数是Person类型，那么</p>
+<p>newYearGreeting的行为应该是Person对象的行为。</p>
+<p>但是在实际运行时我们看到随着实参对象类型的变化， newYearGreeting</p>
+<p>方法却表现出了多种不同的行为，这种机制称为多态</p>
+</li>
+<li><p>仔细观察程序，可以发现产生多态的三个重要因素：</p>
+<p><strong>1：不同类之间有继承链</strong></p>
+<p><strong>2：newYearGreeting方法的参数类型用的父类类型</strong></p>
+<p><strong>3：newYearGreeting调用的Greeting方法都被子类用自己的行为覆盖</strong></p>
+<p>满足了这三个条件，用继承链中不同子类的对象做为方法的实参去调用方法会使该方法表现出不同的行为。由于子类的实例也是父类的实例，所以用子类对象作为实参传给方法中的父类型的形参是没有问题的。</p>
+</li>
+</ul>
+</li>
+<li><p>当调用实例方法时，由Java虚拟机动态地决定所调用的方法，称为动态绑定(dynamic binding)或者晚期绑定或者延迟绑定(lazy binding)或者多态。</p>
+</li>
+<li><p><strong>通用编程：方法参数和变量的声明类型越抽象越好，越抽象越通用</strong></p>
+</li>
+<li><p>当编译器检查到 Manager m = p；编译器认为Person类型引用p要赋值给类型为Manager类型引用，扩展内存可能引起麻烦且不安全，因此，编译器认为类型不匹配，会报错。</p>
+<p>加上强制转换 Manager m = (Manager)p；意思是强烈要求编译器，把p解释成Manager类型，风险我来承担。这个时候编译器就按Manager类型来解释p</p>
+<p>因此，强制类型转换意味着你自己承担风险，编译器不会再做类型检查。</p>
+<p>强制类型转换的风险是：运行时如果p指向的对象不是Manager的实例时程序会出错。</p>
+<p>为了避免风险，最好用instanceof来做实例类型检查。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>（p <span class="keyword">instanceof</span> Manager）</span><br><span class="line">			Manager m = （Manager）p；</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重载发生在编译时(Compile time)，编译时编译器根据实参比对重载方法的形参找到最合适的方法。</p>
+<p>多态发生在运行(Run time)时，运行时JVM根据变量所引用的对象的真正类型来找到最合适的实例方法。</p>
+<p>有的书上把重载叫做“编译时多态”，或者叫“早期绑定”(早期指编译时)。</p>
+<p>多态是晚期绑定(晚期指运行时)</p>
+<p>绑定是指找到函数的入口地址的过程。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="异常处理和文本IO"><a href="#异常处理和文本IO" class="headerlink" title="异常处理和文本IO"></a>异常处理和文本IO</h2><ul>
+<li><p>文本：非二进制文件(参见FileInputStream、FileOutputStream)。</p>
+<p>类库：java.io.File、java.util.Scanner、java.io.PrinterWriter。</p>
+<p>类File： 对文件和目录的抽象，包括：路径管理，文件读写状态、修改日期获取等。</p>
+<p>类Scanner：从File或InputStream的读入。可按串、字节、整数、双精度、或整行等不同要求读入。</p>
+<p>类PrinterWriter ： 输出到File或OutputStream： 可按串、字节、整数、双精度、或整行等不同要求输出。</p>
+</li>
+<li><p>例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span>  filecopy;</span><br><span class="line"><span class="keyword">import</span> java.lang.System;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Copy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[ ] args)</span> </span>&#123;  <span class="comment">//参数不含程序名</span></span><br><span class="line">        <span class="keyword">if</span>(args.length!=<span class="number">2</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"Usage: Java  Copy  &lt;sourceFile&gt;   &lt;tagetFile&gt;"</span>);</span><br><span class="line">            System.exit(<span class="number">1</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        File sF=<span class="keyword">new</span> File(args[<span class="number">0</span>]);                     <span class="comment">//args[0]:源文件路径</span></span><br><span class="line">        <span class="keyword">if</span>(!sF.exists( ))&#123;</span><br><span class="line">            System.out.println(<span class="string">"Source Fiel "</span>+args[<span class="number">0</span>]+ <span class="string">"does not exist!"</span>);</span><br><span class="line">            System.exit(<span class="number">2</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">File tF=<span class="keyword">new</span> File(args[<span class="number">1</span>]);      <span class="comment">//args[1]:目标文件</span></span><br><span class="line">        <span class="keyword">if</span>(tF.exists( ))&#123;</span><br><span class="line">            System.out.println(<span class="string">"Target File "</span>+args[<span class="number">0</span>]+ <span class="string">"already exist"</span>);</span><br><span class="line">            System.exit(<span class="number">3</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Scanner input=<span class="keyword">new</span> Scanner(sF);</span><br><span class="line">            PrintWriter output=<span class="keyword">new</span> PrintWriter(tF);</span><br><span class="line">            <span class="keyword">while</span>(input.hasNext( ))&#123;</span><br><span class="line">                String s=input.nextLine(); <span class="comment">//读取下一行</span></span><br><span class="line">                output.println(s);		<span class="comment">//打印这一行</span></span><br><span class="line">            &#125;</span><br><span class="line">            input.close( );       </span><br><span class="line">            output.close( );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(IOException ioe)&#123;       </span><br><span class="line">		System.out.println(ioe.toString( ));      </span><br><span class="line">	 &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="抽象类和接口"><a href="#抽象类和接口" class="headerlink" title="抽象类和接口"></a>抽象类和接口</h2><ul>
+<li><p>Java可定义不含方法体的方法，其方法体由子类根据具体情况实现，这样的方法称为抽象方法(abstract method)，包含抽象方法的类必须是抽象类(abstract class)。</p>
+</li>
+<li><p>抽象类和抽象方法的声明必须加上abstract关键字。</p>
+</li>
+<li><p>抽象方法的意义：加给子类的一个约束。例如Circle类和Rectangle类计算面积必须使用父类规定的函数签名。这样可以充分利用多态特性使得代码变得更通用</p>
+</li>
+<li><p>抽象方法：使用abstract定义的方法或者接口中定义的方法（接口中定义的方法自动是抽象的，可以省略abstract）</p>
+</li>
+<li><p>一个类C如果满足下面的任一条件，则该类包含抽象方法且是抽象类：</p>
+<ul>
+<li><p>类C显式地包含一个抽象方法的声明；</p>
+</li>
+<li><p>类C的父类中声明的抽象方法未在类C中实现；</p>
+</li>
+<li><p>类C所实现的接口中有的方法在类C里没有实现</p>
+</li>
+<li><p>只要类C有一个未实现的方法（自己定义的或继承的），就是抽象类</p>
+</li>
+<li><p>但是，一个不包含任何抽象方法的类，也可以定义成抽象类</p>
+</li>
+</ul>
+</li>
+<li><p>抽象类不能被实例化，即不能用new关键字创建对象（即new 右边的类型不能是抽象类）。</p>
+<p> 但是抽象类可以作为变量声明类型、方法参数类型、方法返回类型</p>
+<p>为什么？因为一个抽象类型引用变量可以指向具体子类的对象</p>
+<p>抽象类可以定义构造函数，并可以被子类调用。</p>
+<p>抽象类可以定义变量、非抽象方法并被子类使用</p>
+<p>抽象类的父类可以是具体类：自己引入了抽象方法。例如，具体类Object是所有类的祖先父类。</p>
+</li>
+<li><p>接口是公共静态常量和公共抽象实例方法的集合。接口是能力、规范、协议的反映。</p>
+<p>接口不是类：(1)不能定义构造函数；(2)接口之间可以多继承，类可implements多个接口。(3)和抽象类一样，不能new一个接口</p>
+</li>
+<li><p>接口中的所有数据字段隐含为public static final</p>
+<p>接口体中的所有方法隐含为public abstract</p>
+</li>
+<li><p>接口不是类（Java支持单继承类），一个接口可以继承多个接口。</p>
+<p> 语法</p>
+<p> [<em>modifier*] interface *interfaceName</em> [extends <em>interfaceName*</em>List*] {</p>
+<p> declaration*</p>
+<p> }</p>
+<p> 如果接口声明中提供了extends子句，那么该接口就继承了父接口的方法和常量。被继承的接口称为声明接口的直接父接口。</p>
+<p> 任何实现该接口的类，必须实现该接口继承的其他接口</p>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ck7e44y85000dznie6hk6dxkl"
+      <a data-url="http://yoursite.com/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ck7ek5rtd00007diecjegfh2z"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>

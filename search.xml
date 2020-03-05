@@ -1,6 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>JAVA学习笔记</title>
+    <url>/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>摘要：</p>
+<p>突击准备阿里的面试，奥利给</p>
+<p>（将来会持续更新…）</p>
+<a id="more"></a>
+
+<h2 id="数学函数、字符和字符串"><a href="#数学函数、字符和字符串" class="headerlink" title="数学函数、字符和字符串"></a>数学函数、字符和字符串</h2><ul>
+<li><p>Math是final类：在java.lang.Math中，所有数学函数都是静态方法。</p>
+<p>uMath类中定义了常用的数学常量，如</p>
+<p>PI : 3.14159265358979323846</p>
+<p>E : 2.7182818284590452354（自然对数的底）</p>
+<p>u方法:注意都是静态函数</p>
+<p>三角函数</p>
+<p>sin, cos, tan, asin, acos, atan,toRadians,toDigrees</p>
+<p>指数</p>
+<p>exp, log, log10，pow, sqrt</p>
+<p>取整</p>
+<p>ceil, floor, round</p>
+<p>其它</p>
+<p>min, max, abs, random（[0.0,1.0)）</p>
+<ul>
+<li><p>扩展：final关键字。</p>
+<ul>
+<li><p>final修饰类时：当用final去修饰一个类的时候，表示这个类不能被继承。注意：a. 被final修饰的类，final类中的成员变量可以根据自己的实际需要设计为fianl。b. final类中的成员方法都会被隐式的指定为final方法。说明：在自己设计一个类的时候，要想好这个类将来是否会被继承，如果可以被继承，则该类不能使用fianl修饰，在这里呢，一般来说工具类我们往往都会设计成为一个fianl类。在JDK中，被设计为final类的有String、System等。</p>
+</li>
+<li><p>final修饰方法时：被final修饰的方法不能被重写。</p>
+<p><strong>a. 一个类的private方法会隐式的被指定为final方法。</strong></p>
+<p>**b. 如果父类中有final修饰的方法，那么子类不能去重写。</p>
+</li>
+<li><p>final修饰成员变量时，必须初始化而且只能初始化一次。如果成员变量是引用变量，那么相当于和被引用的对象绑定，不能再引用其他对象，被引用对象的值可以改变。</p>
+</li>
+<li><p>final修饰形参时，表示方法内部不允许对这个参数进行修改，类似于C的const</p>
+</li>
+</ul>
+</li>
+<li><p>扩展：静态函数与static关键字</p>
+<ul>
+<li><p><strong>static关键字;</strong>  </p>
+<p>​    <strong>静态成员变量只会在数据共享区中维护一份，而非静态成员变量会在每个对象中维护一份</strong></p>
+<p><strong>作用</strong></p>
+<p>   <strong>static修饰成员变量</strong>：如果有数据需要共享所有数据使用时</p>
+<p>   <strong>static修饰成员函数：</strong>如果一个函数没有直接访问非静态成员时，那么可以使用static修饰，一般用于工具类的方法（创建函数局部变量是ok的，不要和静态成员变量搞混了）</p>
+<p><strong>访问方式</strong></p>
+<p>  1、 静态修饰成员变量与方法时，可以用类名或者对象进行访问</p>
+<p>  2、非静态修饰成员变量与方法时，只能用对象进行访问</p>
+<p><strong>静态函数的注意事项</strong>  </p>
+<p>​    <strong>1、静态函数可以直接访问静态成员，但不能访问非静态成员</strong></p>
+<p>​    <strong>2、非静态函数可以访问静态或者非静态成员</strong></p>
+<p>​    <strong>3、静态函数不能出现this、super关键字</strong></p>
+</li>
+</ul>
+</li>
+<li><p>Java为每个基本类型实现了对应的包装类，char类型的包装类是Character类。注意包装类对象为引用类型，不是值类型</p>
+</li>
+<li><p>String类是一个final类，不能被继承。ujava.lang.String表示一个固定长度的字符序列，实例化后其内容不能改。</p>
+</li>
+<li><p>String m1 = “Welcome”;  //字符串的内容都是不可修改的</p>
+<p>String m2 = “Welcome”;    //m1和m2通过内存优化引用了同一常量对象：m1==m2</p>
+<p>String m3 = “Wel” +”come”;  //m1==m2==m3 </p>
+<p>String m4 = “Wel” +new String(“come”);  //m1!=m4</p>
+<ul>
+<li><p>由于字符串是不可变的，为了提高效率和节省内存，Java中的字符串字面值维护在字符串常量池中）。这样的字符串称为规范字符串(canonical string)。</p>
+</li>
+<li><p>可以使用字符串对象（假设内容为Welcome to Java）的intern方法返回规范化字符串。intern方法会在字符串常量池中找是否已存在”Welcome to Java”,如果有返回其地址。如果没有，在池中添加“Welcome to java”再返回地址。即intern方法一定返回一个指向常量池里的字符串对象引用。</p>
+</li>
+<li><p><strong>直接用字符串字面量构造的字符串在常量池里，如s。用new String方法构造的字符串在堆里，如s1。</strong></p>
+<p><strong>只有字面量在常量池里,例如：”Wel” + “come”，而”Wel”+new String(“come”)不在常量池里，在堆里。</strong></p>
+</li>
+<li><p>扩展：堆</p>
+<p>（1）Java的堆是一个运行时数据区，类的对象从堆中分配空间。这些对象通过new等指令建立，通过垃圾回收器来销毁。</p>
+<p>（2）堆的优势是可以动态地分配内存空间，需要多少内存空间不必事先告诉编译器，因为它是在运行时动态分配的。但缺点是，由于需要在运行时动态分配内存，所以存取速度较慢。</p>
+<p>栈</p>
+<p>1）栈中主要存放一些基本数据类型的变量（byte，short，int，long，float，double，boolean，char）和对象的引用。</p>
+<p>（2）栈的优势是，存取速度比堆快，栈数据可以共享。但缺点是，存放在栈中的数据占用多少内存空间需要在编译时确定下来，缺乏灵活性。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>基本数据类型和字符串间的转换</strong></p>
+<ul>
+<li><p>valueOf方法将基本数据类型转换为字符串。例如</p>
+<p> String s1 = String.valueOf(1.0); //“１.0”</p>
+<p> String s2 = String.valueOf(true); //“true”    </p>
+</li>
+<li><p>字符串转换为基本类型：利用包装类</p>
+<p> Double.parseDouble(str)</p>
+<p> Integer.parseInt(str)</p>
+<p> Boolean.parseBoolean(str)</p>
+</li>
+</ul>
+</li>
+<li><p>字符串类型StringBuilder与StringBuffer</p>
+<ul>
+<li><p>String类一旦初始化完成，字符串就是不可修改的。</p>
+</li>
+<li><p>StringBuilder与StringBuffer(final类）初始化后还可以修改字符串。</p>
+</li>
+<li><p>StringBuffer修改缓冲区的方法是同步（synchronized）的，更适合多线程环境。</p>
+</li>
+<li><p>StringBuilder线程不安全，与StringBuffer工作机制类似。</p>
+</li>
+<li><p>由于可修改字符串， <strong>StringBuilder</strong> <strong>与</strong>StringBuffer 增加了String类没有的一些函数，例如：append、insert、delete、replace、reverse、setCharAt等。</p>
+<p>仅以StringBuilder为例：</p>
+<p>StringBuilder stringMy=new StringBuilder( );</p>
+<p>StringMy.append(“Welcome to”);</p>
+<p>   StringMy.append(“ Java”);</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><ul>
+<li><p>JDK 1.5引入新的for循环，可以不用下标就可以依次访问数组元素。语法：</p>
+<p>for(elementType value : arrayRefVar) {</p>
+<p>}</p>
+<p>例如</p>
+<p>for(int i = 0; i &lt; myList.length; i++) {</p>
+<p>  sum += myList[i];</p>
+<p>}</p>
+</li>
+</ul>
+<p>  for(double value : myList) {</p>
+<p>   sum += value;</p>
+<p>  }</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><ul>
+<li>方法中不能定义static局部变量</li>
+<li>每当调用一个方法时，系统将该方法参数、局部变量存储在一个内存区域中，这个内存区域称为调用堆栈(call stack)。当方法结束返回到调用者时，系统自动释放相应的调用栈</li>
+<li>方法重载(overloading)是指方法名称相同，但形参列表不同的方法。仅返回类型不同的方法不是合法的重载。一个类中可以包含多个重载的方法（同名的方法可以重载多个版本）。</li>
+</ul>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><ul>
+<li><p>数组用new创建后，内存单元都初始化为0（值）或null（引用）</p>
+</li>
+<li><p>数组元素本身也可以是引用变量</p>
+<p>double[ ][ ] myList = new double[4][ ];  //创建一个二维数组</p>
+<p>myList[0]=new double[2];  // myList[0]是一个引用变量，指向一个一维数组（2个元素）</p>
+<p>myList[3]=new double[3]; // myList[3]是一个引用变量，指向一个一维数组（3个元素）</p>
+</li>
+<li><p>数组变量是引用类型的变量，声明数组引用变量并不分配数组内存空间。必须通过new实例化数组来分配数组内存空间</p>
+</li>
+<li><p>String、Integer这样的对象作为参数传递要注意的问题：引用类型的实参传递给形参后，实参、形参指向同一个对象。但是，对于String类、基本数据类型的包装类型的实参传递给形参，形参变了不会导致实参变化。这是为什么？这是因为String、Integer的内容是不可更改的，在Integer内部，用private final int value来保存整数值，在String内部，用private final char value[] 来保存字符串内容。对于String、Integer这样内容不可改变的对象，当对其赋值时实际上创建了一个新的对象。</p>
+</li>
+<li><p>可变长参数列表：可以把类型相同但个数可变的参数传递给方法。方法中的可变长参数声明如下</p>
+<p> typeName … parameterName</p>
+<p>在方法声明中，指定类型后面跟省略号</p>
+<p>只能给方法指定一个可变长参数，同时该参数必须是最后一个参数</p>
+<p>Java将可变长参数当数组看待，通过length属性得到可变参数的个数</p>
+<p> print(String… args){  //可看作String [ ]args</p>
+<p>   for(String temp:args)</p>
+<pre><code>System.out.println(temp);</code></pre><p> System.out.println(args.length);<br>  }</p>
+<p>调用该方法</p>
+<p> print(“hello”,”lisy”);</p>
+</li>
+<li><p>Arrays类</p>
+<p>ujava.util.Arrays类包括各种静态方法，其中实现了数组的排序和查找</p>
+<p>Ø排序</p>
+<p>   double[ ] numbers={6.0, 4.4, 1.9, 2.9};</p>
+<p>   java.util.Arrays.sort(numbers); //注意直接在原数组排序</p>
+<p>Ø二分查找</p>
+<p>​    int[ ] list={2, 4, 7, 10, 11, 45, 50};</p>
+<p>   int index = java.util.Arrays.binarySearch(list, 11);</p>
+</li>
+</ul>
+<h2 id="对象和类"><a href="#对象和类" class="headerlink" title="对象和类"></a>对象和类</h2><ul>
+<li><p>当创建对象数组时，数组元素的缺省初值为null。</p>
+<p>Circle[] circleArray = new Circle[10]; //这时没有构造Circle对象，只是构造数组</p>
+<p>for(int i = 0; i &lt; circleArray.length; i++) {</p>
+<p> circleArray[i] = new Circle( );  //这时才构造Circle对象，可使用有参构造函数</p>
+<p>}</p>
+</li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>csp 201604_2 俄罗斯方块</title>
     <url>/2020/02/17/csp-201604-2-%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97/</url>
     <content><![CDATA[<p>摘要：</p>

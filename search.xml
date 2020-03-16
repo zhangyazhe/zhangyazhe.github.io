@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>map &amp; unordered_map</title>
+    <url>/2020/03/16/map-unordered-map/</url>
+    <content><![CDATA[<p>摘要：</p>
+<p>参考链接</p>
+<p><a href="https://blog.csdn.net/BillCYJ/article/details/78985895" target="_blank" rel="noopener">https://blog.csdn.net/BillCYJ/article/details/78985895</a></p>
+<a id="more"></a>
+
+<h2 id="map与unordered-map的区别"><a href="#map与unordered-map的区别" class="headerlink" title="map与unordered_map的区别"></a>map与unordered_map的区别</h2><ul>
+<li><p>内部实现不同</p>
+<ul>
+<li>map： map内部实现了一个红黑树（红黑树是非严格平衡二叉搜索树，而AVL是严格平衡二叉搜索树），<strong><em>红黑树具有自动排序的功能，因此map内部的所有元素都是有序的</em></strong>，红黑树的每一个节点都代表着map的一个元素。因此，对于map进行的查找，删除，添加等一系列的操作都相当于是对红黑树进行的操作。map中的元素是按照二叉搜索树（又名二叉查找树、二叉排序树，特点就是左子树上所有节点的键值都小于根节点的键值，右子树所有节点的键值都大于根节点的键值）存储的，使用中序遍历可将键值按照从小到大遍历出来。</li>
+<li>unordered_map: unordered_map内部实现了一个哈希表（也叫散列表，通过把关键码值映射到Hash表中一个位置来访问记录，<strong>查找的时间复杂度可达到O(1)，其在海量数据处理中有着广泛应用）</strong>。因此，<strong>其元素的排列顺序是无序的</strong>。</li>
+</ul>
+</li>
+<li><p>需要引入的头文件不同</p>
+<p>map: <code>#include &lt; map &gt;</code><br>unordered_map: <code>#include &lt; unordered_map &gt;</code></p>
+</li>
+<li><p>各自的优缺点与适用范围</p>
+<ul>
+<li>map</li>
+</ul>
+<p>优点：</p>
+<ol>
+<li>有序性，这是map结构最大的优点，其元素的有序性在很多应用中都会简化很多的操作。红黑树，内部实现一个红黑书使得map的很多操作在lgn的时间复杂度下就可以实现，因此效率非常的高</li>
+<li>缺点： 空间占用率高，因为map内部实现了红黑树，虽然提高了运行效率，但是因为每一个节点都需要额外保存父节点、孩子节点和红/黑性质，使得每一个节点都占用大量的空间</li>
+</ol>
+<p>适用处：对于那些有顺序要求的问题，用map会更高效一些</p>
+<p>unordered_map：</p>
+<p>优点： 因为内部实现了哈希表，因此其查找速度非常的快<br>缺点： 哈希表的建立比较耗费时间<br>适用处：对于查找问题，unordered_map会更加高效一些，因此遇到查找问题，常会考虑一下用unordered_map</p>
+</li>
+</ul>
+<h2 id="map和unordered-map的使用"><a href="#map和unordered-map的使用" class="headerlink" title="map和unordered_map的使用"></a>map和unordered_map的使用</h2><ul>
+<li>unordered_map的用法和map是一样的，提供了 insert，size，count等操作，并且里面的元素也是以pair类型来存贮的。其底层实现是完全不同的，上方已经解释了，但是就外部使用来说却是一致的。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JAVA学习笔记</title>
     <url>/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>摘要：</p>
@@ -494,7 +534,7 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这道题思路不难，但是0分了好久才最后AC，原因在于我一开始输出的时候没有注意到所有的数字需要用空格隔开，修复了这个bug之后马上就AC了，这种情况如果出现在真正的考试中绝对血亏，相当于白给100分，之后在做题过程中一定要注意，审清题目，看好输出的格式和要求。</p>
 ]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -556,7 +596,7 @@
 
 ]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -638,7 +678,7 @@
 
 ]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -664,7 +704,7 @@
 
 ]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -684,7 +724,7 @@
 
 ]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -703,7 +743,7 @@
 <h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>1.由于每个信号灯的类型会随着时间的推移而改变，所以定义信号灯结构体，结构体中包含目前信号灯的类型以及距离下一次信号类型发生改变剩余的时间。<br>2.问题的核心在于，求出经过t时间后，小明达到某个红绿灯时，红绿灯的类型以及剩余时间。只需要记录好小明到达某个红绿灯时已经使用的时间，即可推算此时红绿灯是什么类型。由于红绿灯是每经过(r+g+y)s就会循环一次，故使用t%(r+g+y)来推断红绿灯类型，如果不这样做会超时<br>3.需要注意，题目中已经说明，经过一段路所需时间和红绿灯等待时间均最多为10^6^s，道路的段数n最大为10^5^，那么小明回家所需时间最大就有可能是10^11^，此时已经超过int型数据所能表示的范围，故代码中的整数均直接定义成long long类型。<br>4.要注意黄灯结束后紧接着是红灯，依然需要等待</p>
 <h2 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">//容易出错的点</span></span><br><span class="line"><span class="comment">//1.由于数据量大，t需要定义成long longl类型</span></span><br><span class="line"><span class="comment">//2.黄灯结束后，还需要紧接着等红灯</span></span><br><span class="line"><span class="comment">//3.小心超时</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">//定义结构体，其中包含类型和时间两个信息。</span></span><br><span class="line"><span class="comment">// 另外构造一个函数，用于计算某一个红绿灯经过t时间后是什么类型的灯以及剩余多少时间</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">sig</span>&#123;</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> type;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> time_left;</span><br><span class="line">&#125;sig;</span><br><span class="line"><span class="function">sig <span class="title">next_state</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> y, <span class="keyword">int</span> g, sig p, <span class="keyword">long</span> <span class="keyword">long</span> t)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r, y, g, n, i;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> t = <span class="number">0</span>;</span><br><span class="line">    sig p, ret_sig;</span><br><span class="line">    <span class="built_in">vector</span>&lt;sig&gt; state;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; r &gt;&gt; y &gt;&gt; g;</span><br><span class="line">    <span class="built_in">cin</span>.get();</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="built_in">cin</span>.get();</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; p.type &gt;&gt; p.time_left;</span><br><span class="line">        <span class="built_in">cin</span>.get();</span><br><span class="line">        state.push_back(p);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">        p = state[i];</span><br><span class="line">        <span class="keyword">if</span>(p.type == <span class="number">0</span>)&#123;</span><br><span class="line">            t+=p.time_left;</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">            ret_sig = next_state(r, y, g, state[i], t);</span><br><span class="line">            <span class="keyword">if</span>(ret_sig.type == <span class="number">1</span>)&#123;</span><br><span class="line">                t+=ret_sig.time_left;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ret_sig.type == <span class="number">2</span>)&#123;</span><br><span class="line">            	t+=ret_sig.time_left;</span><br><span class="line">            	t+=r;</span><br><span class="line">			&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; t;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">sig <span class="title">next_state</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> y, <span class="keyword">int</span> g, sig p, <span class="keyword">long</span> <span class="keyword">long</span> t)</span></span>&#123;</span><br><span class="line">    sig ret_sig;</span><br><span class="line">    <span class="keyword">int</span> time[<span class="number">4</span>];</span><br><span class="line">    time[<span class="number">1</span>]=r;</span><br><span class="line">    time[<span class="number">2</span>]=y;</span><br><span class="line">    time[<span class="number">3</span>]=g;</span><br><span class="line">    ret_sig.type = p.type;</span><br><span class="line">    ret_sig.time_left = p.time_left;</span><br><span class="line">    <span class="keyword">if</span>(t&gt;r+g+y)&#123;</span><br><span class="line">    	t=t%(r+g+y);<span class="comment">//important point to optimize the time cost</span></span><br><span class="line">	&#125;</span><br><span class="line">    ret_sig.time_left-=t;</span><br><span class="line">    <span class="keyword">if</span>(ret_sig.time_left&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            ret_sig.type--;</span><br><span class="line">            <span class="keyword">if</span>(ret_sig.type == <span class="number">0</span>) ret_sig.type=<span class="number">3</span>;</span><br><span class="line">            ret_sig.time_left+=time[ret_sig.type];</span><br><span class="line">        &#125;<span class="keyword">while</span> (ret_sig.time_left&lt;<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret_sig;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -953,7 +993,7 @@ setiosflags中的常见标志：<br>boolalpha    可以使用单词”true”和
 </ul>
 ]]></content>
       <tags>
-        <tag>CSP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>

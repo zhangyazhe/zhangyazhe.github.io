@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    ubuntu下qt环境配置 |
+    map &amp; unordered_map |
     
     知 昂 张</title>
   
@@ -34,7 +34,7 @@
   <section class="outer">
   
 
-<article id="post-ubuntu下qt环境配置" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+<article id="post-map-unordered-map" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
   
   <div class="article-inner">
     
@@ -42,7 +42,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ubuntu下qt环境配置
+      map &amp; unordered_map
     </h1>
   
   
@@ -55,8 +55,8 @@
 
     
       <div class="article-meta">
-        <a href="/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2020-02-11T13:03:52.000Z" itemprop="datePublished">2020-02-11</time>
+        <a href="/2020/03/16/map-unordered-map/" class="article-date">
+  <time datetime="2020-03-16T02:45:02.000Z" itemprop="datePublished">2020-03-16</time>
 </a>
         
       </div>
@@ -80,40 +80,45 @@
 
       
         <p>摘要：</p>
-<p>第一次使用qt，亲自踩坑整理出来的，记录一下</p>
+<p>参考链接</p>
+<p><a href="https://blog.csdn.net/BillCYJ/article/details/78985895" target="_blank" rel="noopener">https://blog.csdn.net/BillCYJ/article/details/78985895</a></p>
 <a id="more"></a>
 
-<h2 id="下载QT"><a href="#下载QT" class="headerlink" title="下载QT"></a>下载QT</h2><p>点击<a href="https://download.qt.io/archive/qt/" target="_blank" rel="noopener">这里</a>下载即可，我下载的是qt-opensource-linux-x64-5.7.1.run。</p>
-<p>下载下来之后运行安装即可，QT库和QT creator都会被安装。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>如果我们不进行配置，直接新建一个工程来运行的话，我这边会报错说“Error while building/deploying project XXX when executing step ‘qmake’”。我分析的原因有两个，一个是ubuntu系统本身自带qt库，我们还没有指定qt creator去使用我们新安装的qt库；另一个原因是我们还没有配置qmake的路径，qt creator找不到qmake。解决方法如下。</p>
+<h2 id="map与unordered-map的区别"><a href="#map与unordered-map的区别" class="headerlink" title="map与unordered_map的区别"></a>map与unordered_map的区别</h2><ul>
+<li><p>内部实现不同</p>
+<ul>
+<li>map： map内部实现了一个红黑树（红黑树是非严格平衡二叉搜索树，而AVL是严格平衡二叉搜索树），<strong><em>红黑树具有自动排序的功能，因此map内部的所有元素都是有序的</em></strong>，红黑树的每一个节点都代表着map的一个元素。因此，对于map进行的查找，删除，添加等一系列的操作都相当于是对红黑树进行的操作。map中的元素是按照二叉搜索树（又名二叉查找树、二叉排序树，特点就是左子树上所有节点的键值都小于根节点的键值，右子树所有节点的键值都大于根节点的键值）存储的，使用中序遍历可将键值按照从小到大遍历出来。</li>
+<li>unordered_map: unordered_map内部实现了一个哈希表（也叫散列表，通过把关键码值映射到Hash表中一个位置来访问记录，<strong>查找的时间复杂度可达到O(1)，其在海量数据处理中有着广泛应用）</strong>。因此，<strong>其元素的排列顺序是无序的</strong>。</li>
+</ul>
+</li>
+<li><p>需要引入的头文件不同</p>
+<p>map: <code>#include &lt; map &gt;</code><br>unordered_map: <code>#include &lt; unordered_map &gt;</code></p>
+</li>
+<li><p>各自的优缺点与适用范围</p>
+<ul>
+<li>map</li>
+</ul>
+<p>优点：</p>
 <ol>
-<li><p>首先打开终端输入下面的指令安装qtchooser</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qtchooser</span><br></pre></td></tr></table></figure>
-
-<p>安装它是因为我们希望借助这个工具来指定我们当前想要使用的qt版本。</p>
-</li>
-<li><p>增加我们新下载的那个qt环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qtchooser -install qt5.7 &#x2F;home&#x2F;zhangyazhe&#x2F;Qt5.7.1&#x2F;5.7&#x2F;gcc_64&#x2F;bin&#x2F;qmake</span><br></pre></td></tr></table></figure>
-
-<p>qt5.7是这个环境的name，可以随意起。后面的路径是qmake的路径。</p>
-</li>
-<li><p>设置下环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export QT_SELECT&#x3D;qt5.7</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>经过上面的操作，qmake就配置好了，可以执行qmake -v来查看版本。这个时候再运行工程，不会再显示qmake出错，而是开始显示make出错，这时候执行下面的命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libqt4-dev</span><br></pre></td></tr></table></figure>
-
-<p>之后再尝试运行就ok了。</p>
-</li>
+<li>有序性，这是map结构最大的优点，其元素的有序性在很多应用中都会简化很多的操作。红黑树，内部实现一个红黑书使得map的很多操作在lgn的时间复杂度下就可以实现，因此效率非常的高</li>
+<li>缺点： 空间占用率高，因为map内部实现了红黑树，虽然提高了运行效率，但是因为每一个节点都需要额外保存父节点、孩子节点和红/黑性质，使得每一个节点都占用大量的空间</li>
 </ol>
+<p>适用处：对于那些有顺序要求的问题，用map会更高效一些</p>
+<p>unordered_map：</p>
+<p>优点： 因为内部实现了哈希表，因此其查找速度非常的快<br>缺点： 哈希表的建立比较耗费时间<br>适用处：对于查找问题，unordered_map会更加高效一些，因此遇到查找问题，常会考虑一下用unordered_map</p>
+</li>
+</ul>
+<h2 id="map和unordered-map的使用"><a href="#map和unordered-map的使用" class="headerlink" title="map和unordered_map的使用"></a>map和unordered_map的使用</h2><ul>
+<li>unordered_map的用法和map是一样的，提供了 insert，size，count等操作，并且里面的元素也是以pair类型来存贮的。其底层实现是完全不同的，上方已经解释了，但是就外部使用来说却是一致的。</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="ck7twu3sw000jf9ie73n45jiz"
+      <a data-url="http://yoursite.com/2020/03/16/map-unordered-map/" data-id="ck7twu3so0008f9ie38ylbzec"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
 
     </footer>
 
@@ -123,19 +128,10 @@
     
   <nav class="article-nav">
     
-      <a href="/2020/02/17/csp-201604-2-%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97/" class="article-nav-link">
-        <strong class="article-nav-caption">Newer</strong>
-        <div class="article-nav-title">
-          
-            csp 201604_2 俄罗斯方块
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/02/09/csp-201503-4-%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F/" class="article-nav-link">
+      <a href="/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
         <strong class="article-nav-caption">Older</strong>
-        <div class="article-nav-title">csp 201503_4 网络延迟</div>
+        <div class="article-nav-title">JAVA学习笔记</div>
       </a>
     
   </nav>

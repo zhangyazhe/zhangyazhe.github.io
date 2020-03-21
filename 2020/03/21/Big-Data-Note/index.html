@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    ubuntu下qt环境配置 |
+    Big Data Note |
     
     知 昂 张</title>
   
@@ -34,7 +34,7 @@
   <section class="outer">
   
 
-<article id="post-ubuntu下qt环境配置" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+<article id="post-Big-Data-Note" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
   
   <div class="article-inner">
     
@@ -42,7 +42,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ubuntu下qt环境配置
+      Big Data Note
     </h1>
   
   
@@ -55,8 +55,8 @@
 
     
       <div class="article-meta">
-        <a href="/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2020-02-11T13:03:52.000Z" itemprop="datePublished">2020-02-11</time>
+        <a href="/2020/03/21/Big-Data-Note/" class="article-date">
+  <time datetime="2020-03-21T13:55:53.000Z" itemprop="datePublished">2020-03-21</time>
 </a>
         
       </div>
@@ -80,40 +80,48 @@
 
       
         <p>摘要：</p>
-<p>第一次使用qt，亲自踩坑整理出来的，记录一下</p>
 <a id="more"></a>
 
-<h2 id="下载QT"><a href="#下载QT" class="headerlink" title="下载QT"></a>下载QT</h2><p>点击<a href="https://download.qt.io/archive/qt/" target="_blank" rel="noopener">这里</a>下载即可，我下载的是qt-opensource-linux-x64-5.7.1.run。</p>
-<p>下载下来之后运行安装即可，QT库和QT creator都会被安装。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>如果我们不进行配置，直接新建一个工程来运行的话，我这边会报错说“Error while building/deploying project XXX when executing step ‘qmake’”。我分析的原因有两个，一个是ubuntu系统本身自带qt库，我们还没有指定qt creator去使用我们新安装的qt库；另一个原因是我们还没有配置qmake的路径，qt creator找不到qmake。解决方法如下。</p>
-<ol>
-<li><p>首先打开终端输入下面的指令安装qtchooser</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qtchooser</span><br></pre></td></tr></table></figure>
-
-<p>安装它是因为我们希望借助这个工具来指定我们当前想要使用的qt版本。</p>
+<h2 id="hadoop"><a href="#hadoop" class="headerlink" title="hadoop"></a>hadoop</h2><ul>
+<li><p>hadoop两大核心组件：HDFS和MapReduce</p>
 </li>
-<li><p>增加我们新下载的那个qt环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qtchooser -install qt5.7 &#x2F;home&#x2F;zhangyazhe&#x2F;Qt5.7.1&#x2F;5.7&#x2F;gcc_64&#x2F;bin&#x2F;qmake</span><br></pre></td></tr></table></figure>
-
-<p>qt5.7是这个环境的name，可以随意起。后面的路径是qmake的路径。</p>
+<li><p>MapReduce两大核心组件：JobTracker和TaskTraker</p>
+<p>前者对整个作业任务进行管理，会把用户的大作业拆分成很多的小作业，每一个小作业在一个机器上执行，这个机器上的小作业就由部署在该机器的TaskTraker进行追踪和执行。</p>
 </li>
-<li><p>设置下环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export QT_SELECT&#x3D;qt5.7</span><br></pre></td></tr></table></figure>
+<li><p>DataNode和TaskTraker可以部署在同一台机器上</p>
 </li>
-<li><p>经过上面的操作，qmake就配置好了，可以执行qmake -v来查看版本。这个时候再运行工程，不会再显示qmake出错，而是开始显示make出错，这时候执行下面的命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libqt4-dev</span><br></pre></td></tr></table></figure>
-
-<p>之后再尝试运行就ok了。</p>
+</ul>
+<h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><ul>
+<li><p>块的概念：与普通文件系统中块的概念类似，但是HDFS中的块会大很多。如果块太小的话，块的数量就会很多，后续的寻址开销就会很大。通过块的设计，将一个大文件拆分成若干的块，如此便可以存储在不同的机器上。每个块的大小是固定的，也方便对数据进行管理。</p>
 </li>
-</ol>
+<li><p>HDFS中的NamaNode和DataNode</p>
+<ul>
+<li><p>NameNode用来记录文件的每一个部分都被存储在了哪台机器上面，DataNode用来实际存储数据。NameNode中存储的是元数据，元数据记录了文件是什么、文件被分成多少块、每个块和文件是怎么映射的、每个块被存储到那个服务器上面等等信息。</p>
+</li>
+<li><p>元数据有两个关键的数据结构：FsImage和Editlog。</p>
+<p>FsImage用来保存系统文件树以及文件树中所有的文件和文件夹中的元数据。其中包括文件的复制等级、修改和访问时间、访问权限、块大小以及组成文件的块。但是，每个块具体没存储在哪个节点的信息不是由FsImage保存的。</p>
+<p>EditLog用来记录对数据进行的操作。</p>
+<p>在NameNode工作起来的时候，FsImage中的存的是历史数据，而EditLog中存的是对历史数据所有的操作。首先需要根据F中的历史数据以及E中记录的操作，得到最新的元数据信息。NameNode会把最新元数据的F保存下来，然后把旧版的删掉，同时再创建一个新的空的E。之后，在对数据进行操作的时候，因为F比较大，如果每次都去操作F的话，效率很低。所以我们只是将更新的操作存到E里面。</p>
+</li>
+<li><p>在NN（NameNode）工作过程中，E会不断变大。这时候，每间隔一段时间，SecondaryNameNode（第二名称节点）会让主N停止向E中写东西，同时将主N的F和E都通过HTTP的方式下载过来。在这个过程中，主N会将新的操作记录在edit.new中。第二N会根据F和E合并出新的F，再将新的F发给主N。然后主N会将edit.new更改成新的E。这样就既解决了E不断变大的问题，同时实现了第二N的冷备份。</p>
+</li>
+</ul>
+</li>
+<li><p>HDFS存储原理</p>
+<p>通常来讲，所有的数据块都会被存放3份，也就是冗余数据，用来保证一个数据出问题后，还可以恢复。三个块不会存储在同一个节点内。对于第一个块，如果这个块是某一个集群内部的某一个节点产生的，那么就会吧这个快存放在这个节点上。如果这个块是外部产生的，HDFS会选一个比较空闲的节点来存放数据；对于第二个块，会放在不同机架上的某一个节点。对于第三个块，会放在和第一个节点相同的机架上面的不同节点上面。（集群中有很多机架，每个机架上有很多节点，同一机架的节点之间的数据传输带宽是很高的）</p>
+</li>
+<li><p>HDFS读取原理</p>
+<p>读取时，理论上可以从之前存储的任意一个冗余的块中进行读取。但是一般会采取就近原则。HDFS提供一个API，可以算出数据所在的机架UD，也算出需要读取数据的节点的机架ID，这样就可以选一个比较近的进行读取。</p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="ck81ry32e000kjnie7js897rx"
+      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ck81ry31v0001jnie95q4f0c5"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li></ul>
 
     </footer>
 
@@ -123,19 +131,10 @@
     
   <nav class="article-nav">
     
-      <a href="/2020/02/17/csp-201604-2-%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97/" class="article-nav-link">
-        <strong class="article-nav-caption">Newer</strong>
-        <div class="article-nav-title">
-          
-            csp 201604_2 俄罗斯方块
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/02/09/csp-201503-4-%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F/" class="article-nav-link">
+      <a href="/2020/03/21/csp-201509-4-%E9%AB%98%E9%80%9F%E5%85%AC%E8%B7%AF/" class="article-nav-link">
         <strong class="article-nav-caption">Older</strong>
-        <div class="article-nav-title">csp 201503_4 网络延迟</div>
+        <div class="article-nav-title">csp 201509_4 高速公路</div>
       </a>
     
   </nav>

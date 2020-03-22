@@ -3,7 +3,10 @@
   <entry>
     <title>Big Data Note</title>
     <url>/2020/03/21/Big-Data-Note/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>摘要：</p>
+<p>hadoop、Kafka、Flink</p>
+<p>持续更新中</p>
+<a id="more"></a>
 
 <h2 id="hadoop"><a href="#hadoop" class="headerlink" title="hadoop"></a>hadoop</h2><ul>
 <li><p>hadoop两大核心组件：HDFS和MapReduce</p>

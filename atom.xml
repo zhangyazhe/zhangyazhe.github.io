@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-24T16:33:01.169Z</updated>
+  <updated>2020-03-25T14:19:47.368Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,13 +21,12 @@
     <link href="http://yoursite.com/2020/03/21/Big-Data-Note/"/>
     <id>http://yoursite.com/2020/03/21/Big-Data-Note/</id>
     <published>2020-03-21T13:55:53.000Z</published>
-    <updated>2020-03-24T16:33:01.169Z</updated>
+    <updated>2020-03-25T14:19:47.368Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;hadoop、Kafka、Flink&lt;/p&gt;
-&lt;p&gt;持续更新中&lt;/p&gt;
+&lt;p&gt;hadoop、Kafka、Flink&lt;br&gt;持续更新中…&lt;/p&gt;
     
     </summary>
     
@@ -82,13 +81,12 @@
     <link href="http://yoursite.com/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
     <published>2020-03-04T12:57:49.000Z</published>
-    <updated>2020-03-20T01:42:12.164Z</updated>
+    <updated>2020-03-25T14:15:14.738Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;突击准备面试，奥利给&lt;/p&gt;
-&lt;p&gt;（将来会持续更新…）&lt;/p&gt;
+&lt;p&gt;复习Java基础知识&lt;/p&gt;
     
     </summary>
     
@@ -303,13 +301,12 @@
     <link href="http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/"/>
     <id>http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</id>
     <published>2020-01-30T03:54:35.000Z</published>
-    <updated>2020-03-21T13:12:06.994Z</updated>
+    <updated>2020-03-25T14:16:34.710Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;祝看过这篇博文的同学CSP都能考到300以上(￣▽￣)~*&lt;/p&gt;
-&lt;p&gt;笔记里面主要记录的是我在准备CSP过程中遇到过得问题或者学习到的新知识，涵盖C语言、C++、算法等方面内容，由于我是遇到啥写啥，所以内容有点散，不过还是希望所有读过的同学都能有所收获~&lt;/p&gt;
+&lt;p&gt;笔记里面主要记录的是刷题过程中遇到过得问题或者学习到的新知识，涵盖C语言、C++、算法等方面内容&lt;/p&gt;
     
     </summary>
     

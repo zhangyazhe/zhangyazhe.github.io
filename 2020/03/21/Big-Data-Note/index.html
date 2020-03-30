@@ -132,6 +132,15 @@
 </li>
 </ul>
 </li>
+<li><p>HDFS HA</p>
+<p>HDFS2.0引入HDFS HA的概念，我们的名字节点将不止一个，其中有一个活跃名字节点和一个待命名字节点，具体哪个活跃哪个待命由zookeeper进行管理。当活跃名字节点出现故障是，待命名字节点可以立刻顶上去。要做到这一点，必须保证活跃名字节点和待命名字节点储存的元数据等等数据都是实时同步的。Editlog的同步是通过名字节点之间的共享存储系统进行同步的，对于映射表信息（例如一个节点包括几个块，某个快被存储到哪个节点上）的实时同步，是通过底层的数据节点一直都同时向活跃名字节点和待命名字节点汇报来进行维护的</p>
+</li>
+<li><p>HDFS Federation</p>
+<p>先前的HDFS架构仅允许整个群集使用单个命名空间，单个Namenode管理命名空间。 HDFS Federation通过向HDFS添加对多个Namenodes /Namespaces的支持来解决此限制，每个名字空间各自独立地管理自己的命名空间。每个DataNode要向集群中所有的namenode注册，且周期性的向所有namenode发送心跳和块报告，并执行来自所有namenode的命令，所以所有的名字节点都是共享底层的数据节点的。</p>
+<p>每个命名空间都有一个块池，块池是属于单个命名空间的一组块。 Datanode存储集群中所有块池的块。 每个Block Pool都是独立管理的。 这允许命名空间为新块生成块ID，而无需与其他命名空间协调。</p>
+<p>访问数据时，就相当于每个名字节点是一个文件夹，我要访问哪个名字节点的数据，就去访问哪个文件夹。</p>
+<p>Federation提高了HDFS的集群扩展性，同时各个名字节点可以同时对外提供服务，提高了吞吐率。再就是数据的隔离性，可以将不同业务类型的数据放在不同的名字节点进行管理。</p>
+</li>
 <li><p>HDFS存储原理</p>
 <p>通常来讲，所有的数据块都会被存放3份，也就是冗余数据，用来保证一个数据出问题后，还可以恢复。三个块不会存储在同一个节点内。对于第一个块，如果这个块是某一个集群内部的某一个节点产生的，那么就会吧这个快存放在这个节点上。如果这个块是外部产生的，HDFS会选一个比较空闲的节点来存放数据；对于第二个块，会放在不同机架上的某一个节点。对于第三个块，会放在和第一个节点相同的机架上面的不同节点上面。（集群中有很多机架，每个机架上有很多节点，同一机架的节点之间的数据传输带宽是很高的）</p>
 </li>
@@ -184,15 +193,19 @@
 <ul>
 <li>分片过多会导致map任务多，资源消耗大。分片太少会使得并行度降低。</li>
 <li>map任务数量去觉得分片的数量，reduce任务的数量取决于整个集群中 reduce slot可用资源总数，一班reduce任务数会比这个资源总数略小</li>
+<li>Map任务的输入是<key-value>键值对，map任务处理完之后经过shuffle过程会生成若干的key-value list作为reduce任务的输入，reduce处理后输出的依然是K-V.</li>
 </ul>
 </li>
-<li></li>
+<li><p>MR的整个过程，数据一开始从HDFS中读取，最终写入HDFS。中间产生的中间结果不会写入HDFS而是存在各个机器自己的磁盘中。</p>
+</li>
+<li><p>MR不是万能的，只有当一个大的任务可以拆分成若干小的任务而且各个任务之间不会相互依赖才可以用MR。</p>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ck87f5ioa0000jfie1yav5r48"
+      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ck8eo257e0000iniefdxofrz3"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li></ul>

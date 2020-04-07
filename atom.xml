@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-01T15:42:44.776Z</updated>
+  <updated>2020-04-07T15:18:44.578Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,31 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>csp 201609_4 交通规划</title>
+    <link href="http://yoursite.com/2020/04/07/csp-201609-4-%E4%BA%A4%E9%80%9A%E8%A7%84%E5%88%92/"/>
+    <id>http://yoursite.com/2020/04/07/csp-201609-4-%E4%BA%A4%E9%80%9A%E8%A7%84%E5%88%92/</id>
+    <published>2020-04-07T14:44:20.000Z</published>
+    <updated>2020-04-07T15:18:44.578Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;最短路径 Dijkstra算法&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>csp 201512_4 送货</title>
     <link href="http://yoursite.com/2020/04/01/csp-201512-4-%E9%80%81%E8%B4%A7/"/>
     <id>http://yoursite.com/2020/04/01/csp-201512-4-%E9%80%81%E8%B4%A7/</id>
     <published>2020-04-01T15:22:55.000Z</published>
-    <updated>2020-04-01T15:42:44.776Z</updated>
+    <updated>2020-04-07T14:44:46.146Z</updated>
     
     <summary type="html">
     
@@ -31,6 +51,8 @@
     </summary>
     
     
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

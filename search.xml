@@ -127,9 +127,43 @@
 <p>EditLog用来记录对数据进行的操作。</p>
 <p>在NameNode工作起来的时候，FsImage中的存的是历史数据，而EditLog中存的是对历史数据所有的操作。首先需要根据F中的历史数据以及E中记录的操作，得到最新的元数据信息。NameNode会把最新元数据的F保存下来，然后把旧版的删掉，同时再创建一个新的空的E。之后，在对数据进行操作的时候，因为F比较大，如果每次都去操作F的话，效率很低。所以我们只是将更新的操作存到E里面。</p>
 </li>
-<li><p>在NN（NameNode）工作过程中，E会不断变大。这时候，每间隔一段时间，SecondaryNameNode（第二名称节点）会让主N停止向E中写东西，同时将主N的F和E都通过HTTP的方式下载过来。在这个过程中，主N会将新的操作记录在edit.new中。第二N会根据F和E合并出新的F，再将新的F发给主N。然后主N会将edit.new更改成新的E。这样就既解决了E不断变大的问题，同时实现了第二N的冷备份。</p>
+<li><p>在NN（NameNode）工作过程中，E会不断变大。这时候，每间隔一段时间，SecondaryNameNode（第二名称节点）会让主N停止向E中写东西，同时将主N的F和E都通过HTTP的方式下载过来。在这个过程中，主N会将新的操作记录在edit.new中。第二N会根据F和E合并出新的F，再将新的F发给主N。然后主N会将edit.new更改成新的E。这样就既解决了E不断变大的问题，同时实现了第二N的冷备份。（元数据的持久化）</p>
 </li>
 </ul>
+</li>
+<li><p>FSImage数据结构（<a href="https://blog.csdn.net/CNHK1225/article/details/50786785）" target="_blank" rel="noopener">https://blog.csdn.net/CNHK1225/article/details/50786785）</a></p>
+<p>Fsimage是一个二进制文件，当中记录了HDFS中所有文件和目录的元数据信息，fsimage保存有如下信息：</p>
+<ol>
+<li>首先是一个image head，其中包含：</li>
+</ol>
+<p>a)     imgVersion(int)：当前image的版本信息</p>
+<p>b)    namespaceID(int)：用来确保别的HDFS instance中的datanode不会误连上当前NN。</p>
+<p>c)     numFiles(long)：整个文件系统中包含有多少文件和目录</p>
+<p>d)    genStamp(long)：生成该image时的时间戳信息。</p>
+<ol start="2">
+<li>接下来便是对每个文件或目录的源数据信息，如果是目录，则包含以下信息：</li>
+</ol>
+<p>a)     path(String)：该目录的路径，如”/user/build/build-index”</p>
+<p>b)    replications(short)：副本数（目录虽然没有副本，但这里记录的目录副本数也为3）</p>
+<p>c)     mtime(long)：该目录的修改时间的时间戳信息</p>
+<p>d)    atime(long)：该目录的访问时间的时间戳信息</p>
+<p>e)     blocksize(long)：目录的blocksize都为0</p>
+<p>f)     numBlocks(int)：实际有多少个文件块，目录的该值都为-1，表示该item为目录</p>
+<p>g)    nsQuota(long)：namespace Quota值，若没加Quota限制则为-1</p>
+<p>h)    dsQuota(long)：disk Quota值，若没加限制则也为-1</p>
+<p>i)     username(String)：该目录的所属用户名</p>
+<p>j)     group(String)：该目录的所属组</p>
+<p>k)    permission(short)：该目录的permission信息，如644等，有一个short来记录。</p>
+<ol start="3">
+<li>若从fsimage中读到的item是一个文件，则还会额外包含如下信息：</li>
+</ol>
+<p>a)     blockid(long)：属于该文件的block的blockid，</p>
+<p>b)    numBytes(long)：该block的大小</p>
+<p>c)     genStamp(long)：该block的时间戳</p>
+<p>当该文件对应的numBlocks数不为1，而是大于1时，表示该文件对应有多个block信息，此时紧接在该fsimage之后的就会有多个blockid，numBytes和genStamp信息。</p>
+</li>
+<li><p>BlockMap（<a href="https://blog.csdn.net/CNHK1225/article/details/50786785）" target="_blank" rel="noopener">https://blog.csdn.net/CNHK1225/article/details/50786785）</a></p>
+<p>从以上fsimage中加载如namenode内存中的信息中可以很明显的看出，在fsimage中，并没有记录每一个block对应到哪几个datanodes的对应表信息，而只是存储了所有的关于namespace的相关信息。而真正每个block对应到datanodes列表的信息在hadoop中并没有进行持久化存储，而是在所有datanode启动时，每个datanode对本地磁盘进行扫描，将本datanode上保存的block信息汇报给namenode，namenode在接收到每个datanode的块信息汇报后，将接收到的块信息，以及其所在的datanode信息等保存在内存中。HDFS就是通过这种块信息汇报的方式来完成 block -&gt; datanodes list的对应表构建。Datanode向namenode汇报块信息的过程叫做<strong>blockReport</strong>，而namenode将block -&gt; datanodes list的对应表信息保存在一个叫<strong>BlocksMap</strong>的数据结构中。</p>
 </li>
 <li><p>HDFS HA</p>
 <p>HDFS2.0引入HDFS HA的概念，我们的名字节点将不止一个，其中有一个活跃名字节点和一个待命名字节点，具体哪个活跃哪个待命由zookeeper进行管理。当活跃名字节点出现故障是，待命名字节点可以立刻顶上去。要做到这一点，必须保证活跃名字节点和待命名字节点储存的元数据等等数据都是实时同步的。Editlog的同步是通过名字节点之间的共享存储系统进行同步的，对于映射表信息（例如一个节点包括几个块，某个快被存储到哪个节点上）的实时同步，是通过底层的数据节点一直都同时向活跃名字节点和待命名字节点汇报来进行维护的</p>
@@ -146,7 +180,13 @@
 <li><p>HDFS读取原理</p>
 <p>读取时，理论上可以从之前存储的任意一个冗余的块中进行读取。但是一般会采取就近原则。HDFS提供一个API，可以算出数据所在的机架UD，也算出需要读取数据的节点的机架ID，这样就可以选一个比较近的进行读取。</p>
 </li>
-<li><p>HDFS数据读写原理 <a href="https://blog.csdn.net/u014470581/article/details/51461540" target="_blank" rel="noopener">https://blog.csdn.net/u014470581/article/details/51461540</a></p>
+<li><p>HDFS数据读写原理 </p>
+<ul>
+<li><p><a href="https://blog.csdn.net/u014470581/article/details/51461540" target="_blank" rel="noopener">https://blog.csdn.net/u014470581/article/details/51461540</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/whdxjbw/article/details/81072207?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1" target="_blank" rel="noopener">https://blog.csdn.net/whdxjbw/article/details/81072207?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1</a></p>
+</li>
+</ul>
 </li>
 <li><p>HDFS编程</p>
 <p>使用java进行编程。首先需要将/usr/local/hadoop/share/hadoop中的commonjar包进行导入</p>

@@ -97,16 +97,17 @@
 <p>工作日每天至少一小时，双休日每天至少两小时</p>
 </li>
 </ul>
-<h3 id="Kafka（4月13日-5月5日左右-20-25天）"><a href="#Kafka（4月13日-5月5日左右-20-25天）" class="headerlink" title="Kafka（4月13日~5月5日左右 20-25天）"></a>Kafka（4月13日~5月5日左右 20-25天）</h3><ul>
+<h3 id="Kafka（4月13日-5月8日左右-20-25天）"><a href="#Kafka（4月13日-5月8日左右-20-25天）" class="headerlink" title="Kafka（4月13日~5月8日左右 20-25天）"></a>Kafka（4月13日~5月8日左右 20-25天）</h3><ul>
 <li>学习资料<ol>
 <li>Kafka文档 <a href="http://kafka.apachecn.org（计划用时6天）" target="_blank" rel="noopener">http://kafka.apachecn.org（计划用时6天）</a></li>
 <li>Kafka中文教程 <a href="https://www.orchome.com/kafka/index" target="_blank" rel="noopener">https://www.orchome.com/kafka/index</a> （计划用时6天）</li>
 <li>Kafka技术分享系列 <a href="https://blog.csdn.net/lizhitao/article/details/39499283" target="_blank" rel="noopener">https://blog.csdn.net/lizhitao/article/details/39499283</a> （计划用时7天）</li>
 <li>学习的同时在服务器上搭建环境</li>
+<li>视频教程 <a href="https://www.bilibili.com/video/BV1a4411B7V9?from=search&amp;seid=16508228783968366139" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1a4411B7V9?from=search&amp;seid=16508228783968366139</a></li>
 </ol>
 </li>
 </ul>
-<h3 id="Flink（5月5日-6月底-20-25天）"><a href="#Flink（5月5日-6月底-20-25天）" class="headerlink" title="Flink（5月5日~6月底 20-25天）"></a>Flink（5月5日~6月底 20-25天）</h3><h3 id="SpringBoot（6月底-实习前-20-25天）"><a href="#SpringBoot（6月底-实习前-20-25天）" class="headerlink" title="SpringBoot（6月底~实习前 20-25天）"></a>SpringBoot（6月底~实习前 20-25天）</h3><h2 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<h3 id="Flink（5月8日-6月底-20-25天）"><a href="#Flink（5月8日-6月底-20-25天）" class="headerlink" title="Flink（5月8日~6月底 20-25天）"></a>Flink（5月8日~6月底 20-25天）</h3><h3 id="SpringBoot（6月底-实习前-20-25天）"><a href="#SpringBoot（6月底-实习前-20-25天）" class="headerlink" title="SpringBoot（6月底~实习前 20-25天）"></a>SpringBoot（6月底~实习前 20-25天）</h3><h2 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
 <li><p>搭建hadoop、flink、kafka系统并了解这3个开源系统的原理，达到可以流畅部署，可以基本上理解核心逻辑，比如了解flink作业启动过程、flink作业运行时处理过程、kafka系统数据写入过程、数据持久化过程、数据消费过程、hadoop系统hdfs数据写入过程、数据持久化过程、数据读取过程、主控fsimage数据结构、yarn队列原理</p>
 </li>
 <li><p>使用taf-java构造数据实时写入数据到kafka，flink从kafka消费数据进行计算，然后把数据写入到mysql，可以计算一个网站常用的指标，比如UV、PV、DAU等指标。</p>
@@ -345,13 +346,15 @@
 <p>日志的分区partition （分布）在Kafka集群的服务器上。每个服务器在处理数据和请求时，共享这些分区。每一个分区都会在已配置的服务器上进行备份，确保容错性.</p>
 <p>每个分区都有一台 server 作为 “leader”，零台或者多台server作为 follwers 。leader server 处理一切对 partition （分区）的读写请求，而follwers只需被动的同步leader上的数据。当leader宕机了，followers 中的一台服务器会自动成为新的 leader。每台 server 都会成为某些分区的 leader 和某些分区的 follower，因此集群的负载是平衡的。</p>
 </li>
-<li></li>
+<li><p>补充资料（来源：尚硅谷）</p>
+</li>
 </ul>
+<p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka1.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka2.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka3.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka4.png" alt="题目"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ck9inw4kl0000hhieapmw34oh"
+      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ck9iscdgt0001jmie7mywhfvi"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li></ul>

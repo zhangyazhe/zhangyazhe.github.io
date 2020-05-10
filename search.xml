@@ -349,6 +349,53 @@
 </li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka1.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka2.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka3.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.2/kafka4.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.3/kafka5.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.3/kafka6.png" alt="题目"><br><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.3/kafka7.png" alt="题目"></p>
+<ul>
+<li><p>Kafka写入数据流程</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.4/kafka8.png" alt="题目"></p>
+<ul>
+<li>Kafka发送消息的主要步骤（<a href="https://www.jianshu.com/p/26532247d4cc）" target="_blank" rel="noopener">https://www.jianshu.com/p/26532247d4cc）</a></li>
+</ul>
+<p>我们从创建 一个 ProducerRecord 对象开始， ProducerRecord 对象需要包含目标主题和要发送的内容。我们还可以指定键或分区。在发送 ProducerRecord对象时，生产者要先把键和 值对象序列化成字节数组，这样它们才能够在网络上传输 。</p>
+<p>接下来，数据被传给分区器。如果之前在 ProducerRecord对象里指定了分区，那么分区器就不会再做任何事情，直接把指定的分区返回。如果没有指定分区 ，那么分区器会根据 ProducerRecord对象的键来选择一个分区 。选好分区以后 ，生产者就知道该往哪个主题和分区发送这条记录了。紧接着，这条记录被添加到一个记录批次里，这个批次里的所有消息会被发送到相同的主题和分区上。有一个独立的线程负责把这些记录批次发送到相应的 broker 上。</p>
+<p>服务器在收到这些消息时会返回一个响应。如果消息成功写入 Kafka，就返回 一 个 RecordMetaData 对象，它包含了主题和分区信息，以及记录在分区里的偏移量。如果写入 失败， 就会返回 一个错误 。生产者在收到错误之后会尝试重新发送消息，几次之后如果还是失败，就返回错误信息。</p>
+</li>
+<li><p>kafka的ack应答机制</p>
+<p>ack = 0：producer不等待broker中leader的ack；broker接收消息后如果还没写入本地log，broker就发生故障，可能会丢失数据；</p>
+<p>ack = 1：producer等待leader的ack，但是不等待replication的ack；这样partition的leader消息落盘成功后返回ack，但是在follwer备份成功之前若leader发生故障，也会丢失数据；延迟时间短但是可靠性低；</p>
+<p>ack = -1：producer等待leader和replication的ack，这样只有等leader中partition消息落盘成功，并且follower中replication消息备份落盘成功，才会给producer返回ack，数据一般不会丢失，延迟时间长但是可靠性高。</p>
+</li>
+<li><p>创建kafka生产者（<a href="https://www.jianshu.com/p/26532247d4cc）" target="_blank" rel="noopener">https://www.jianshu.com/p/26532247d4cc）</a></p>
+<p>要往 Kafka写入消息，首先要创建一个生产者对象，井设置一些属性。</p>
+<p>下面的代码片段展示了如何创建一个新的生产者，这里只指定了必要的属性，其他使用默认设置。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> Properties kafkaProps = <span class="keyword">new</span> Properties();</span><br><span class="line"></span><br><span class="line">kafkaProps.put(<span class="string">"bootstrap.servers"</span>,<span class="string">"broker1:9092,broker2:9092"</span>);</span><br><span class="line"></span><br><span class="line">kafkaProps.put(<span class="string">"key.serializer"</span>,<span class="string">"org.apache.kafka.common.serialization.StringSerializer"</span>);</span><br><span class="line"></span><br><span class="line">kafkaProps.put(<span class="string">"value.seializer"</span>,<span class="string">"org.apache.kafka.common.serialization.StringSerializer"</span>);</span><br><span class="line"></span><br><span class="line">producer = <span class="keyword">new</span> KafkaProducer&lt;String, String&gt;(kafkaProps);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Kafka生产者有 3个必选的属性</p>
+<ul>
+<li>bootstrap.servers</li>
+</ul>
+<p>该属性指定 broker 的地址清单，地址的格式为 host:port。清单里不需要包含所有的broker地址，生产者会从给定的 broker里查找到其他 broker的信息。不过建议至少要提供两个 broker的信息， 一旦其中一个宕机，生产者仍然能够连接到集群上。</p>
+<ul>
+<li>key.serializer</li>
+</ul>
+<p>broker希望接收到的消息的键和值都是字节数组。生产者接口允许使用参数化类型，因此可以把 Java对象作为键和值发送给 broker。这样的代码具有良好的可读性，不过生产者需要知道如何把这些 Java对象转换成字节数组。 key.serializer必须被设置为一个实现了org.apache.kafka.common.serialization.Serializer接口的类，生产者会使用这个类把键对象序列化成字节数组。 Kafka 客户端默认提供了ByteArraySerializer(这个只做很少的事情)、 StringSerializer和 IntegerSerializer，因此，如果你只使用常见的几种 Java对象类型，那么就没必要实现自己的序列化器 。要注意， key.serializer是必须设置的，就算你打算只发送值内容。</p>
+<ul>
+<li>value.serializer</li>
+</ul>
+<p>与 key.serializer一样， value.serializer指定的类会将值序列化。如果键和值都是字符串，可以使用与 key.serializer 一样的序列化器。如果键是整数类型而值是字符扇 ， 那么需要使用不同的序列化器。</p>
+</li>
+<li><p>同步发送消息到kafka</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ProducerRecord&lt;String, String&gt; record = <span class="keyword">new</span> ProducerRecord&lt;&gt;(<span class="string">"CustomerCountry"</span>, <span class="string">"Precision Products"</span>, <span class="string">"France"</span>);</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    producer.send(record).get();</span><br><span class="line">&#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">    e.printStack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里， producer.send() 方住先返回一个 Future对象，然后调用 Future对象的 get() 方法等待 Kafka 响应。如果服务器返回错误， get()方怯会抛出异常。如果没有发生错误，我们会得到一个 RecordMetadata对象，可以用它获取消息的偏移量。如果在发送数据之前或者在发送过程中发生了任何错误 ，比如 broker返回 了一个不允许重发消息的异常或者已经超过了重发的次数 ，那么就会抛出异常。我们只是简单地把异常信息打印出来。</p>
+</li>
+<li><p>异步发送消息到kafka</p>
+<p>假设消息在应用程序和 Kafka集群之间一个来回需要 10ms。如果在发送完每个消息后都等待回应，那么发送 100个消息需要 1秒。但如果只发送消息而不等待响应，那么发送100个消息所需要的时间会少很多。大多数时候，我们并不需要等待响应——尽管 Kafka 会把目标主题、分区信息和消息的偏移量发送回来，但对于发送端的应用程序来说不是必需的。不过在遇到消息发送失败时，我们需要抛出异常、记录错误日志，或者把消息写入 “错误消息”文件以便日后分析。</p>
+<p>为了在异步发送消息的同时能够对异常情况进行处理，生产者提供了回调支持 。下面是使用异步发送消息、回调的一个例子。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ProducerRecord&lt;String, String&gt; record = <span class="keyword">new</span> ProducerRecord&lt;&gt;(<span class="string">"CustomCountry"</span>, <span class="string">"Precision Products"</span>, <span class="string">"France"</span>);<span class="comment">//Topic Key Value</span></span><br><span class="line">producer.send(record, <span class="keyword">new</span> DemoProducerCallback());<span class="comment">//发送消息时，传递一个回调对象，该回调对象必须实现org.apahce.kafka.clients.producer.Callback接口</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoProducerCallback</span> <span class="keyword">implements</span> <span class="title">Callback</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompletion</span><span class="params">(RecordMetadata recordMetadata, Exception e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;<span class="comment">//如果Kafka返回一个错误，onCompletion方法抛出一个non null异常。</span></span><br><span class="line">            e.printStackTrace();<span class="comment">//对异常进行一些处理，这里只是简单打印出来</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子中使用了回调函数，需要一个实现了Callback接口的类，这个接口只有一个onComplement方法。如果kafka返回一个错误，onComplement方法会抛出一个非空异常</p>
+</li>
+</ul>
 ]]></content>
       <tags>
         <tag>Big Data</tag>

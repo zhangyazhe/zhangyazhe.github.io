@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Create plugin QMYSQL for Qt on Mac</title>
-    <url>/2020/05/21/Create-plugin-QMYSQL-for-Qt-on-Mac/</url>
+    <title>Create driver QMYSQL for Qt on Mac</title>
+    <url>/2020/05/21/Create-driver-QMYSQL-for-Qt-on-Mac/</url>
     <content><![CDATA[<p>摘要：</p>
 <p>解决在mac环境下Qt无法连接到mysql数据库的问题</p>
 <a id="more"></a>

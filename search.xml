@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Create plugin QMYSQL for Qt on Mac</title>
+    <url>/2020/05/21/Create-plugin-QMYSQL-for-Qt-on-Mac/</url>
+    <content><![CDATA[<p>摘要：</p>
+<p>解决在mac环境下Qt无法连接到mysql数据库的问题</p>
+<a id="more"></a>
+
+<p>最近尝试在mac环境下将Qt连接到mysql，但是Qt本身是没有预装mysql的驱动的，所以需要用户手动根据Qt源码将这个驱动编译出来，这个过程中遇到了很多的问题，网上的方法对于我的情况大多数都不管用。经过将近9个小时的尝试总算是成功连上mysql了，将这个过程记录一下，希望能给同样遇到这个问题的朋友一些帮助。</p>
+<ol>
+<li><p>首先说下我的环境和软件版本</p>
+<p>MacOs: Catalina 10.15.4</p>
+<p>Qt: 5.13.2</p>
+<p>Mysql: 8.0.20</p>
+</li>
+<li><p>当我们在Qt中尝试连接数据库时，会写这样的代码：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase db = QSqlDatabase::addDatabase(<span class="string">"QMYSQL"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但是由于QMYSQL不存在，所以Qt会报错：</p>
+<p><strong>QSqlDatabase: QMYSQL driver not loaded<br>QSqlDatabase: available drivers: QSQLITE QODBC QODBC3 QPSQL QPSQL7</strong></p>
+</li>
+<li><p>为了解决这个问题，接下来我们会按照一篇<a href="https://doc.qt.io/qt-5/sql-driver.html#qmysql" target="_blank" rel="noopener">官方文档</a>来进行操作，但是在此之前，有一点非常重要，那就是在安装Qt时，除了名字上带有IOS、Android的那几个肯定不会用的组件之外，尽量将所有的组件全都安装，不然你将找不到接下来要用到的路径以及接下来要用到的文件（我因为这个真的是耽误了超久的时间）。在这里附上<a href="http://download.qt.io/archive/qt/" target="_blank" rel="noopener">Qt的下载地址</a>。</p>
+</li>
+<li><p>接下来，按照上面提到的官方文档的指示，需要做这些</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd $QTDIR/Src/qtbase/src/plugins/sqldrivers</span><br><span class="line">qmake -- MYSQL_PREFIX=/usr/local/mysql</span><br><span class="line">make sub-mysql</span><br></pre></td></tr></table></figure>
+
+<p>有一点需要注意，在执行<strong>make sub-mysql</strong>的时候，有可能会报错，这可能是因为qmake的版本不对，所以这时候可以执行<strong>qmake -version</strong>来检查一下qmake的版本，当时我检查后发现qmake默认使用的是conda环境下的qmake，自然就会出问题，而我们希望使用的是<strong>/Users/zhangyazhe/Qt5.13.2/5.13.2/clang_64/bin/qmake</strong>，所以需要将上面的qmake命令改为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/Users/zhangyazhe/Qt5.13.2/5.13.2/clang_64/bin/qmake  -- MYSQL_PREFIX=/usr/local/mysql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接着，我们进入到当前目录下的myql文件夹中将mysql的驱动编译出来</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd mysql</span><br><span class="line">qmake</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>注意，这里的qmake也要注意版本是否正确，如果不正确，就按照第4点的方法解决。</p>
+<p>这一步执行完之后，我们就可以在<strong>$QTDIR/clang_64/plugins/sqldriver</strong>路径下找到<strong>libqsqlmysql_debug.dylib、libqsqlmysql_debug.dylib.dSYM、libqsqlmysql.dylib、libqsqlmysql.dylib.dSYM</strong>这四个文件，这些就是我们连接mysql的关键</p>
+</li>
+<li><p>虽然现在我们已经有了<strong>libqsqlmysql.dylib</strong>，但是这个时候如果去Qt里尝试连接mysql，会得到错误信息说QMYSQL已经可以用了，但是无法被加载。在我遇到的情况中，这是因为这个动态链接库所依赖的那些库有些无法被找到。我们可以使用otool命令来查看<strong>libqsqlmysql.dylib</strong>所依赖的库</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">otool -L /Users/zhangyazhe/Qt5.13.2/5.13.2/clang_64/plugins/sqldrivers/libqsqlmysql.dylib</span><br></pre></td></tr></table></figure>
+
+<p>执行后可以看到很多路径前面都有@rpath这个标记，经过尝试我发现是因为由于@rpath中没有包含正确的路径导致<strong>@rpath/libmysqlclient.21.dylib</strong>无法被找到，所以我们需要手动将<strong>libmysqlclient.21.dylib</strong>所在的文件夹的路径加入到@rpath中，使用install-name-tool命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">install_name_tool -add_rpath /usr/local/mysql-8.0.20-macos10.15-x86_64/lib /Users/zhangyazhe/Qt5.13.2/5.13.2/clang_64/plugins/sqldrivers/libqsqlmysql.dylib</span><br></pre></td></tr></table></figure>
+
+<p>-add_rpath后面的第一个参数就是<strong>libmysqlclient.21.dylib</strong>所在的文件夹的路径。</p>
+</li>
+<li><p>至此，如果前面的步骤都没有问题的话，应该就已经可以连接到mysql了。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>csp 201703_4 地铁修建</title>
     <url>/2020/04/10/csp-201703-4-%E5%9C%B0%E9%93%81%E4%BF%AE%E5%BB%BA/</url>
     <content><![CDATA[<p>摘要：</p>

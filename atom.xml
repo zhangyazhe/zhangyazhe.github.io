@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-10T10:32:02.902Z</updated>
+  <updated>2020-05-21T08:04:02.588Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Create plugin QMYSQL for Qt on Mac</title>
+    <link href="http://yoursite.com/2020/05/21/Create-plugin-QMYSQL-for-Qt-on-Mac/"/>
+    <id>http://yoursite.com/2020/05/21/Create-plugin-QMYSQL-for-Qt-on-Mac/</id>
+    <published>2020-05-21T07:20:11.000Z</published>
+    <updated>2020-05-21T08:04:02.588Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;解决在mac环境下Qt无法连接到mysql数据库的问题&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="Qt" scheme="http://yoursite.com/tags/Qt/"/>
+    
+  </entry>
   
   <entry>
     <title>csp 201703_4 地铁修建</title>

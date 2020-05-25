@@ -438,12 +438,45 @@
 <p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.5/flink3.png" alt="题目"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.5/flink4.png" alt="题目"></p>
 </li>
+<li><p>Window</p>
+<p>streaming流式计算是一种被设计用于处理无限数据集的数据处理引擎，而无限数据集是指一种不断增长的本质上无限的数据集，而window是一种切割无限数据为有限块进行处理的手段。</p>
+<p>Window是无限数据流处理的核心，Window将一个无限的stream拆分成有限大小的“buckets”桶，我们可以在这些桶上做计算操作。</p>
+<p>Window可以分成两类：</p>
+<ul>
+<li><p>CountWindow：按照指定的数据条数生成一个Window，与时间无关。</p>
+</li>
+<li><p>TimeWindow：按照时间生成Window。</p>
+</li>
+</ul>
+<p>对于TimeWindow，可以根据窗口实现原理的不同分成三类：滚动窗口（Tumbling Window）、滑动窗口（Sliding Window）和会话窗口（Session Window）</p>
+<ol>
+<li><p>滚动窗口（Tumbling Windows）</p>
+<p><strong>将数据依据固定的窗口长度对数据进行切片</strong>。</p>
+<p><strong>特点</strong>：<strong>时间对齐，窗口长度固定，没有重叠</strong>。</p>
+<p>滚动窗口分配器将每个元素分配到一个指定窗口大小的窗口中，滚动窗口有一个固定的大小，并且不会出现重叠。例如：如果你指定了一个5分钟大小的滚动窗口，窗口的创建如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.6/flink5.png" alt="题目"></p>
+</li>
+<li><p>滑动窗口（Sliding Windows）</p>
+<p><strong>滑动窗口是固定窗口的更广义的一种形式，滑动窗口由固定的窗口长度和滑动间隔组成</strong>。</p>
+<p><strong>特点</strong>：<strong>时间对齐，窗口长度固定，有重叠</strong>。</p>
+<p>滑动窗口分配器将元素分配到固定长度的窗口中，与滚动窗口类似，窗口的大小由窗口大小参数来配置，另一个窗口滑动参数控制滑动窗口开始的频率。因此，滑动窗口如果滑动参数小于窗口大小的话，窗口是可以重叠的，在这种情况下元素会被分配到多个窗口中。</p>
+<p>例如，你有10分钟的窗口和5分钟的滑动，那么每个窗口中5分钟的窗口里包含着上个10分钟产生的数据，如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.6/flink6.png" alt="题目"></p>
+</li>
+<li><p>会话窗口（Session Windows）</p>
+<p><strong>由一系列事件组合一个指定时间长度的timeout**</strong>间隙组成，类似于web<strong><strong>应用的session</strong></strong>，也就是一段时间没有接收到新数据就会生成新的窗口**。</p>
+<p><strong>特点</strong>：<strong>时间无对齐</strong>。</p>
+<p>session窗口分配器通过session活动来对元素进行分组，session窗口跟滚动窗口和滑动窗口相比，不会有重叠和固定的开始时间和结束时间的情况，相反，<strong>当它在一个固定的时间周期内不再收到元素，即非活动间隔产生，那个这个窗口就会关闭</strong>。一个session窗口通过一个session间隔来配置，这个session间隔定义了非活跃周期的长度，当这个非活跃周期产生，那么当前的session将关闭并且后续的元素将被分配到新的session窗口中去。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zhangyazhe/CDN@v1.6/flink7.png" alt="题目"></p>
+</li>
+</ol>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ckalyqx5z0000f1ie52jqfl0b"
+      <a data-url="http://yoursite.com/2020/03/21/Big-Data-Note/" data-id="ckam834o000057yie9mzuc5wx"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li></ul>

@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    map &amp; unordered_map |
+    计算机系统结构复习笔记 |
     
     Kyle&#39;s blog</title>
   
@@ -34,7 +34,7 @@
   <section class="outer">
   
 
-<article id="post-map-unordered-map" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+<article id="post-计算机系统结构复习笔记" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
   
   <div class="article-inner">
     
@@ -42,7 +42,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      map &amp; unordered_map
+      计算机系统结构复习笔记
     </h1>
   
   
@@ -55,8 +55,8 @@
 
     
       <div class="article-meta">
-        <a href="/2020/03/16/map-unordered-map/" class="article-date">
-  <time datetime="2020-03-16T02:45:02.000Z" itemprop="datePublished">2020-03-16</time>
+        <a href="/2020/07/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2020-07-14T06:55:15.000Z" itemprop="datePublished">2020-07-14</time>
 </a>
         
       </div>
@@ -64,8 +64,6 @@
 
     
       
-    <div class="tocbot"></div>
-
 
 
 
@@ -80,46 +78,13 @@
 
       
         <p>摘要：</p>
-<p>从内部实现来分析两者的异同与适用范围</p>
 <a id="more"></a>
-
-<h2 id="map与unordered-map的区别"><a href="#map与unordered-map的区别" class="headerlink" title="map与unordered_map的区别"></a>map与unordered_map的区别</h2><ul>
-<li><p>内部实现不同</p>
-<ul>
-<li>map： map内部实现了一个红黑树（红黑树是非严格平衡二叉搜索树，而AVL是严格平衡二叉搜索树），<strong><em>红黑树具有自动排序的功能，因此map内部的所有元素都是有序的</em></strong>，红黑树的每一个节点都代表着map的一个元素。因此，对于map进行的查找，删除，添加等一系列的操作都相当于是对红黑树进行的操作。map中的元素是按照二叉搜索树（又名二叉查找树、二叉排序树，特点就是左子树上所有节点的键值都小于根节点的键值，右子树所有节点的键值都大于根节点的键值）存储的，使用中序遍历可将键值按照从小到大遍历出来。</li>
-<li>unordered_map: unordered_map内部实现了一个哈希表（也叫散列表，通过把关键码值映射到Hash表中一个位置来访问记录，<strong>查找的时间复杂度可达到O(1)，其在海量数据处理中有着广泛应用）</strong>。因此，<strong>其元素的排列顺序是无序的</strong>。</li>
-</ul>
-</li>
-<li><p>需要引入的头文件不同</p>
-<p>map: <code>#include &lt; map &gt;</code><br>unordered_map: <code>#include &lt; unordered_map &gt;</code></p>
-</li>
-<li><p>各自的优缺点与适用范围</p>
-<ul>
-<li>map</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>有序性，这是map结构最大的优点，其元素的有序性在很多应用中都会简化很多的操作。红黑树，内部实现一个红黑书使得map的很多操作在lgn的时间复杂度下就可以实现，因此效率非常的高</li>
-<li>缺点： 空间占用率高，因为map内部实现了红黑树，虽然提高了运行效率，但是因为每一个节点都需要额外保存父节点、孩子节点和红/黑性质，使得每一个节点都占用大量的空间</li>
-</ol>
-<p>适用处：对于那些有顺序要求的问题，用map会更高效一些</p>
-<p>unordered_map：</p>
-<p>优点： 因为内部实现了哈希表，因此其查找速度非常的快<br>缺点： 哈希表的建立比较耗费时间<br>适用处：对于查找问题，unordered_map会更加高效一些，因此遇到查找问题，常会考虑一下用unordered_map</p>
-</li>
-</ul>
-<h2 id="map和unordered-map的使用"><a href="#map和unordered-map的使用" class="headerlink" title="map和unordered_map的使用"></a>map和unordered_map的使用</h2><ul>
-<li>unordered_map的用法和map是一样的，提供了 insert，size，count等操作，并且里面的元素也是以pair类型来存贮的。其底层实现是完全不同的，上方已经解释了，但是就外部使用来说却是一致的。</li>
-</ul>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://blog.csdn.net/BillCYJ/article/details/78985895" target="_blank" rel="noopener">https://blog.csdn.net/BillCYJ/article/details/78985895</a></p>
-
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/16/map-unordered-map/" data-id="ckclm4xdt000x27t3hhld8ym6"
+      <a data-url="http://yoursite.com/2020/07/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ckclm4xdu001027t305vsesu8"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
-
     </footer>
 
   </div>
@@ -128,19 +93,10 @@
     
   <nav class="article-nav">
     
-      <a href="/2020/03/21/csp-201509-4-%E9%AB%98%E9%80%9F%E5%85%AC%E8%B7%AF/" class="article-nav-link">
-        <strong class="article-nav-caption">Newer</strong>
-        <div class="article-nav-title">
-          
-            csp 201509_4 高速公路
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/03/04/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+      <a href="/2020/05/21/Create-driver-QMYSQL-for-Qt-on-Mac/" class="article-nav-link">
         <strong class="article-nav-caption">Older</strong>
-        <div class="article-nav-title">JAVA学习笔记</div>
+        <div class="article-nav-title">Create driver QMYSQL for Qt on Mac</div>
       </a>
     
   </nav>

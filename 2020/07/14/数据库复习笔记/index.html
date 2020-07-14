@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, 算法, 随笔, git, linux, Qt, Java, Big Data">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    数据库复习笔记 |
+    
+    Kyle&#39;s blog</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Kyle's blog" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-数据库复习笔记" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据库复习笔记
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/07/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2020-07-14T07:27:44.000Z" itemprop="datePublished">2020-07-14</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>考完数据库就只剩一门了!!</p>
+<a id="more"></a>
+
+<h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><ul>
+<li>DBA数据库管理员 DBMS数据库管理系统 DBS数据库系统</li>
+<li>数据的整体结构化是数据库的主要特征之一</li>
+<li>数据独立性主要表现在两个方面：数据独立性和物理独立性。数据独立性是指应用程序与数据的物理结构相互独立，当数据的物理结构改变时，应用程序不用改变。逻辑独立性是指应用程序与数据的逻辑结构是相互独立的，当数据的逻辑结构改变了，应用程序也可以不变。</li>
+<li>层次模型类似于树。</li>
+</ul>
+<h1 id="第二章-关系代数"><a href="#第二章-关系代数" class="headerlink" title="第二章 关系代数"></a>第二章 关系代数</h1><ul>
+<li>投影的结果中要去掉相同的行</li>
+</ul>
+<h1 id="第三章-Sql"><a href="#第三章-Sql" class="headerlink" title="第三章 Sql"></a>第三章 Sql</h1><ul>
+<li><p>基本表在定义时可以在外键约束处定义ON DELETE CASCADE或者ON DELETE NO ACTION，ON UPDATE也是一样的。一个表总是课程编号，另一个表是学生每门课的成绩，其中引用了课程编号，这时如果某一门课被删除，会有下面的情况。为ON DELETE CASCADE时，会级联删除，为ON DELETE NO ACTION时，会禁止删除。当更新了某一课程的课程号时，会有下面的情况：如果是ON UPDATE CASVADE，会同步更新，如果是ON UPDATE NO ACTION，会禁止更新</p>
+</li>
+<li><p>基本表在删除时，可以在drop table 表名 后面加cascade或者restrict。前者表示这个表以及建立在这个表上的其他数据结构都将被删除。而restrict含义是，如果在这个表上还建立有其他的数据结构，那么这条命令会被拒绝。(drop view后面也可以加CASCADE)</p>
+</li>
+<li><p>having用于组筛选，一定是作用在组上面。having的思想先由group by进行分组，然后对于每个分组，统计一个值。 再看统计出来的这个值，是不是满足组筛选条件。符合的留下，不符合的直接丢弃。</p>
+</li>
+<li><p>查询条件</p>
+<p>比 较  =,&gt;,&lt;,&gt;=,&lt;=,!=,!&gt;,!&lt; </p>
+<p>确 定 范 围  Between and， Not Between and</p>
+<p>确定集合  In, Not In</p>
+<p>字符匹配 Like,NotLike</p>
+<p>空 值  IS NULL, IS NOT NULL</p>
+<p>多重条件 AND,OR</p>
+</li>
+<li><p>[例3.23] 列出全体学生的年级，姓名和所在院系(要求用</p>
+<p>小写字母) 。</p>
+<p>select left(sno,4) as 年级, sname 姓名,</p>
+<p>院系 = lower(sdept) from student</p>
+</li>
+<li><p>[例3.27] 列出IS和CS系年龄在18~21岁(含18,21)的学生的 姓名和年龄。</p>
+<p>select from Where</p>
+<p>Sname, sage Student</p>
+<p>sage <strong>between 18 and 21</strong> and <strong>Sdept IN (‘CS’,’IS’)</strong></p>
+</li>
+<li><p>[例3.28] 列出学号为‘U2017’打头的学生学号和姓名</p>
+<p>select Sno, Sname<br> from Student<br> where Sno <strong>LIKE ‘U2017%‘</strong></p>
+</li>
+<li><p>[例3.29] 列出我校2016和2017级的学生学号和姓名。</p>
+<p>select Sno, Sname<br> from Student<br> where Sno <strong>LIKE ‘U201[67]%’</strong></p>
+</li>
+<li><p>求1号课程的最高成绩,及取得最好成绩的学生学号。</p>
+<p>select sno, grade from sc where cno=’1’<br> order by grade desc</p>
+<p><strong>limit 1</strong></p>
+</li>
+<li><p>where语句是行的筛选条件，所以统计函数不能出现在where子句中。having子句是对组的筛选，所以统计函数可以出现在having子句中</p>
+</li>
+<li><p><strong>group by之后的列表，必包含select列 表中除去集函数之后的列表.</strong></p>
+</li>
+<li><p>注意区别下：select max(grade) from sc是没问题的。它列出所有成绩中的最高成绩。 select max(grade) from sc where cno =’1’ 也没问题，它列出1号课程的最高成绩。 就是加上其它属性后，一定要分组。无论是 select sno,max(grade) from …，还是select cno,max(grade) from … 。</p>
+</li>
+<li><p><strong>相关子查询</strong>[例3.57] 列出每个同学超过其平均成绩的课程号。</p>
+<p>select sno, cno<br> from SC <strong>X</strong><br> where grade &gt; (select avg(grade)</p>
+<p>from SC<br> where sno = <strong>X.sno</strong>)</p>
+</li>
+<li><p>[例3.43b] 列出至少有三门课程成绩90分以上的 学生学号及其平均成绩。</p>
+<p>select sno,avg(grade) as avg_grade from sc sc1<br> group by sno<br> having (select count(*)</p>
+<p>from sc<br> where sno = sc1.sno and</p>
+<p>grade&gt;=90 ) &gt;=3</p>
+<p><strong>嵌套子查询还可以用在having子句</strong></p>
+</li>
+<li><p>带有ANY(SOME)或ALL谓词的子查询</p>
+<p>&gt; ANY &gt; ALL &lt; ANY &lt; ALL</p>
+<p>&gt;= ANY &gt;= ALL &lt;= ANY &lt;= ALL</p>
+<p>大于子查询结果中的某个值 (&gt;min) 大于子查询结果中的所有值 (&gt;max) 小于子查询结果中的某个值 (&lt;max) 小于子查询结果中的所有值 (&lt;min)</p>
+<p>大于等于子查询结果中的某个值 (&gt;=min) 大于等于子查询结果中的所有值 (&gt;=max) 小于等于子查询结果中的某个值 (&lt;=max) 小于等于子查询结果中的所有值 (&lt;=min)</p>
+<p>= ANY<br> !=(或&lt;&gt;)ALL 不等于子查询结果中的任何一个值 (not in)</p>
+<p>!=(或&lt;&gt;)ANY 不等于子查询结果中的某个值</p>
+</li>
+<li><p>[例3.58a] 求非CS系中比CS系某个学生年龄小的学生姓</p>
+<p>名和年龄。</p>
+<p>select sname, sage from student where sage &lt; any</p>
+<p>(select sage from student</p>
+<p>where sdept = ‘CS’) and sdept &lt;&gt; ‘CS‘</p>
+</li>
+<li><p>带有EXISTS 谓词的 子查询不返回任何数据，只产生逻辑真值“true” 或逻辑假值“false”。子查询的目标列表达式通常都用*</p>
+</li>
+<li><p>in 与 exists的互相替换:</p>
+<p>item in SET-A<br> 等价于<br> SET-A中必存在某个 element = item ，</p>
+<p>item in (select attribute from T)<br> 等价于</p>
+<p>exists (select * from T</p>
+<p>where attribute = item )</p>
+</li>
+<li><p>不是所有的带exists或not exists谓词的子查 询都能被其它形式的子查询等价代换，但所有 带IN、比较运算符，ANY和ALL等谓词的子 查询都能被带exists谓词的子查询等价替换</p>
+</li>
+<li><p><strong>SQL没有全称量词。但总可以把带有全 称量词的谓词转换为等价的带有存在量 词的谓词。</strong></p>
+<p>[例3.62] 查询选修了全部课程的学生姓名。</p>
+<p>任给课程(cno)，所求学生(sno)选修了cno 等价于</p>
+<p>不存在任何一门课程(cno)，所求学生(sno)没有选修</p>
+<p>select sname from student where not exists (</p>
+<p>select * from course where not exists (</p>
+<p>select * from sc<br> where sno = student.sno and</p>
+<p>cno = course.cno ))</p>
+<p>或者</p>
+<p>select sname from student</p>
+<p>where not exists<br> (select * from course</p>
+<p>where cno not in (<br> select cno from sc</p>
+<p>where sno = student.sno))</p>
+</li>
+<li><p>将子查询的结果批量插入到指定的表中，不需要’values‘</p>
+<p>INSERT [ INTO] &lt;表名&gt;<br> [(&lt;属性列1&gt; [，&lt;属性列2&gt;… )]</p>
+<p>子查询</p>
+</li>
+<li><p>定义视图时：With Check Option:</p>
+<p>透过视图进行增删改操作时，要保证</p>
+<p>insert,delete,update的行满足视图定义中的 谓词条件(即子查询中的条件表达式)</p>
+</li>
+<li><p>数据库的完整性是指数据的正确性、有 效性和相容性。即数据库中数据与现实 世界的实际情况是相符合的或数据库中 数据自身不存在自相矛盾的现象。</p>
+</li>
+<li><p>(1) 删除原约束 (2) 定义新约束</p>
+<p>alter table sc1 drop constraint pk_sc1<br> alter table sc1 alter column cno char(4) not null</p>
+<p>alter table sc1 add constraint pk_sc1 primary key(sno,cno)</p>
+</li>
+<li><p>IS NULL不能写成 = NULL</p>
+</li>
+<li><p>子查询不能使用order by子句</p>
+</li>
+<li><p>当要insert的内容需要通过select才能找到时，不需要加values.</p>
+<p>INSERT INTO Dept_age(Sdept，Avg_age) SELECT Sdept，AVG(Sage)</p>
+<p>FROM Student GROUP BY Sdept;</p>
+</li>
+</ul>
+<h1 id="第四章-数据库安全性"><a href="#第四章-数据库安全性" class="headerlink" title="第四章 数据库安全性"></a>第四章 数据库安全性</h1><ul>
+<li>DAC：DBA可以自主地定义用户对数据对象的存取权限。</li>
+<li>讲一个角色授予另一个角色或者用户时，可以使用WITH ADMIN OPTION，作用于WITH GRANT OPTION一样</li>
+<li>MAC：每一个数据对象被标以不同的密级，每一个用户被授予一定级别的许可证。</li>
+</ul>
+<h1 id="第六章-关系数据理论"><a href="#第六章-关系数据理论" class="headerlink" title="第六章 关系数据理论"></a>第六章 关系数据理论</h1><ul>
+<li><p>补充课件的6-2的26页，求极小化时，记得repeat</p>
+</li>
+<li><p>求候选码时，可以先对F进行简单的化简，之后再用老师的方法求候选码，这样可以简化步骤</p>
+</li>
+<li><p><strong>候选码中不能有多余的属性，包含候选码的属性组叫超码。一个属性只要在任何一个候选码中出现过，那么他就是非主属性</strong></p>
+</li>
+<li><p>1NF：任给关系模式R(U,F)，若U中每个属性及其值均为不</p>
+<p>可再分的基本数据元素(原子项)，则R∈1NF</p>
+</li>
+<li><p>2NF：若关系模式R∈1NF，并且每一个非</p>
+<p>主属性都完全函数依赖于R的码，则R∈2NF(不存在非主属性对码的部分函数依赖)</p>
+</li>
+<li><p>3NF： (不存在非主属性对码的传递函数依赖)<strong>3NF有另外一个定义: 关系模式R的所有非平凡函数依赖，要么左侧包 含候选码，要么右侧是主属性</strong>。第二种定义方式似乎更好用</p>
+</li>
+<li><p>BCNF：所有非平凡函数依赖的左侧必包含候选码</p>
+</li>
+<li><p>4NF：关系模式R&lt;U, F&gt;属于1NF，如果对于R的每个非平凡多值依赖X-&gt;-&gt;Y，X都含有候选码，则R是4NF。</p>
+</li>
+<li><p><strong>函数依赖是多值依赖的特例，即 若X-&gt;Y，则X-&gt;-&gt;Y</strong></p>
+<p>反之则不然。记住这个结论可以帮助判断多值依赖</p>
+</li>
+<li><p>二元关系一定可以达到4范式。</p>
+</li>
+<li><p>一个全码的关系模式一定可以到bc范式。原因：既然全码作主码，那一定是谁也决定不了谁呀（只有自己决定自己）。但凡F中有一个非平凡FD,比如A-&gt;B，那就一定不是全码呀(因为A可以决定B，主码中有A无B）。所以说，关系模式中不会出现非平凡函数依赖，也就肯定是bc范式</p>
+</li>
+<li><p>投影的计算：例如要求原关系模式在ACD上的投影，则先分别算A、C、D的闭包，然后算AC、AD、CD的闭包，然后算ACD的闭包</p>
+</li>
+<li><p>无损连接性：分解后的关系模式连接后可以还原原本的关系模式</p>
+</li>
+<li><p>依赖保持性：原始的函数依赖的闭包等于分解后的各个函数依赖的并集的闭包</p>
+</li>
+<li><p>无损连接性和依赖保持性都是<strong>分解</strong>的性质</p>
+</li>
+<li><p>无损连接性判断方法:</p>
+<ol>
+<li>如果一个关系模式的被分解成了两个子模式，那么可以使用简便的无损连接性判断方法：判断U1交U2能否退出U1-U2或者U2-U1(充要条件)</li>
+<li>通用方法:画那个表，找同花顺</li>
+</ol>
+</li>
+<li><p>模式分解的目的是使得规范登记较低的模式转换为规范登记较高的，如果一个模式已经是bc范式了，就没有必要再进行分解</p>
+</li>
+<li><p>ppt48页的例子很好</p>
+</li>
+<li><p>模式分解有两种，第一种是可以保证同时有无损连接和依赖保持，但是不能保证到bc范式。另外一种是保证可以到bc范式，但是同时只能保证无损连接，却不能保证依赖保持。</p>
+</li>
+</ul>
+<h1 id="第七章-数据库设计"><a href="#第七章-数据库设计" class="headerlink" title="第七章 数据库设计"></a>第七章 数据库设计</h1><ul>
+<li>在ER图中，一个事物如果要被作为实体对待，则应该至少满足下面条件中的一个：<ol>
+<li>该实体具有除了码以外的其他属性</li>
+<li>该实体是一个一对多联系或者多对多联系的多端</li>
+</ol>
+</li>
+<li>在将ER图中的联系转换为关系模式中的关系时，关系的属性包括该联系自身的属性以及与该联系相连的各个实体的码。确定关系的码需要分为一下几种情况：<ol>
+<li>如果是一对一的二元联系：两端实体的码都是候选码</li>
+<li>如果是一对多的二元联系：多端实体的码是候选码</li>
+<li>如果是多对多的二元联系：关系的码至少包含两端实体的码的并集</li>
+</ol>
+</li>
+<li>根据ER图建表时，每个多对多联系都对应一个表。 一对一/一对多联系都不需要再建表。一对多的联系，表达在多端。一对一，可在任一端表达。</li>
+</ul>
+<h1 id="第八章-关系查询处理和查询优化"><a href="#第八章-关系查询处理和查询优化" class="headerlink" title="第八章 关系查询处理和查询优化"></a>第八章 关系查询处理和查询优化</h1><ul>
+<li>连接操作的实现有下面四种方法：<ol>
+<li>嵌套循环（选择占用内存较小的表作为外表）</li>
+<li>排序-合并（特别适合参与连接的两表在连接属性上排好序的情形）</li>
+<li>索引连接</li>
+<li>哈希连接（较小的表作为驱动表，必须全部装入桶中。另外一个大表作为探测表，通过哈希函数映射到桶中并与桶中符合条件的元组做链接）</li>
+</ol>
+</li>
+</ul>
+<h1 id="第九章-数据库恢复技术"><a href="#第九章-数据库恢复技术" class="headerlink" title="第九章 数据库恢复技术"></a>第九章 数据库恢复技术</h1><ul>
+<li>对于系统故障的恢复，由于一些未提交事务对于数据库的更新可能还留在缓冲区中没有来得及写入数据库，所以在恢复时除了做UNDO操作还要做REDO操作。</li>
+<li>事务故障恢复方法：反向扫描日志文件，找到该事务的操作并执行其逆操作。</li>
+<li>系统故障恢复方法：从日志文件的开头开始扫描，首先建立redo-list和undo-list列表。然后反向扫描日志文件，对undo-list中的操作执行逆操作，然后正向扫描redo-list，重做其中的操作。</li>
+<li>介质故障的恢复策略：装入最近的后备数据库副本（如果采用静态转储，则直接加载就可以。如果采用动态转储，在加载完之后还需要像系统故障恢复一样，对转储期间的日志进行相应的redo或者undo）。之后再装入后续操作的日志文件，此时只需要正向扫描并进行redo操作，不再需要执行undo操作</li>
+</ul>
+<h1 id="第十章-并发控制"><a href="#第十章-并发控制" class="headerlink" title="第十章 并发控制"></a>第十章 并发控制</h1><ul>
+<li>在一个事事务的生命周期内，如果有其他事务修改了这个事务用到的任何数据，就是不可重复读</li>
+<li>一级封锁协议：写之前加写锁，<strong>事务</strong>结束后释放写锁。（不会限制其他事务的读操作，所以会有读脏）。可以防止丢失更新，其他的都防不了。</li>
+<li>二级封锁协议：写之前加写锁，<strong>事务</strong>结束后释放写锁。读之前加读锁，读完之后可以<strong>立即</strong>释放读锁。可以防止丢失更新和读脏，其他都防不了。</li>
+<li>三级封锁协议：写之前加写锁，<strong>事务</strong>结束后释放写锁。读之前加读锁，<strong>事务</strong>结束之后释放读锁。三种都可以防。</li>
+<li>一次封锁和顺序封锁都会有一些问题，所以处理死锁通常是发生之后去解除而非发生前预防。</li>
+<li>检测死锁：超时法和等待图（若T1等待T2，则有有向边从T1指向T2）</li>
+<li>并行调度当且仅当与<strong>某个</strong>串行调度的结果相同时，才是正确的。</li>
+<li>判断一个调度是否为可串行化调度的一个方法：一个调度Sc在保证冲突操作的操作次序不变的情况下，通过交换两个事务不冲突操作次序得到另一个调度Sc’，如果Sc’是串行的，那么Sc为冲突可串行化的调度，也就是可串行化调度。<strong>不是冲突可串行化的调度，也有可能是可串行化的调度</strong></li>
+<li>冲突操作：不同事务对同一数据的<strong>读写操作</strong>和<strong>写写操作</strong>。(其实就是除了读读操作之外都是冲突操作)</li>
+<li>不同事务的冲突操作不能交换顺序。同一事务中的两个操作不能交换顺序。</li>
+<li>不同事务，统一数据，读读操作可以交换；不同事务，不同数据，无论读写都可以交换</li>
+<li>三级封锁协议过于严格，所以我们又有了两段锁协议。两端锁协议：在读任何数据进行读、写操作之前，事务要先获得对该数据的封锁。在释放一个封锁之后，事务不再获得任何数据的任何封锁。两段锁协议与三级封锁协议不同的是，在不需要锁之后可以随时释放，不必等到事务结束，但是一旦释放就不能再次获得。三级封锁协议时两段锁协议的一个特例。</li>
+<li>若并发事务都遵循两段锁协议，则对其任何调度都是可串行化的。但是若对于并发事务的一个调度是可串行化的，不一定所有事务都符合两段锁协议。<strong>充分不必要</strong></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ckclm8top000wfxt35ggi8zxa"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/07/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">计算机系统结构复习笔记</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Kyle&#39;s blog</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="Kyle&#39;s blog"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

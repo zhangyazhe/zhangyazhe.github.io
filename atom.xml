@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-07-14T06:55:15.128Z</updated>
+  <updated>2020-07-14T07:30:13.879Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据库复习笔记</title>
+    <link href="http://yoursite.com/2020/07/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/07/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
+    <published>2020-07-14T07:27:44.000Z</published>
+    <updated>2020-07-14T07:30:13.879Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;考完数据库就只剩一门了!!&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="课程笔记" scheme="http://yoursite.com/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机系统结构复习笔记</title>
@@ -390,26 +410,6 @@
     
     
       <category term="课程笔记" scheme="http://yoursite.com/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CSP零碎知识点整理</title>
-    <link href="http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/"/>
-    <id>http://yoursite.com/2020/01/30/CSP%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</id>
-    <published>2020-01-30T03:54:35.000Z</published>
-    <updated>2020-03-25T14:16:34.710Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;笔记里面主要记录的是刷题过程中遇到过得问题或者学习到的新知识，涵盖C语言、C++、算法等方面内容&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

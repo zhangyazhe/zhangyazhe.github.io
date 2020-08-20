@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-07-18T13:05:44.410Z</updated>
+  <updated>2020-08-20T14:06:00.659Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>百度C++开发工程师一面面经</title>
+    <link href="http://yoursite.com/2020/08/20/%E7%99%BE%E5%BA%A6C-%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/"/>
+    <id>http://yoursite.com/2020/08/20/%E7%99%BE%E5%BA%A6C-%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/</id>
+    <published>2020-08-20T14:04:35.000Z</published>
+    <updated>2020-08-20T14:06:00.659Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;时间：8月20日晚上八点&lt;/p&gt;
+&lt;p&gt;时长：90min&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>计算机系统结构复习笔记</title>
@@ -393,26 +412,6 @@
     
     
       <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>git笔记</title>
-    <link href="http://yoursite.com/2020/01/30/git%E7%AC%94%E8%AE%B0/"/>
-    <id>http://yoursite.com/2020/01/30/git%E7%AC%94%E8%AE%B0/</id>
-    <published>2020-01-30T11:19:33.000Z</published>
-    <updated>2020-01-30T11:21:53.013Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;依据廖雪峰的教程和网上其他一些博客的内容整理，涵盖了平时比较常用的指令和操作，适合于零基础的同学。可能会有表述不合适的地方，欢迎指正。&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
   </entry>
   

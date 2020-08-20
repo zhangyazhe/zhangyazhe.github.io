@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    ubuntu下qt环境配置 |
+    百度C++开发工程师一面面经 |
     
     Kyle&#39;s blog</title>
   
@@ -34,7 +34,7 @@
   <section class="outer">
   
 
-<article id="post-ubuntu下qt环境配置" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+<article id="post-百度C-开发工程师一面面经" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
   
   <div class="article-inner">
     
@@ -42,7 +42,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ubuntu下qt环境配置
+      百度C++开发工程师一面面经
     </h1>
   
   
@@ -55,8 +55,8 @@
 
     
       <div class="article-meta">
-        <a href="/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2020-02-11T13:03:52.000Z" itemprop="datePublished">2020-02-11</time>
+        <a href="/2020/08/20/%E7%99%BE%E5%BA%A6C-%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/" class="article-date">
+  <time datetime="2020-08-20T14:04:35.000Z" itemprop="datePublished">2020-08-20</time>
 </a>
         
       </div>
@@ -64,8 +64,6 @@
 
     
       
-    <div class="tocbot"></div>
-
 
 
 
@@ -80,41 +78,67 @@
 
       
         <p>摘要：</p>
-<p>第一次使用qt，亲自踩坑整理出来的，记录一下</p>
+<p>时间：8月20日晚上八点</p>
+<p>时长：90min</p>
 <a id="more"></a>
 
-<h2 id="下载QT"><a href="#下载QT" class="headerlink" title="下载QT"></a>下载QT</h2><p>点击<a href="https://download.qt.io/archive/qt/" target="_blank" rel="noopener">这里</a>下载即可，我下载的是qt-opensource-linux-x64-5.7.1.run。</p>
-<p>下载下来之后运行安装即可，QT库和QT creator都会被安装。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>如果我们不进行配置，直接新建一个工程来运行的话，我这边会报错说“Error while building/deploying project XXX when executing step ‘qmake’”。我分析的原因有两个，一个是ubuntu系统本身自带qt库，我们还没有指定qt creator去使用我们新安装的qt库；另一个原因是我们还没有配置qmake的路径，qt creator找不到qmake。解决方法如下。</p>
-<ol>
-<li><p>首先打开终端输入下面的指令安装qtchooser</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qtchooser</span><br></pre></td></tr></table></figure>
-
-<p>安装它是因为我们希望借助这个工具来指定我们当前想要使用的qt版本。</p>
+<ul>
+<li><p>问：做下自我介绍</p>
+<p>简单说了下自己来自哪里，做过什么，和面试官有说有笑，比较轻松</p>
 </li>
-<li><p>增加我们新下载的那个qt环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qtchooser -install qt5.7 &#x2F;home&#x2F;zhangyazhe&#x2F;Qt5.7.1&#x2F;5.7&#x2F;gcc_64&#x2F;bin&#x2F;qmake</span><br></pre></td></tr></table></figure>
-
-<p>qt5.7是这个环境的name，可以随意起。后面的路径是qmake的路径。</p>
+<li><p>问：对未来有什么规划，想做什么方向？</p>
+<p>blablabla…</p>
 </li>
-<li><p>设置下环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export QT_SELECT&#x3D;qt5.7</span><br></pre></td></tr></table></figure>
+<li><p>问：讲一下你在腾讯做的项目</p>
+<p>blablabla…</p>
 </li>
-<li><p>经过上面的操作，qmake就配置好了，可以执行qmake -v来查看版本。这个时候再运行工程，不会再显示qmake出错，而是开始显示make出错，这时候执行下面的命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libqt4-dev</span><br></pre></td></tr></table></figure>
-
-<p>之后再尝试运行就ok了。</p>
+<li><p>问：看到你做了一个工资管理系统，里面有涉及到锁吗？</p>
+<p>没有（就是这么直接）</p>
 </li>
-</ol>
+<li><p>问：讲一下如果两个人同时对数据库进行操作，该如何避免冲突？</p>
+<p>描述了一下三级封锁协议</p>
+</li>
+<li><p>问：如果A事务先查看了x的值，在A还没结束的时候，B修改了x的值，这之后A再次读取x的值，请问，在没有封锁协议的情况下，A两次读到的值相同吗？</p>
+<p>回答的是因为没有封锁协议的保护，所以两次读的值不同（我感觉这个我答错了</p>
+</li>
+<li><p>问：数据库索引了解吗？不同的索引涉及到了哪些不同的数据结构？</p>
+<p>这个没复习到，含含糊糊说有哈希，有红黑树，这题要凉</p>
+</li>
+<li><p>了解哪些数据库的引擎？</p>
+<p>这个方面没有了解过（==）</p>
+</li>
+<li><p>问：讲一下数据库优化？</p>
+<p>讲了下优化树以及优化树的优化规则，讲了下做连接操作时可以将占用内存较小的表作为外表来提高速度。</p>
+</li>
+<li><p>问：描述下网络请求一个数据的全过程？</p>
+<p>讲的比较详细，讲到了DHCP, DNS, TCP, 路由选择协议，这题应该比较稳</p>
+</li>
+<li><p>问：了解哪些网络请求的安全保护措施？</p>
+<p>回答了https，这个我真不懂</p>
+</li>
+<li><p>说下https的握手过程？</p>
+<p>听成了tcp的握手过程，讲到一半被打断，尴尬。</p>
+</li>
+<li><p>了解cookies和session吗？</p>
+<p>只了解cookies，然后把cookies的原理讲了一遍</p>
+</li>
+<li><p>最后做道题吧，输入是一个单链表，类似于1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;6，你要写一个方法，返回1-&gt;6-&gt;2-&gt;5-&gt;3-&gt;4</p>
+<p>先讲了下思路，说是可以用暴力解法，把123456先保存到数组里面，然后一前一后两个指针往中间移就完事了。结果面试官补充说要求空间复杂度是O(1)。</p>
+<p>后来想了蛮久，没啥思路，面试官给提示了一下，先切分成两条链，然后第二条链翻转，最后两条链合并。</p>
+<p>恍然大悟。</p>
+<p>闷头开始写，结果在翻转链表的部分卡住了，最后没有写完，面试官让讲了讲思路。</p>
+</li>
+<li><p>问：你有什么想问我们的吗？</p>
+<p>问了下部门和岗位的情况，问了下打卡严不严，加不加班。</p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/11/ubuntu%E4%B8%8Bqt%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="cke2vohe90012wmt38c636cpy"
+      <a data-url="http://yoursite.com/2020/08/20/%E7%99%BE%E5%BA%A6C-%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/" data-id="cke2vohe90014wmt36cm6e6h0"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li></ul>
-
     </footer>
 
   </div>
@@ -123,19 +147,10 @@
     
   <nav class="article-nav">
     
-      <a href="/2020/02/17/csp-201604-2-%E4%BF%84%E7%BD%97%E6%96%AF%E6%96%B9%E5%9D%97/" class="article-nav-link">
-        <strong class="article-nav-caption">Newer</strong>
-        <div class="article-nav-title">
-          
-            csp 201604_2 俄罗斯方块
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/02/09/csp-201503-4-%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F/" class="article-nav-link">
+      <a href="/2020/07/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
         <strong class="article-nav-caption">Older</strong>
-        <div class="article-nav-title">csp 201503_4 网络延迟</div>
+        <div class="article-nav-title">计算机系统结构复习笔记</div>
       </a>
     
   </nav>

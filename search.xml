@@ -2348,9 +2348,24 @@ setiosflags中的常见标志：<br>boolalpha    可以使用单词”true”和
 </li>
 <li><p>当需要用map但是又不需要让内容有序时，可以使用unordered_map查询效率更高。需要头文件<unordered_map></p>
 </li>
+<li><p>map在插入新的元素时，可以使用下标的方式，即mp[i]，这种方式插入时，如果下标相同，会直接覆盖。另外还可以使用mp.insert(make_pair(1,2))的方式进行插入，这个时候如果插入了相同的key，会直接报错</p>
+</li>
+<li><p>创建map时，使用map&lt;int, int, greater<int> &gt; mp即可使得mp中的元素按照key值降序排序</p>
+</li>
 <li><p>使用map时，即使没有对map[x]赋值，还是可以直接使用map[x]，其值为0</p>
 </li>
 <li><p>注意数据溢出的问题，必要时候使用long long</p>
+</li>
+<li><p>multimap</p>
+<ul>
+<li><p>multimap中的键值对的key值可以相同，其中的数据依然是按照key值有序的</p>
+</li>
+<li><p>使用insert插入元素时总是成功，但是multimap不支持通过下标的方式插入，因为通过键不能确定唯一的元素</p>
+</li>
+<li><p>一般来说，我们想访问给定键对应的所有元素。成员函数 equal_range() 就可以做到这一点。它会返回一个封装了两个迭代器的 pair 对象，这两个迭代器所确定范围内的元素的键和参数值相等。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> pr = people.equal_range(<span class="string">"Ann"</span>);</span><br><span class="line"><span class="keyword">if</span>(pr.first != <span class="built_in">std</span>::end(people))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> iter = pr.first ; iter != pr.second; ++iter)</span><br><span class="line">        <span class="built_in">std</span>:<span class="built_in">cout</span> &lt;&lt; iter-&gt;first &lt;&lt; <span class="string">" is "</span> &lt;&lt; iter-&gt;second &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 </li>
 </ul>
 </li>

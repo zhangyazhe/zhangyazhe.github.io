@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, 算法, 随笔, git, linux, Qt, Java, Big Data">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    C++学习笔记 |
+    
+    Kyle&#39;s blog</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Kyle's blog" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-C-学习笔记" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2020/09/18/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2020-09-18T15:47:18.000Z" itemprop="datePublished">2020-09-18</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>笔记内容来自中国大学慕课北京大学程序设计与算法（三）C++面向对象程序设计课程</p>
+<a id="more"></a>
+
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><ul>
+<li><p>引用是一个别名，引用变量和原变量相当于是同一个东西。</p>
+</li>
+<li><p>定义引用时一定要将其初始化成引用某个<strong>变量</strong>，不能引用常量和表达式</p>
+</li>
+<li><p>初始化后，他就一直引用该变量，不会再引用别的变量了。</p>
+</li>
+<li><pre><code class="cpp"><span class="keyword">double</span> a = <span class="number">4</span>, b = <span class="number">5</span>;
+<span class="keyword">double</span> &amp; r1 = a;
+r1 = b;
+<span class="built_in">cout</span> &lt;&lt; a;
+&lt;!--￼<span class="number">0</span>--&gt;
+</code></pre>
+</li>
+</ul>
+<h1 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h1><ul>
+<li>一个或者多个函数，名字相同，但是参数个数或者参数类型不同，这就叫函数的重载</li>
+</ul>
+<h1 id="函数的缺省参数"><a href="#函数的缺省参数" class="headerlink" title="函数的缺省参数"></a>函数的缺省参数</h1><ul>
+<li><p>C++中，定义函数的时候可以让<strong>最右边的连续若干个</strong>参数有缺省值，那么调用函数的时候，若相应位置不写参数，参数就是缺省值。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span> <span class="params">(<span class="keyword">int</span> x1, <span class="keyword">int</span> x2 = <span class="number">2</span>, <span class="keyword">int</span> x3 = <span class="number">3</span>)</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">func(<span class="number">10</span>);<span class="comment">//等效于func(10, 2, 3)</span></span><br><span class="line">func(<span class="number">10</span>,,<span class="number">8</span>);<span class="comment">//不行，只能最右边的连续若干个参数缺省</span></span><br></pre></td></tr></table></figure>
+
+<p>缺省参数在进行函数功能扩充时很有用，这时候想在某个已经写好的函数最后增加新的参数时，就不用将调用该函数的位置全部修改了，此时只需要修改那些参数不是缺省值的位置。</p>
+</li>
+</ul>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><ul>
+<li>自己写了构造函数后，编译器就不会再自动生成那个空的构造函数了。</li>
+</ul>
+<h1 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h1><ul>
+<li>只有一个参数，形如X::X(X&amp;)或者X::X(const X &amp;)。<strong>参数必须是引用</strong></li>
+<li>一个类一定有并且只会有一个拷贝构造函数，要么是自己写的，要么是编译器生成的。</li>
+<li>如果某个函数有一个参数是类A的对象，那么该函数被调用时，类A的拷贝构造函数会被调用。如果函数返回值是类A的对象，则函数返回时，A的拷贝构造函数会被调用</li>
+</ul>
+<h1 id="类型转换构造函数"><a href="#类型转换构造函数" class="headerlink" title="类型转换构造函数"></a>类型转换构造函数</h1><ul>
+<li><p>定义转换构造函数的目的是实现类型的自动转换</p>
+</li>
+<li><p><strong>只有一个参数，而且不是拷贝构造函数的构造函数，一般就可以看做是转换构造函数</strong></p>
+</li>
+<li><p>当需要的时候，编译系统会自动调用转换构造函数。</p>
+</li>
+<li><p>一个例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Complex</span>   &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">double</span> real, imag;</span><br><span class="line">Complex( <span class="keyword">int</span> i) &#123;<span class="comment">//由于这个构造函数只有一个参数而且不是拷贝构造函数，所以他是类型转换构造函数</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"IntConstructor called"</span> &lt;&lt; <span class="built_in">endl</span>; real = i; imag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">Complex(<span class="keyword">double</span> r,<span class="keyword">double</span> i) &#123;real = r; imag = i; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="function">Complex <span class="title">c1</span><span class="params">(<span class="number">7</span>,<span class="number">8</span>)</span></span>;</span><br><span class="line">Complex c2 = <span class="number">12</span>;<span class="comment">//如果没有类型转换构造函数，这样做事不行的。有了类型转换构造函数后，由于12是int，可以作为类型转换构造函数的参数，12就会被转换为一个临时的Complex对象，然后赋值给c2</span></span><br><span class="line">c1 = <span class="number">9</span>; <span class="comment">// 9被自动转换成一个临时Complex对象 </span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; c1.real &lt;&lt; <span class="string">","</span> &lt;&lt; c1.imag &lt;&lt; <span class="built_in">endl</span>; <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h1><ul>
+<li><p>一个类只能有一个析构函数，析构函数没有类型和返回值</p>
+</li>
+<li><p>如果在类中申请了空间，需要在析构函数中手动delete掉。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span>&#123;</span> </span><br><span class="line">  <span class="keyword">private</span> :</span><br><span class="line">  	<span class="keyword">char</span> * p;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">		String () &#123;</span><br><span class="line">			p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">10</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		~ String () ;</span><br><span class="line">&#125;;</span><br><span class="line">String ::~ String() &#123;</span><br><span class="line">  <span class="keyword">delete</span> [] p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若new一个对象数组，那么用delete释放时应该写 []。否则只delete一个对象(调用一次析构函数)</p>
+</li>
+</ul>
+<h1 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h1><ul>
+<li><strong>非静态</strong>成员函数中可以直接使用this来代表该函数作用的对象的指针</li>
+</ul>
+<h1 id="静态成员变量"><a href="#静态成员变量" class="headerlink" title="静态成员变量"></a>静态成员变量</h1><ul>
+<li><p>static</p>
+</li>
+<li><p><strong>普通成员变量每个对象各自有一份，而静态成员变量一共只有一份，为所有的对象共享</strong></p>
+</li>
+<li><p><strong>普通成员函数必须具体作用于某个对象，而静态成员函数并不具体作用于某个对象</strong></p>
+</li>
+<li><p>sizeof运算符不会计算静态成员变量</p>
+</li>
+<li><p>访问静态成员的方式</p>
+<ul>
+<li><p>类名::成员名</p>
+<p>CRectangle::PrintTotal();</p>
+</li>
+<li><p>对象名.成员名</p>
+<p>CRectangle r; r.PrintTotal(); </p>
+</li>
+<li><p>指针-&gt;成员名</p>
+<p>CRectangle * p = &r; p-&gt;PrintTotal(); </p>
+</li>
+<li><p>引用.成员名</p>
+<p>CRectangle &amp; ref = r; int n = ref.nTotalNumber;</p>
+</li>
+</ul>
+</li>
+<li><p>使用静态成员时，就把它当做是全局变量</p>
+</li>
+<li><p>设置静态成员这种机制的目的是将和某些类紧密相关的全局变量和函数写到类里面，看上去像一个整体，易于维护和理解。使用全局变量可以达到和静态成员变量相同的效果，只不过全局变量不想静态成员一样被封装在类里面，所以维护起来不如静态成员方便</p>
+</li>
+<li><p><strong>类中的静态成员变量必须要在类定义后在类的外面显示声明，是否初始化均可。如果不做这一步，编译可以通过，但是链接会失败</strong>。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CRectangle</span> &#123;</span></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">int</span> w, h;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> nTotalArea;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> nTotalNumber;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        CRectangle(<span class="keyword">int</span> w_,<span class="keyword">int</span> h_);</span><br><span class="line">        ~CRectangle();</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintTotal</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CRectangle::CRectangle(<span class="keyword">int</span> w_, <span class="keyword">int</span> h_) &#123;</span><br><span class="line">    w = w_;</span><br><span class="line">    h = h_;</span><br><span class="line">    nTotalNumber++;</span><br><span class="line">    nTotalArea += w * h;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CRectangle::~CRectangle() &#123;</span><br><span class="line">    nTotalNumber--;</span><br><span class="line">    nTotalArea -= w * h;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CRectangle::PrintTotal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; nTotalNumber &lt;&lt; <span class="string">","</span> &lt;&lt; nTotalArea &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> CRectangle::nTotalNumber = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> CRectangle::nTotalArea = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    CRectangle r1(3, 3), r2(2, 2);</span><br><span class="line">    CRectangle::PrintTotal();</span><br><span class="line">    r1.PrintTotal();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第33、34行是必须的。并且此处不再需要加static关键字。</p>
+<p><strong>上面的函数有一个缺陷</strong>：某中情况下，两个静态成员变量的值会不正确。这种情况是：在使用CRectangle类时，有时会调用复制构造函数生成临时的隐藏的CRectangle对象，即调用一个以CRectangle类对象作为参数的函数时， 调用一个以CRectangle类对象作为返回值的函数时。上面的函数中，我们没有定义自己的 拷贝构造函数，所以编译器会自己生成一个，在这个拷贝构造函数中，并没有对两个静态成员变量进行操作。但是，使用拷贝构造函数创建的对象在被销毁时，还是会调用我们写的析构函数，也就是将两个静态成员变量的值减一，这就导致了数值的不正确。临时对象在消亡时会调用析构函数，减少nTotalNumber 和 nTotalArea的值，可是这些临时对象在生成时却没有增加 nTotalNumber 和 nTotalArea的值。</p>
+<p>解决方式为，为这个类写一个拷贝构造函数，如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CRectangle :: CRectangle(CRectangle &amp; r ) &#123;</span><br><span class="line">		w = r.w; h = r.h;</span><br><span class="line">		nTotalNumber ++;</span><br><span class="line">		nTotalArea += w * h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p><strong>静态成员函数中，不能访问非静态成员变量，也不能访问非静态成员函数</strong>。原因很简单，静态成员函数并不作用于具体的某一个类上面，如果在其中访问了非静态的成员的话，没有办法知道访问的到底是哪个类的成员。</p>
+</li>
+<li></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/09/18/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ckfbbeero00066jt37qk83ap5"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/08/20/%E7%99%BE%E5%BA%A6C-%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">百度C++开发工程师一面面经</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Kyle&#39;s blog</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="Kyle&#39;s blog"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

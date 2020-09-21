@@ -106,11 +106,147 @@ r1 = b;
 </li>
 </ul>
 <ul>
-<li><p><strong>静态成员函数中，不能访问非静态成员变量，也不能访问非静态成员函数</strong>。原因很简单，静态成员函数并不作用于具体的某一个类上面，如果在其中访问了非静态的成员的话，没有办法知道访问的到底是哪个类的成员。</p>
-</li>
-<li></li>
+<li><strong>静态成员函数中，不能访问非静态成员变量，也不能访问非静态成员函数</strong>。原因很简单，静态成员函数并不作用于具体的某一个类上面，如果在其中访问了非静态的成员的话，没有办法知道访问的到底是哪个类的成员。</li>
 </ul>
-]]></content>
+<h1 id="成员对象和封闭类"><a href="#成员对象和封闭类" class="headerlink" title="成员对象和封闭类"></a>成员对象和封闭类</h1><ul>
+<li><p>有成员对象的类叫封闭类，所谓成员对象，即类中的成员是另一个类的对象。</p>
+</li>
+<li><pre><code class="cpp"><span class="class"><span class="keyword">class</span> <span class="title">CTyre</span> //轮胎类 </span>
+<span class="class">{</span>
+        <span class="keyword">private</span>:
+                <span class="keyword">int</span> radius; <span class="comment">//半径 </span>
+              <span class="keyword">int</span> width; <span class="comment">//宽度</span>
+        <span class="keyword">public</span>:
+                CTyre(<span class="keyword">int</span> r,<span class="keyword">int</span> w):radius(r),width(w) { }
+};
+
+<span class="class"><span class="keyword">class</span> <span class="title">CEngine</span> //引擎类 </span>
+<span class="class">{</span>
+};
+
+<span class="class"><span class="keyword">class</span> <span class="title">CCar</span> {</span> <span class="comment">//汽车类 private:</span>
+        <span class="keyword">private</span>:
+              <span class="keyword">int</span> price;
+              CTyre tyre;
+              CEngine engine;
+    <span class="keyword">public</span>:
+        CCar(<span class="keyword">int</span> p,<span class="keyword">int</span> tr,<span class="keyword">int</span> tw );
+};
+
+CCar::CCar(<span class="keyword">int</span> p,<span class="keyword">int</span> tr,<span class="keyword">int</span> w):price(p),tyre(tr, w) {
+};
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>
+<span class="function"></span>{
+       <span class="function">CCar <span class="title">car</span><span class="params">(<span class="number">20000</span>,<span class="number">17</span>,<span class="number">225</span>)</span></span>;
+       <span class="keyword">return</span> <span class="number">0</span>;
+}
+&lt;!--￼<span class="number">6</span>--&gt;</code></pre>
+</li>
+<li><p>两个函数，名字和参数表都一样，但是一个是const,一个不是，算重载。例如</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CTest</span> &#123;</span></span><br><span class="line">	<span class="keyword">private</span> :</span><br><span class="line">		<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">    CTest() &#123; n = <span class="number">1</span> ; &#125;</span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">GetValue</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> n ; &#125; </span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">GetValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">2</span> * n ; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> CTest objTest1;</span><br><span class="line">	CTest objTest2;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; objTest1.GetValue() &lt;&lt; <span class="string">","</span> &lt;&lt;</span><br><span class="line">	objTest2.GetValue() ; <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h1><ul>
+<li><p>友元分为友元函数和友元类两种</p>
+</li>
+<li><p>友元函数</p>
+  <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CCar</span> ;</span> <span class="comment">//提前声明 CCar类，以便后面的CDriver类使用 class CDriver</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDriver</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ModifyCar</span><span class="params">( CCar * pCar)</span> </span>; <span class="comment">//改装汽车。由于这里使用了CCar的指针，所以才需要在前面提前声明一下。</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CCar</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">          <span class="keyword">private</span>:</span><br><span class="line">                 <span class="keyword">int</span> price;</span><br><span class="line"><span class="function"><span class="keyword">friend</span> <span class="keyword">int</span> <span class="title">MostExpensiveCar</span><span class="params">( CCar cars[], <span class="keyword">int</span> total)</span></span>; <span class="comment">//声明友元</span></span><br><span class="line"><span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">CDriver::ModifyCar</span><span class="params">(CCar * pCar)</span></span>; <span class="comment">//声明友元 &#125;;</span></span><br><span class="line">  </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CDriver::ModifyCar</span><span class="params">( CCar * pCar)</span> </span>&#123;</span><br><span class="line">pCar-&gt;price += <span class="number">1000</span>; <span class="comment">//汽车改装后价值增加</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MostExpensiveCar</span><span class="params">( CCar cars[],<span class="keyword">int</span> total)</span> <span class="comment">//求最贵汽车的价格</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> tmpMax = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>;i &lt; total; ++i )</span><br><span class="line"><span class="keyword">if</span>( cars[i].price &gt; tmpMax) tmpMax = cars[i].price;</span><br><span class="line">        <span class="keyword">return</span> tmpMax;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>友元类：如果A是B的友元类，那么A的成员函数可以访问B的私有成员</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CCar</span> &#123;</span></span><br><span class="line">       <span class="keyword">private</span>:</span><br><span class="line">             <span class="keyword">int</span> price;</span><br><span class="line">			 <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">CDriver</span>;</span> <span class="comment">//声明CDriver为友元类</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDriver</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>: CCar myCar;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ModifyCar</span><span class="params">()</span> </span>&#123;<span class="comment">//改装汽车</span></span><br><span class="line">myCar.price += <span class="number">1000</span>;<span class="comment">//因CDriver是CCar的友元类，</span></span><br><span class="line">&#125; &#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>友元类之间的关系不能传递，不能继承。</p>
+</li>
+</ul>
+<h1 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h1><ul>
+<li><p>运算符重载，就是对已有的运算符(C++中预定义的运算符)赋予多 重的含义，使同一运算符作用于不同类型的数据时导致不同类型的 行为。</p>
+</li>
+<li><p>运算符重载的目的是:扩展C++中提供的运算符的适用范围，使之 能作用于对象。</p>
+</li>
+<li><p>同一个运算符，对不同类型的操作数，所发生的行为不同。</p>
+</li>
+<li><p>运算符重载的实质是函数重载</p>
+</li>
+<li><p>遇到表达式中有重载运算符时，会把含运算符的表达式转换成对运算符函数的调用，然后把运算符的操作数转换成运算符函数的参数</p>
+</li>
+<li><p>运算符被多次重载时，根据实参的类型决定调用哪个运算符函数。</p>
+</li>
+<li><pre><code class="cpp"><span class="class"><span class="keyword">class</span> <span class="title">Complex</span> {</span>
+    <span class="keyword">public</span>:
+        <span class="keyword">double</span> real,imag;
+        Complex( <span class="keyword">double</span> r = <span class="number">0.0</span>, <span class="keyword">double</span> i= <span class="number">0.0</span> ):real(r),imag(i){}                     Complex <span class="keyword">operator</span>-(<span class="keyword">const</span> Complex &amp; c);
+};
+Complex <span class="keyword">operator</span>+( <span class="keyword">const</span> Complex &amp; a, <span class="keyword">const</span> Complex &amp; b) {
+    <span class="keyword">return</span> Complex( a.real+b.real,a.imag+b.imag); <span class="comment">//返回一个临时对象 </span>
+}
+Complex Complex::<span class="keyword">operator</span>-(<span class="keyword">const</span> Complex &amp; c) {
+    <span class="keyword">return</span> Complex(real - c.real, imag - c.imag); <span class="comment">//返回一个临时对象</span>
+}
+&lt;!--￼<span class="number">10</span>--&gt;
+
+- 赋值运算符重载时，返回值类型为引用，这样做的目的是尽量保留运算符原本的特性，理解不了就记住；与之对应的是，第<span class="number">21</span>行要返回指针
+
+- 第<span class="number">16</span>和<span class="number">17</span>行是很重要的，看这样一个例子
+
+  &lt;!--￼<span class="number">11</span>--&gt;
+
+  如果没有<span class="number">16</span>和<span class="number">17</span>行，那么此处第三行执行赋值操作时，会先<span class="keyword">delete</span>掉str，之后又对str进行操作，会出错。
+
+- 第<span class="number">18</span>行的<span class="keyword">delete</span>操作是必须的，如果没有这个，构造函数中申请的内存会泄露。通俗讲，就是使用等于号进行赋值之前，要先将目前的释放掉，再去等于其他的。
+
+- 第<span class="number">19</span>行需要开辟新的存储空间，即为深拷贝，不这样做的话就是浅拷贝，浅拷贝的危害是显而易见的。进一步思考，当我们想要执行一个赋值操作时，除了使用等于号可以达到目的，通过拷贝构造函数也可以达到赋值操作，所以就必须自己重新写拷贝构造函数，即<span class="number">9</span>~<span class="number">12</span>行，否则我们通过拷贝构造函数进行赋值时将会是浅拷贝。
+</code></pre>
+</li>
+</ul>
+<h2 id="运算符重载为友元"><a href="#运算符重载为友元" class="headerlink" title="运算符重载为友元"></a>运算符重载为友元</h2><ul>
+<li><p>一个例子：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Complex</span> &#123;</span></span><br><span class="line">		<span class="keyword">double</span> real,imag;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		Complex( <span class="keyword">double</span> r, <span class="keyword">double</span> i):real(r),imag(i)&#123; &#125;; </span><br><span class="line">  	Complex <span class="keyword">operator</span>+( <span class="keyword">double</span> r );</span><br><span class="line">&#125;;</span><br><span class="line">Complex Complex::<span class="keyword">operator</span>+( <span class="keyword">double</span> r ) &#123; <span class="comment">//能解释 c+5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对上面这个例子，如果我们定义了一个Complex类的对象c，此时我们只能c + 5，不能5 + C。如果我们想解决这个问题，可以在类外面另外写一个普通函数</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Complex <span class="keyword">operator</span>+ (<span class="keyword">double</span> r,<span class="keyword">const</span> Complex &amp; c) &#123; <span class="comment">//能解释 5+c</span></span><br><span class="line">	<span class="keyword">return</span> Complex( c.real + r, c.imag);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这个函数第一个参数是double，第二个参数是类对象。</p>
+<p>只是这样的话，新的这个重载函数不能访问类的私有成员，所以需要将这个函数重载为友元，即Complex类写成如下形式。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Complex</span> &#123;</span></span><br><span class="line">		<span class="keyword">double</span> real,imag;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		Complex( <span class="keyword">double</span> r, <span class="keyword">double</span> i):real(r),imag(i)&#123; &#125;; </span><br><span class="line">  	Complex <span class="keyword">operator</span>+( <span class="keyword">double</span> r );</span><br><span class="line">  	<span class="keyword">friend</span> Complex <span class="keyword">operator</span> + (<span class="keyword">double</span> r,<span class="keyword">const</span> Complex &amp; c);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><ul>
+<li><p>在定义一个新的类B时，如果该类与某 个已有的类A相似(指的是B拥有A的全部特点)， 那么就可以把A作为一个基类，而把B作为基 类的一个派生类(也称子类)。</p>
+</li>
+<li><p>派生类拥有基类的全部成员函数和成员变 量，不论是private、protected、public 。但是在派生类的各个成员函数中，不能访问 基类中的private成员。</p>
+</li>
+<li><p>派生类的写法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 派生类名:</span><span class="keyword">public</span> 基类名 &#123;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>派生类对象的内存空间:派生类对象的体积，等于基类对象的体积，再加上派 生类对象自己的成员变量的体积。在派生类对象中，包 含着基类对象，而且基类对象的存储位置位于派生类对 象新增的成员变量之前。</p>
+</li>
+<li><pre><code class="cpp"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt; </span></span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;
+<span class="class"><span class="keyword">class</span> <span class="title">CStudent</span> {</span> 
+  <span class="keyword">private</span>:
+        <span class="built_in">string</span> name;
+        <span class="built_in">string</span> id; <span class="comment">//学号</span>
+        <span class="keyword">char</span> gender; <span class="comment">//性别,'F'代表女，'M'代表男 int age;</span>
+    <span class="keyword">public</span>:
+        <span class="function"><span class="keyword">void</span> <span class="title">PrintInfo</span><span class="params">()</span></span>;
+        <span class="function"><span class="keyword">void</span> <span class="title">SetInfo</span><span class="params">( <span class="keyword">const</span> <span class="built_in">string</span> &amp; name_,<span class="keyword">const</span> <span class="built_in">string</span> &amp; id_,</span></span>
+<span class="function"><span class="params"><span class="keyword">int</span> age_, <span class="keyword">char</span> gender_ )</span></span>; 
+      <span class="function"><span class="built_in">string</span> <span class="title">GetName</span><span class="params">()</span> </span>{ <span class="keyword">return</span> name; }
+};
+
+</code></pre>
+</li>
+</ul>
+<p>  class CUndergraduateStudent:public CStudent {//本科生类，继承了CStudent类<br>      private:<br>          string department; //学生所属的系的名称<br>      public:<br>          void QualifiedForBaoyan() { //给予保研资格<br>              cout &lt;&lt; “qualified for baoyan” &lt;&lt; endl; }<br>          void PrintInfo() {<br>              CStudent::PrintInfo(); //调用基类的PrintInfo<br>              cout &lt;&lt; “Department:” &lt;&lt; department &lt;&lt;endl; }<br>          void SetInfo( const string &amp; name_,const string &amp; id_,<br>  int age_,char gender_ ,const string &amp; department_) {<br>        CStudent::SetInfo(name_,id_,age_,gender_); //调用基类的SetInfo<br>        department = department_;<br>  } };</p>
+<pre><code>
+  注意24和28行调用基类函数的方式
+
+- 
+</code></pre>]]></content>
   </entry>
   <entry>
     <title>百度C++开发工程师一面面经</title>

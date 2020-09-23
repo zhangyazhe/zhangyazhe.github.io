@@ -241,12 +241,120 @@ Complex Complex::<span class="keyword">operator</span>-(<span class="keyword">co
 </code></pre>
 </li>
 </ul>
-<p>  class CUndergraduateStudent:public CStudent {//本科生类，继承了CStudent类<br>      private:<br>          string department; //学生所属的系的名称<br>      public:<br>          void QualifiedForBaoyan() { //给予保研资格<br>              cout &lt;&lt; “qualified for baoyan” &lt;&lt; endl; }<br>          void PrintInfo() {<br>              CStudent::PrintInfo(); //调用基类的PrintInfo<br>              cout &lt;&lt; “Department:” &lt;&lt; department &lt;&lt;endl; }<br>          void SetInfo( const string &amp; name_,const string &amp; id_,<br>  int age_,char gender_ ,const string &amp; department_) {<br>        CStudent::SetInfo(name_,id_,age_,gender_); //调用基类的SetInfo<br>        department = department_;<br>  } };</p>
-<pre><code>
-  注意24和28行调用基类函数的方式
+<p>  class CUndergraduateStudent:public CStudent {//本科生类，继承了CStudent类<br>      private:<br>          string department; //学生所属的系的名称<br>      public:<br>          void QualifiedForBaoyan() { //给予保研资格<br>              cout &lt;&lt; “qualified for baoyan” &lt;&lt; endl; }<br>          void PrintInfo() {<br>              CStudent::PrintInfo(); //调用基类的PrintInfo<br>              cout &lt;&lt; “Department:” &lt;&lt; department &lt;&lt;endl; }<br>          void SetInfo( const string &amp; name_,const string &amp; id_,<br>  int age_,char gender_ ,const string &amp; department_) {<br>        CStudent::SetInfo(name_,id_,age_,gender_); //调用基类的SetInfo<br>        department = department_;<br>  } };<br>  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  注意24和28行调用基类函数的方式</span><br><span class="line"></span><br><span class="line">- 继承关系与复合关系</span><br><span class="line"></span><br><span class="line">  创建继承关系时，不仅要考虑代码重合度是否高，还要考虑逻辑上是否正确。继承关系的逻辑是：如果A继承B，则A也是B。例如，如果man类继承human类，则man也是human。考虑这个情况：现在要定义一个点类Point和一个圆类Circle。点类中有坐标x和y，Circle类能否直接继承点类并加一个半径的成员变量呢？这时就要考虑下逻辑关系，一个圆是一个点吗？显然不是的，所以建立继承关系时不合适的，这时可以创建复合关系，如下</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;cpp</span><br><span class="line">  class CPoint &#123;</span><br><span class="line">  	double x,y;</span><br><span class="line">  	friend class CCircle; &#x2F;&#x2F;便于Ccirle类操作其圆心</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  class CCircle &#123;</span><br><span class="line">  	double r;</span><br><span class="line">  	CPoint center; </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>考虑一个符合关系：每个人可以养10条狗，每只狗只有一个主人:</p>
+<p>错误示范：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDog</span>;</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMaster</span> &#123;</span></span><br><span class="line">	CDog dogs[<span class="number">10</span>]; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDog</span> &#123;</span></span><br><span class="line">	CMaster m; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-- 
-</code></pre>]]></content>
+<p>上面的写法循环定义了，比如现在要求sizeof(CMaster)，我们需要知道CDog的大小，而求CDog的大小又需要知道CMaster的大小。所以我们是求不出来的。改进方法如下。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDog</span>;</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMaster</span> &#123;</span></span><br><span class="line">	CDog *dogs[<span class="number">10</span>]; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDog</span> &#123;</span></span><br><span class="line">	CMaster *m; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>public继承的赋值兼容规则</p>
+<ul>
+<li><p>派生类的对象可以赋值给基类对象</p>
+<p>b = d;</p>
+<p>可以这样理解：如果基类对象b代表human，派生类对象d代表man，那么把man赋值给human没有问题，毕竟man也是human。下面的也可以这样理解</p>
+</li>
+<li><p>派生类的对象可以初始化基类引用</p>
+<p>base &amp; br = d;</p>
+<p>此时可理解为，基类引用指向派生类中的基类部分</p>
+</li>
+<li><p>派生类对象的地址可以赋值给基类指针</p>
+<p>base * pb = &amp; d;</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="覆盖"><a href="#覆盖" class="headerlink" title="覆盖"></a>覆盖</h1><ul>
+<li>派生类可以定义一个和基类成员同名的成员，这叫 覆盖。在派生类中访问这类成员时，缺省的情况是 访问派生类中定义的成员。要在派生类中访问由基 类定义的同名成员时，要使用作用域符号::</li>
+</ul>
+<h1 id="存取权限"><a href="#存取权限" class="headerlink" title="存取权限"></a>存取权限</h1><ul>
+<li><p>基类的private成员：可以被下列函数访问 </p>
+<ul>
+<li>基类的成员函数</li>
+<li>基类的友元函数</li>
+</ul>
+</li>
+<li><p>基类的public成员：任意位置</p>
+</li>
+<li><p>基类的protected成员：</p>
+<ul>
+<li>基类的成员函数</li>
+<li>基类的友元函数</li>
+<li>派生类的<strong>成员函数</strong>可以访问<strong>当前对象</strong>的基类的保护成员。保护成员只能在派生类或者基类的成员函数或者通过友元被访问</li>
+</ul>
+</li>
+<li><p>看一个例子</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span> &#123;</span></span><br><span class="line">	<span class="keyword">private</span>: <span class="keyword">int</span> nPrivate; <span class="comment">//私有成员</span></span><br><span class="line">	<span class="keyword">public</span>: <span class="keyword">int</span> nPublic; <span class="comment">//公有成员</span></span><br><span class="line">  <span class="keyword">protected</span>: <span class="keyword">int</span> nProtected;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> :</span><span class="keyword">public</span> Father&#123;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">AccessFather</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">   		nPublic = <span class="number">1</span>; <span class="comment">// ok;</span></span><br><span class="line">      nPrivate = <span class="number">1</span>;  <span class="comment">// wrong</span></span><br><span class="line">      nProtected = <span class="number">1</span>; <span class="comment">// OK，访问从基类继承的protected成员</span></span><br><span class="line">     Son f;</span><br><span class="line">     f.nProtected = <span class="number">1</span>;<span class="comment">//wrong ，f不是当前对象</span></span><br><span class="line"><span class="comment">// 保护成员</span></span><br><span class="line">&#125; &#125;;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Father f;</span><br><span class="line">	Son s;</span><br><span class="line">	f.nPublic = <span class="number">1</span>; <span class="comment">// Ok </span></span><br><span class="line">  s.nPublic = <span class="number">1</span>; <span class="comment">// Ok </span></span><br><span class="line">  f.nProtected = <span class="number">1</span>; <span class="comment">// error </span></span><br><span class="line">  f.nPrivate = <span class="number">1</span>; <span class="comment">// error</span></span><br><span class="line">	s.nProtected = <span class="number">1</span>; <span class="comment">//error </span></span><br><span class="line">  s.nPrivate = <span class="number">1</span>; <span class="comment">// error</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第12行编译时会出错。需要注意，派生类的成员函数可以访问当前对象的基类的保护成员，当前类即AccessFather作用的那个对象，所以f并不是当前对象，所以f不能访问nProtected。</p>
+<p>接着来看22和24行，由于保护成员只能在派生类或者基类的成员函数或者通过友元被访问，所以这里main函数中不能访问保护成员。</p>
+</li>
+</ul>
+<h1 id="虚函数和多态"><a href="#虚函数和多态" class="headerlink" title="虚函数和多态"></a>虚函数和多态</h1><ul>
+<li><p>在类的定义中，前面有 virtual 关键字的成员函 数就是虚函数。</p>
+</li>
+<li><p>virtual 关键字只用在类定义里的函数声明中， 写函数体时不用</p>
+</li>
+<li><p>构造函数和静态成员函数不能是虚函数</p>
+</li>
+<li><p>多态有两种表现形式：</p>
+<ul>
+<li><p>通过基类<strong>指针</strong>调用基类和派生类中的同名<strong>虚函数</strong>时:</p>
+<p> (1)若该指针指向一个基类的对象，那么被调用是基类的虚函数;</p>
+<p> (2)若该指针指向一个派生类的对象，那么被调用的是派生类的虚函数。</p>
+<p> 这种机制就叫做“多态”</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CBase</span> &#123;</span> </span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">SomeVirtualFunction</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDerived</span>:</span><span class="keyword">public</span> CBase &#123;</span><br><span class="line">	<span class="keyword">public</span> :</span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">SomeVirtualFunction</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	CDerived ODerived;</span><br><span class="line">	CBase * p = &amp; ODerived;</span><br><span class="line">	p -&gt; SomeVirtualFunction(); <span class="comment">//调用哪个虚函数取决于p指向哪种类型的对象 </span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过基类<strong>引用</strong>调用基类和派生类中的同名<strong>虚函数</strong>时:</p>
+<p> (1)若该引用引用的是一个基类的对象，那么被调用是基类的虚函数;</p>
+<p> (2)若该引用引用的是一个派生类的对象，那么被调用的是派生类的虚函数。 </p>
+<p>这种机制也叫做“多态”。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CBase</span> &#123;</span> </span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">SomeVirtualFunction</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDerived</span>:</span><span class="keyword">public</span> CBase &#123;</span><br><span class="line">	<span class="keyword">public</span> :</span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">SomeVirtualFunction</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	CDerived ODerived;</span><br><span class="line">	CBase &amp; r = ODerived;</span><br><span class="line">	r.SomeVirtualFunction(); <span class="comment">//调用哪个虚函数取决于r引用哪种类型的对象 </span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>多态的作用</p>
+<p>在面向对象的程序设计中使用多态，能够增强程序的可扩充性，即程序需要修改或增加功能的时候，需要改动和增加的代码较少。</p>
+</li>
+</ul>
+<h1 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h1><ul>
+<li><p><strong>通过基类的指针删除派生类对象时，通常情况下只调用基类的析构函数。</strong>但是，删除一个派生类的对象时，应该先调用派生类的析构函数，然后调用基类的析构函数。</p>
+<p>解决办法:把基类的析构函数声明为virtual</p>
+<p>派生类的析构函数可以virtual不进行声明</p>
+<p>此时通过基类的指针删除派生类对象时，首先调用派生类的析构函 数，然后调用基类的析构函数</p>
+<p>一般来说，一个类如果定义了虚函数，则应该将析构函数也定义成虚函数。或者，一个类打算作为基类使用，也应该将析构函数定义成虚函数。</p>
+<p>注意:不允许以虚函数作为构造函数</p>
+</li>
+</ul>
+<h1 id="纯虚函数和抽象类"><a href="#纯虚函数和抽象类" class="headerlink" title="纯虚函数和抽象类"></a>纯虚函数和抽象类</h1><ul>
+<li>纯虚函数：没有函数体的虚函数<ul>
+<li>没有函数体指的是没有花括号，例如virtual void Print() = 0。</li>
+<li>对于virtual void Print(){}，这个不是纯虚函数，他是有函数体的，只不过函数体为空</li>
+</ul>
+</li>
+<li>如果一个类包含纯虚函数，那么这个类就是抽象类<ul>
+<li>抽象类只能作为基类来派生新类使用，不能创建抽象类的对象</li>
+<li>抽象类的指针和引用可以指向由抽象类派生出来的类的对象</li>
+</ul>
+</li>
+<li>在抽象类的成员函数内可以调用纯虚函数，但是在构造函数或析构函数内部 不能调用纯虚函数。</li>
+<li>如果一个类从抽象类派生而来，那么当且仅当它实现了基类中的所有纯虚函 数，它才能成为非抽象类。</li>
+</ul>
+<h1 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h1><ul>
+<li><p>假如我们要写一个swap函数，交换两个变量的值，如果要交换两个int，我们要写一个swap(int a, int b)，如果要换两个double，又要重载一下，如果还有其他类型，就还需要重载很多次。这样做比较麻烦，对于这些比较相似的函数，我们可以直接使用函数模板来实现。</p>
+</li>
+<li><p>编译器由模板生成函数的过程称为模板的实例化，</p>
+</li>
+<li><p>例子</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">Swap</span>(<span class="title">T</span> &amp; <span class="title">x</span>,<span class="title">T</span> &amp; <span class="title">y</span>) &#123;</span></span><br><span class="line">	T tmp = x; </span><br><span class="line">  x = y;</span><br><span class="line">	y = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">1</span>,m = <span class="number">2</span>;</span><br><span class="line">	Swap(n,m); <span class="comment">//编译器自动生成 void Swap(int &amp; ,int &amp; )函数 </span></span><br><span class="line">  <span class="keyword">double</span> f = <span class="number">1.2</span>,g = <span class="number">2.3</span>;</span><br><span class="line">	Swap(f,g); <span class="comment">//编译器自动生成 void Swap(double &amp; ,double &amp; )函数 </span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>百度C++开发工程师一面面经</title>

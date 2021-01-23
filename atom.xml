@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-01-23T10:03:21.948Z</updated>
+  <updated>2021-01-23T10:19:38.809Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,11 +21,12 @@
     <link href="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/"/>
     <id>http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/</id>
     <published>2021-01-23T10:01:40.000Z</published>
-    <updated>2021-01-23T10:03:21.948Z</updated>
+    <updated>2021-01-23T10:19:38.809Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;通过网络编码实现最佳存储扩展&lt;/p&gt;
     
     </summary>
     

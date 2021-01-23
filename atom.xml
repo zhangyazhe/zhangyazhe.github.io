@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-09-23T09:49:50.388Z</updated>
+  <updated>2021-01-23T09:59:37.289Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,9 +17,27 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Cpp-学习笔记</title>
-    <link href="http://yoursite.com/2020/09/18/Cpp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://yoursite.com/2020/09/18/Cpp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
+    <title>[paper]Toward Optimal Storage Scaling via Network Coding: From Theory to Practice</title>
+    <link href="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/"/>
+    <id>http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/</id>
+    <published>2021-01-23T09:59:03.000Z</published>
+    <updated>2021-01-23T09:59:37.289Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;论文阅读&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Cpp学习笔记</title>
+    <link href="http://yoursite.com/2020/09/18/Cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/09/18/Cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
     <published>2020-09-18T15:47:18.000Z</published>
     <updated>2020-09-23T09:49:50.388Z</updated>
     
@@ -384,26 +402,6 @@
     
       &lt;p&gt;摘要：&lt;/p&gt;
 &lt;p&gt;多源最短路径 bfs&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>csp 201403_4 无线网络</title>
-    <link href="http://yoursite.com/2020/02/05/csp-201403-4-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/"/>
-    <id>http://yoursite.com/2020/02/05/csp-201403-4-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/</id>
-    <published>2020-02-05T09:31:12.000Z</published>
-    <updated>2020-09-04T14:46:04.675Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;最短路径 bfs&lt;/p&gt;
     
     </summary>
     

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, 算法, 随笔, git, linux, Qt, Java, Big Data">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    [paper]Toward Optimal Storage Scaling via Network Coding: From Theory to Practice |
+    
+    Kyle&#39;s blog</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Kyle's blog" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [paper]Toward Optimal Storage Scaling via Network Coding: From Theory to Practice
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" class="article-date">
+  <time datetime="2021-01-23T09:59:03.000Z" itemprop="datePublished">2021-01-23</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>论文阅读</p>
+<a id="more"></a>
+
+<h1 id="通过网络编码实现最佳存储扩展"><a href="#通过网络编码实现最佳存储扩展" class="headerlink" title="通过网络编码实现最佳存储扩展"></a>通过网络编码实现最佳存储扩展</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>为了适应不断增长的存储需求和经常改变的存储冗余需求，实际的分布式存储系统需要通过将目前已经存储的数据重新定位到不同的存储节点来提供存储扩展能力。但是，存储过程不可避免地需要通过网络传输大量数据。因此，将存储扩展过程中的带宽成本最小化对于分布式设置至关重要。在这篇论文中，我们展示了通过允许存储节点在编码过程中发送编码信息，可以在基于网络编码的可擦除分布式存储系统中实现最佳的存储扩展。根据我们的理论发现，我们还构建了一个分布式存储系统原型NCScale，该原型可以实现基于网络编码的扩展，同时保留了实际部署所需的属性。在亚马逊EC2上进行实验表明，存储扩展时间可以比目前最新的技术缩短至少50%。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>分布式存储系统为通过多个存储节点或存储服务器存储大量数据提供了可伸缩的平台。为了提供防止节点故障的可靠性保障，他们通常在节点之间将数据冗余进行拆分。擦除编码是一种冗余形式，与相同的存储开销下的冗余相比，可以显著提高可靠性，并且已经在分布式系统中广泛采用。</p>
+<p>为了适应不断增长的存储需求，系统的使用者经常会定期向存储系统中增加新的节点来增加存储空间和提升服务带宽。在这种情况下，存储系统需要对已经存在于存储节点中的数据重新分发（擦除编码）以在所有原本就存在的节点和新增节点之间保持数据的均衡分布。此外，系统使用者还需要为擦除编码重新设置正确的冗余级别参数，以适应存储效率、容错能力、访问性能以及管理复杂性之间的权衡。例如，存储系统可以通过增加存储冗余来降低恢复成本，或者针对不同的工作负载在不同的冗余级别的擦除编码之间动态切换，从而在访问性能和容错能力之间取得平衡。</p>
+<p>这激励我们去研究存储扩展，通过存储扩展，存储系统将已经存储的数据重新分发到不同节点，并且基于新的数据分布重新计算擦除编码数据。由于扩展过程不可避免地会触发大量的数据转移，我们提出了下面的扩展问题，我们的目标是将扩展带宽最小化（例如在扩展过程中的数据迁移量）。需要注意的是，扩缩容问题与传统的数据恢复问题有着本质的不同，后者的目标是将恢复数据时数据迁移量最小化。尽管扩缩容问题和数据恢复问题都旨在减少带宽，但是他们建立在不同的问题背景之上，所以会引出不同的分析和发现。</p>
+<p>在这篇论文中，我们从理论和应用两个方面来研究扩缩容问题，我们的贡献有：</p>
+<ul>
+<li>我们使用信息流图模型，证明了理论上最小的扩展带宽。为了最小化扩展带宽，我们通过允许存储节点发送当前正在存储的未编码和已编码数据的组合，来利用网络编码的信息混合特性。需要注意的是，已有的扩缩容方法无法实现最小带宽。据我们所知，我们的研究是目前为止第一个将网络编码应用于存储扩展的正式研究。</li>
+<li>我们设计了一个名为NCScale的分布式存储系统，该系统通过利用存储节点的可用计算资源来实现基于网络编码的存储扩展。NCScale在保留了实际部署所需要的多项参数设置的同时，实现了最小或者接近最小的网络带宽。</li>
+<li>我们实现了一个NCScale的原型并且在亚马逊的EC2上完成了实验。实验结果 表明NCScale可以比目前最新的扩展方法减少至少50%的时间。</li>
+</ul>
+<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>我们首先介绍擦除编码的基础，然后对存储扩展问题进行定义，并提供一个示例。表一总结了本文使用的主要符号。</p>
+<ol>
+<li><p>擦除编码基础</p>
+<p>擦除编码通常由两个可配置参数n和k组成，其中k &lt; n。具体来说，我们将存储系统中按照固定大小进行组织的单元叫做块。对于每组的k个块（数据块），存储系统将他们编码为另外n - k个相同大小的块（奇偶校验块），这样n个数据和奇偶校验块中的任何k个都足以重建原始的k个数据块。我们将n个数据和奇偶校验块的集合称为条带，并将n个块存储在n个不同的节点上，以保障合议可以容忍任意的n - k个节点失效或者数据块丢失。一个存储系统中包含多个条带，这些条带都是独立编码的。编码结构有两个属性：</p>
+<ol>
+<li>最大距离可分离（MDS），即通过最小的存储冗余来实现容错。</li>
+<li>系统性，即将k个数据块保存在一个条带中以保证直接访问</li>
+</ol>
+<p>最实用的擦除编码（例如Reed-Solomon码）是线性代码，其中每个奇偶校验块都是基于Galois Field算法，然后对同一个条带中的数据块进行线性组合。在这篇论文中，我们专注于基于Vandermonde的Reed-Solomon编码，其编码运算基于一个(n - k) × k的Vandermonde矩阵<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121100158958.png" alt="image-20210121100158958" style="zoom:50%;" />，其中i∈[1, n-k]，j∈[1, k]，并且<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121100346117.png" alt="image-20210121100346117" style="zoom:50%;" />。例如，在一个(4, 2)编码中，我们可以通过两个数据块（分别由D1和D2表示）的线性组合来计算两个分别由P1和P2表示的奇偶校验块，即</p>
+<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121105543676.png" alt="image-20210121105543676" style="zoom:50%;" />
+
+<p>假设我们现在希望通过添加两个数据块D3和D4从而从(4, 2)编码扩展为(6, 4)编码，那么新的奇偶校验块P1’和P2’的计算方法为</p>
+<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121105606854.png" alt="image-20210121105606854" style="zoom:50%;" />
+
+<p>可以看到，(4, 2)编码的Vandermonde矩阵是(6, 4)编码的Vandermonde矩阵的子矩阵。我们发现，新的奇偶校验块可以通过将已存在的奇偶校验块和一个增量块相加得到，并且这仅仅是新数据块的一个线性组合。通常，上述结论在下面的情况下成立，即我们想要从(n, k)扩展到(n’, k’)，且n - k = n’ - k’。我们在后面会利用这个特性。</p>
+<p>尽快擦除编码产生的冗余度比复制要少得多，但是在修复故障时会导致大量数据的传输。例如，Reed-Solomon编码需要检索k个块来修复丢失的块。因此，目前的研究大多都专注于故障修复问题，其目的是最小化修复所消耗的带宽并因此提高修复性能。特别地，基于网络编码，重新生成的代码是特殊的擦除编码，通过允许无故障的节点在修复过程中对其存储的数据进行编码，可以证明在修复带宽和存储冗余之间实现了最佳的折衷。另一方面，我们的工作将网络编码应用于存储扩展，这从根本上不同于修复问题。</p>
+</li>
+<li><p>扩展</p>
+<p>我们现在正式定义什么是存储扩展问题。</p>
+<p>(n, k, s)缩放：对于任意的s &gt; 0，我们将存储在n个现有节点中的(n, k)编码块转换为(n + s, k + s)编码的块，转换后的块将被存储在n + s个节点中，这样一来，下面的属性会被实现：</p>
+<ul>
+<li>属性1（MDS和系统性）：新的(n + s, k + s)编码条带能够在容忍与(n, k)编码相同的n - k 个错误的同时，保持MDS和系统性。</li>
+<li>属性2（统一数据和奇偶校验分布）：在进行存储扩展之前以及完成扩展之后，不同的条带之间的数据块和奇偶校验块之间的比例应该均匀地分布在各个节点上。这样就可以确保奇偶校验更新在各个节点之间达到负载平衡。</li>
+<li>属性3（分散式缩放）：存储扩展操作可以在没有集中实体的协调下完成。这样可以消除单点故障或瓶颈。</li>
+<li>目标：我们的目标是最小化扩展带宽（即在扩展期间传输的数据量），同时保留所有上述三条属性，这对于实际部署擦除编码存储至关重要。</li>
+</ul>
+<p>像在RAID和分布式存储系统中现有的扩展方法中一样，我们在扩展之前和之后固定可容忍的故障数量，对于可容忍故障数量可变的这种扩展问题的变体，我们并不考虑。我们同时还会考虑s &lt; 0的情况，即缩容的情况。</p>
+<p>我们通过网络编码提出了扩展问题。我们通过图一种展示的(3, 2, 1)扩展示例来推进这个问题。</p>
+<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210122095730748.png" alt="image-20210122095730748" style="zoom:50%;" />
+
+<p>让Xi是条带上第i个在扩容前就存在的节点，i∈[1, n]，并让Yj是扩展后的第j个新节点，j∈[1, s]。同时，对于某个索引号<em>，令D\</em>，P*以及Q*分别是数据块、扩容前的奇偶校验块、扩容后的奇偶校验块。</p>
+<p>我们首先考虑Scale-RS（如图一(a)所示）。Scale-RS执行缩放需要两个步骤。第一步是对数据块的迁移，也就是将一些数据块从已经存在的节点上迁移到新节点上。第二步是更新奇偶校验块，它在保存重定位数据块的节点中计算新的奇偶校验块，并将其发送到保存奇偶校验块的节点，以重建新的奇偶校验块。例如，在图一(a)中，数据块D5, D6, D11, D12被用来计算奇偶校验块，然后将结果发送到节点X3。在这个例子中，Scale-RS需要传输8个块。需要注意的是，此时属性2被违反了，因为所有的奇偶校验块被存放在了同一个节点上。</p>
+<p>现在我们来看看网络编码是如何减少扩展带宽的，如图二(b)所示。<strong>*<u>我们的关键想法是将数据块迁移和奇偶校验块更新耦合在一起，方法是允许每一个已经存在的节点在重新分配块之前执行本地计算。</u>*</strong>具体来说，每一个奇偶校验块在扩展前都会像RAID5一样使用同一排的数据块执行异或操作。<strong>*<u>例如，在扩展过程中，X1可以在本地计算Q1，Q1 = D1 xor D2 xor D9 = P1 xor D9（之所以能在本地计算，是因为P1和D9都恰好存储在X1中，这也是为什么Scale-RS不能做到本地计算）。与此类似，X2可以在本地计算Q2，X3可以在本地计算Q3。最后的Q4仍由X1本地计算得到，然后再发送给Y1。这个过程中，D9, D12, D10被发送到Y1，Q4由X1计算出来之后发送给Y1，所以一个传输了4个块。</u>*</strong>同时，属性一二三也被满足。</p>
+</li>
+</ol>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>我们通过信息流图模型来分析(n, k, s)扩展。我们推导了扩展带宽的下限，并通过证明存在随机的线性编码，其扩展带宽与一般（n，k，s）的下限相匹配，来证明该下限是紧的。 请注意，随机线性编码是非系统性的，其中每个条带仅包含已编码的块（即，违反了P1）。</p>
+<ol>
+<li><p>信息流图模型</p>
+<p>为了符合文献 中的信息流图模型，我们假定擦除编码在文件粒度上进行操作。特别地，为了给一个大小为M的数据文件进行编码，我们将他拆分为k个块，每个块的大小为M/k，然后将k个块编码到n个相同大小的块中，再将这n个块分发到n个节点中去。至此，对于数据文件的(n, k, s)扩展过程可以被分解为下面的四个步骤：</p>
+<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210123102917271.png" alt="image-20210123102917271" style="zoom:50%;" />
+
+<p>令β代表任何一个已经存在的节点Xi与新节点Yj之间的带宽。换句话说，每个Yj最多从Xi下载β个单元的编码数据。为了最小化扩展带宽，我们的目标是最小化β，同时要保证数据文件可以通过任意k个文件重组。</p>
+<p>我们为(n, k, s)扩展构建了信息流图G，如图二所示。</p>
+<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210123103450913.png" alt="image-20210123103450913" style="zoom:50%;" />
+
+<p>图G中的节点：</p>
+<ul>
+<li><p>我们添加了一个虚拟源节点S和一个数据收集者T，分别作为图G的源节点和目的节点。</p>
+</li>
+<li><p>每一个已经存在的存储节点Xi（1 &lt;= i &lt;= n）都由以下几部分组成：</p>
+<ol>
+<li>一个输入节点$X^{in}_i$</li>
+<li>一个中间节点$X^{mid}_i$</li>
+<li>一个输出节点$X_i^{out}$</li>
+<li>一条有向边$X_i^{in} \rightarrow X_i^{mid}$,权重为$\frac{M}{k}$，即在扩展前存储在节点$X_i$中的数据量</li>
+<li>一条有向边$X_i^{mid} \rightarrow X_i^{out}$，权重为$\frac{M}{k+s}$，即扩展后存储在$X_i$中的数据量</li>
+</ol>
+</li>
+<li><p>每一个新的节点$Y_i(1 \leq j \leq s)$由以下几部分组成：</p>
+<ol>
+<li>一个输入节点$Y_j^{in}$</li>
+<li>一个输出节点$Y_j^{out}$</li>
+<li>一条有向边$Y_j^{in} \rightarrow Y_j^{out}$，权重为$\frac{M}{k+s}$，即存储在$Y_j$节点中的数据量</li>
+</ol>
+</li>
+</ul>
+<p>图G中的边：</p>
+<ul>
+<li>我们在S与所有的$X_i^{in}$之间添加一条有向边，权重为无穷</li>
+<li></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" data-id="ckk9jkgib0010tct34cima2fb"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/09/18/Cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">Cpp学习笔记</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 Kyle&#39;s blog</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="Kyle&#39;s blog"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

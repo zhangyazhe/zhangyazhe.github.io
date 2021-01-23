@@ -25,7 +25,7 @@
 <li>最大距离可分离（MDS），即通过最小的存储冗余来实现容错。</li>
 <li>系统性，即将k个数据块保存在一个条带中以保证直接访问</li>
 </ol>
-<p>最实用的擦除编码（例如Reed-Solomon码）是线性代码，其中每个奇偶校验块都是基于Galois Field算法，然后对同一个条带中的数据块进行线性组合。在这篇论文中，我们专注于基于Vandermonde的Reed-Solomon编码，其编码运算基于一个(n - k) × k的Vandermonde矩阵<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121100158958.png" alt="image-20210121100158958" style="zoom:50%;" />，其中i∈[1, n-k]，j∈[1, k]，并且<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121100346117.png" alt="image-20210121100346117" style="zoom:50%;" />。例如，在一个(4, 2)编码中，我们可以通过两个数据块（分别由D1和D2表示）的线性组合来计算两个分别由P1和P2表示的奇偶校验块，即</p>
+<p>最实用的擦除编码（例如Reed-Solomon码）是线性代码，其中每个奇偶校验块都是基于Galois Field算法，然后对同一个条带中的数据块进行线性组合。在这篇论文中，我们专注于基于Vandermonde的Reed-Solomon编码，其编码运算基于一个(n - k) × k的Vandermonde矩阵<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210121100158958.png" style="zoom:50%;">，其中i∈[1, n-k]，j∈[1, k]，并且<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210121100346117.png" style="zoom:50%;" />。例如，在一个(4, 2)编码中，我们可以通过两个数据块（分别由D1和D2表示）的线性组合来计算两个分别由P1和P2表示的奇偶校验块，即</p>
 <img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210121105543676.png" style="zoom:50%;" />
 
 <p>假设我们现在希望通过添加两个数据块D3和D4从而从(4, 2)编码扩展为(6, 4)编码，那么新的奇偶校验块P1’和P2’的计算方法为</p>
@@ -55,7 +55,7 @@
 <ol>
 <li><p>信息流图模型</p>
 <p>为了符合文献 中的信息流图模型，我们假定擦除编码在文件粒度上进行操作。特别地，为了给一个大小为M的数据文件进行编码，我们将他拆分为k个块，每个块的大小为M/k，然后将k个块编码到n个相同大小的块中，再将这n个块分发到n个节点中去。至此，对于数据文件的(n, k, s)扩展过程可以被分解为下面的四个步骤：</p>
-<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210123102917271.png" style="zoom:50%;" />
+<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210123102917271.png" style="zoom:35%;" />
 
 <p>令β代表任何一个已经存在的节点Xi与新节点Yj之间的带宽。换句话说，每个Yj最多从Xi下载β个单元的编码数据。为了最小化扩展带宽，我们的目标是最小化β，同时要保证数据文件可以通过任意k个文件重组。</p>
 <p>我们为(n, k, s)扩展构建了信息流图G，如图二所示。</p>
@@ -68,23 +68,23 @@
 <li><p>每一个已经存在的存储节点Xi（1 &lt;= i &lt;= n）都由以下几部分组成：</p>
 <ol>
 <li>一个输入节点X<sub>i</sub><sup>in</sup></li>
-<li>一个中间节点$X^{mid}_i$</li>
-<li>一个输出节点$X_i^{out}$</li>
-<li>一条有向边$X_i^{in} \rightarrow X_i^{mid}$,权重为$\frac{M}{k}$，即在扩展前存储在节点$X_i$中的数据量</li>
-<li>一条有向边$X_i^{mid} \rightarrow X_i^{out}$，权重为$\frac{M}{k+s}$，即扩展后存储在$X_i$中的数据量</li>
+<li>一个中间节点X<sub>i</sub><sup>mid</sup></li>
+<li>一个输出节点X<sub>i</sub><sup>out</sup></li>
+<li>一条有向边X<sub>i</sub><sup>in</sup> -&gt; X<sub>i</sub><sup>mid</sup>，权重为M/k，即在扩展前存储在节点X<sub>i</sub>中的数据量</li>
+<li>一条有向边X<sub>i</sub><sup>mid</sup> -&gt; X<sub>i</sub><sup>out</sup>，权重为M/(k+s)即扩展后存储在X<sub>i</sub>中的数据量</li>
 </ol>
 </li>
-<li><p>每一个新的节点$Y_i(1 \leq j \leq s)$由以下几部分组成：</p>
+<li><p>每一个新的节点Y<sub>i</sub>由以下几部分组成：</p>
 <ol>
-<li>一个输入节点$Y_j^{in}$</li>
-<li>一个输出节点$Y_j^{out}$</li>
-<li>一条有向边$Y_j^{in} \rightarrow Y_j^{out}$，权重为$\frac{M}{k+s}$，即存储在$Y_j$节点中的数据量</li>
+<li>一个输入节点Y<sub>j</sub><sup>in</sup></li>
+<li>一个输出节点Y<sub>j</sub><sup>out</sup></li>
+<li>一条有向边Y<sub>j</sub><sup>in</sup>-&gt;  Y<sub>j</sub><sup>out</sup>，权重为M/(k+s)，即存储在Y<sub>j</sub>节点中的数据量</li>
 </ol>
 </li>
 </ul>
 <p>图G中的边：</p>
 <ul>
-<li>我们在S与所有的$X_i^{in}$之间添加一条有向边，权重为无穷</li>
+<li>我们在S与所有的X<sub>i</sub><sup>in</sup>之间添加一条有向边，权重为无穷</li>
 <li></li>
 </ul>
 </li>

@@ -102,10 +102,10 @@
 <li>系统性，即将k个数据块保存在一个条带中以保证直接访问</li>
 </ol>
 <p>最实用的擦除编码（例如Reed-Solomon码）是线性代码，其中每个奇偶校验块都是基于Galois Field算法，然后对同一个条带中的数据块进行线性组合。在这篇论文中，我们专注于基于Vandermonde的Reed-Solomon编码，其编码运算基于一个(n - k) × k的Vandermonde矩阵<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121100158958.png" alt="image-20210121100158958" style="zoom:50%;" />，其中i∈[1, n-k]，j∈[1, k]，并且<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121100346117.png" alt="image-20210121100346117" style="zoom:50%;" />。例如，在一个(4, 2)编码中，我们可以通过两个数据块（分别由D1和D2表示）的线性组合来计算两个分别由P1和P2表示的奇偶校验块，即</p>
-<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121105543676.png" alt="image-20210121105543676" style="zoom:50%;" />
+<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210121105543676.png" style="zoom:50%;" />
 
 <p>假设我们现在希望通过添加两个数据块D3和D4从而从(4, 2)编码扩展为(6, 4)编码，那么新的奇偶校验块P1’和P2’的计算方法为</p>
-<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210121105606854.png" alt="image-20210121105606854" style="zoom:50%;" />
+<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210121105606854.png" style="zoom:50%;" />
 
 <p>可以看到，(4, 2)编码的Vandermonde矩阵是(6, 4)编码的Vandermonde矩阵的子矩阵。我们发现，新的奇偶校验块可以通过将已存在的奇偶校验块和一个增量块相加得到，并且这仅仅是新数据块的一个线性组合。通常，上述结论在下面的情况下成立，即我们想要从(n, k)扩展到(n’, k’)，且n - k = n’ - k’。我们在后面会利用这个特性。</p>
 <p>尽快擦除编码产生的冗余度比复制要少得多，但是在修复故障时会导致大量数据的传输。例如，Reed-Solomon编码需要检索k个块来修复丢失的块。因此，目前的研究大多都专注于故障修复问题，其目的是最小化修复所消耗的带宽并因此提高修复性能。特别地，基于网络编码，重新生成的代码是特殊的擦除编码，通过允许无故障的节点在修复过程中对其存储的数据进行编码，可以证明在修复带宽和存储冗余之间实现了最佳的折衷。另一方面，我们的工作将网络编码应用于存储扩展，这从根本上不同于修复问题。</p>
@@ -121,8 +121,7 @@
 </ul>
 <p>像在RAID和分布式存储系统中现有的扩展方法中一样，我们在扩展之前和之后固定可容忍的故障数量，对于可容忍故障数量可变的这种扩展问题的变体，我们并不考虑。我们同时还会考虑s &lt; 0的情况，即缩容的情况。</p>
 <p>我们通过网络编码提出了扩展问题。我们通过图一种展示的(3, 2, 1)扩展示例来推进这个问题。</p>
-<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210122095730748.png" alt="image-20210122095730748" style="zoom:50%;" />
-
+<p><img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210122095730748.png" alt=""></p>
 <p>让Xi是条带上第i个在扩容前就存在的节点，i∈[1, n]，并让Yj是扩展后的第j个新节点，j∈[1, s]。同时，对于某个索引号<em>，令D\</em>，P*以及Q*分别是数据块、扩容前的奇偶校验块、扩容后的奇偶校验块。</p>
 <p>我们首先考虑Scale-RS（如图一(a)所示）。Scale-RS执行缩放需要两个步骤。第一步是对数据块的迁移，也就是将一些数据块从已经存在的节点上迁移到新节点上。第二步是更新奇偶校验块，它在保存重定位数据块的节点中计算新的奇偶校验块，并将其发送到保存奇偶校验块的节点，以重建新的奇偶校验块。例如，在图一(a)中，数据块D5, D6, D11, D12被用来计算奇偶校验块，然后将结果发送到节点X3。在这个例子中，Scale-RS需要传输8个块。需要注意的是，此时属性2被违反了，因为所有的奇偶校验块被存放在了同一个节点上。</p>
 <p>现在我们来看看网络编码是如何减少扩展带宽的，如图二(b)所示。<strong><u>我们的关键想法是将数据块迁移和奇偶校验块更新耦合在一起，方法是允许每一个已经存在的节点在重新分配块之前执行本地计算。</u></strong>具体来说，每一个奇偶校验块在扩展前都会像RAID5一样使用同一排的数据块执行异或操作。<strong><u>例如，在扩展过程中，X1可以在本地计算Q1，Q1 = D1 xor D2 xor D9 = P1 xor D9（之所以能在本地计算，是因为P1和D9都恰好存储在X1中，这也是为什么Scale-RS不能做到本地计算）。与此类似，X2可以在本地计算Q2，X3可以在本地计算Q3。最后的Q4仍由X1本地计算得到，然后再发送给Y1。这个过程中，D9, D12, D10被发送到Y1，Q4由X1计算出来之后发送给Y1，所以一个传输了4个块。</u></strong>同时，属性一二三也被满足。</p>
@@ -132,7 +131,7 @@
 <ol>
 <li><p>信息流图模型</p>
 <p>为了符合文献 中的信息流图模型，我们假定擦除编码在文件粒度上进行操作。特别地，为了给一个大小为M的数据文件进行编码，我们将他拆分为k个块，每个块的大小为M/k，然后将k个块编码到n个相同大小的块中，再将这n个块分发到n个节点中去。至此，对于数据文件的(n, k, s)扩展过程可以被分解为下面的四个步骤：</p>
-<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210123102917271.png" alt="image-20210123102917271" style="zoom:50%;" />
+<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210123102917271.png" style="zoom:50%;" />
 
 <p>令β代表任何一个已经存在的节点Xi与新节点Yj之间的带宽。换句话说，每个Yj最多从Xi下载β个单元的编码数据。为了最小化扩展带宽，我们的目标是最小化β，同时要保证数据文件可以通过任意k个文件重组。</p>
 <p>我们为(n, k, s)扩展构建了信息流图G，如图二所示。</p>
@@ -170,7 +169,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" data-id="ckk9kdx3i000s8wt30x10eme7"
+      <a data-url="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" data-id="ckk9ljpa60011iut3faqke75x"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/" rel="tag">论文学习</a></li></ul>

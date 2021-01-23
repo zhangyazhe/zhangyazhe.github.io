@@ -60,7 +60,7 @@
 
 <p>令β代表任何一个已经存在的节点Xi与新节点Yj之间的带宽。换句话说，每个Yj最多从Xi下载β个单元的编码数据。为了最小化扩展带宽，我们的目标是最小化β，同时要保证数据文件可以通过任意k个文件重组。</p>
 <p>我们为(n, k, s)扩展构建了信息流图G，如图二所示。</p>
-<img src="/Users/zhangyazhe/Library/Application Support/typora-user-images/image-20210123103450913.png" alt="image-20210123103450913" style="zoom:50%;" />
+<img src="http://zyzblog-1301181600.cos.ap-nanjing.myqcloud.com/2021-01-23-image-20210123103450913.png" style="zoom:50%;" />
 
 <p>图G中的节点：</p>
 <ul>

@@ -85,7 +85,8 @@
 <p>图G中的边：</p>
 <ul>
 <li>我们在S与所有的X<sub>i</sub><sup>in</sup>之间添加一条有向边，权重为无穷</li>
-<li></li>
+<li>对于每一个i与j，增加有向边X<sub>i</sub><sup>mid</sup>-&gt;Y<sub>j</sub><sup>in</sup>，权重为β</li>
+<li>从输出节点中任意选择k个，添加一条到T的有向边</li>
 </ul>
 </li>
 </ol>

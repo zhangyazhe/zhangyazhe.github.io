@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, 算法, 随笔, git, linux, Qt, Java, Big Data, 论文学习">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    [paper] I/O-Efficient Scaling Schemes for Distributed Storage Systems with CRS Codes |
+    
+    Kyle&#39;s blog</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Kyle's blog" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [paper] I/O-Efficient Scaling Schemes for Distributed Storage Systems with CRS Codes
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/01/28/paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes/" class="article-date">
+  <time datetime="2021-01-28T03:19:41.000Z" itemprop="datePublished">2021-01-28</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>具有CRS代码的分布式存储系统的I / O有效扩展方案 </p>
+<a id="more"></a>
+
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>由于数据量的爆炸性增长，系统扩展对于分布式存储系统而言必不可少。考虑到大型分布式存储系统中必须有故障保护功能，并且广泛采用柯西·里德-所罗门（Cauchy Reed-Solomon）代码来容忍多个同时发生的节点故障，因此本文研究了使用CRS代码的分布式存储系统的扩展性问题。特别地，我们用优化模型来表示缩放问题，在该模型中，假定缩放后编码矩阵和数据迁移策略都事先未知。为了最大程度地减少I / O开销，我们为CRS代码提出了一个三相优化缩放方案。具体来说，我们首先根据给定的数据迁移策略得出最优的后缩放编码矩阵，然后使用选定的后缩放编码矩阵优化数据迁移过程，最后利用最大距离可分离性（MDS）属性进一步优化设计的数据迁移过程。我们的扩展方案要求最小的数据移动，同时实现均匀的数据分发。而且，与传统的最小数据迁移方案相比，它需要读取更少的数据块，但仍保证了最小量的迁移数据。为了验证我们方案的效率，我们在网络文件系统上实现了该方案。大量实验表明，我们的缩放方案比基本方案使用更少的缩放时间。 </p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>通常在现代存储系统中部署擦除代码以提供容错能力。 擦除代码相对于复制的优势在于，它们可以在具有相同数量的冗余的情况下实现更高的可靠性，或者为满足相同的可靠性要求而需要较少的冗余。 由于分布式系统中有时会同时发生多个并发节点故障，因此<strong>Cauchy Reed-Solomon（CRS）</strong>代码旨在承受任意数量的并发节点故障，并且已在学术项目和商业系统中广泛部署。另一方面，需要存储的数据在持续增多，存储系统对于对于存储能力和IO性能有着持续增长的需求，所以就需要经常向存储系统中增加新的设备来提高存储能力和IO性能。因此，<strong>容错和存储扩展就成为了目前存储系统中最重要的两个问题</strong>。</p>
+<p>本文研究了CRS编码存储系统中的扩展问题。 容错存储系统的系统扩展可被视为存储系统之上的应用程序。 为了完成扩展过程，<strong>必须在旧设备和新添加的设备之间重新平衡原始数据</strong>。 此外，在具有冗余机制的存储系统中，还必须相应地更新关联的奇偶校验。 因此，扩展分布式存储系统不可避免地会导致磁盘使用和网络消耗。 现代存储系统已广泛部署在网络资源十分匮乏的多云和数据中心服务中。 因此，执行系统扩展的一个重要目标是最小化I / O和网络传输的数量，以实现快速扩展并允许对前台用户任务进行更灵活的调度。</p>
+<p>RAID扩展的方法很多，旨在在扩展过程中最小化迁移的数据量。 在本文的后续部分中，缩放方案称为最小数据迁移方案。 例如，FastScale 旨在最小化RAID-0扩展的迁移I / O。 MiPiL 将最少数量的数据块从旧设备移至新设备，以进行RAID-5扩展。 SDM 根据将来针对各种RAID-6代码的奇偶校验布局，将数据迁移流量最小化。 但是，由于特殊的编码机制，这些方法都不能有效地应用于CRS代码。 有关CRS缩放和常规缩放方法之间差异的更多详细信息，请参见第3节。  </p>
+<p>为了解决由于CRS代码带来的缩放挑战，我们使用优化模型来制定CRS缩放比例，在该优化模型中，缩放后的编码矩阵和数据迁移策略都应该事先未知。因此，要优化CRS缩放过程，我们必须设计缩放后编码矩阵和数据迁移策略。注意，Jerasure库[9]为编码性能得到优化的CRS代码提供了编码矩阵。因此，通常从Jerasure生成用于实际部署的CRS代码的编码矩阵。对于CRS缩放方案，将给出预缩放编码矩阵，并且可以从Jerasure生成该矩阵。但是，如果缩放后编码矩阵也从Jerasure导出，则I / O开销和网络带宽流量可能会很大。为了解决这一挑战，我们尝试通过三个步骤来最大程度地减少CRS缩放的I / O和网络传输量：（i）我们首先通过朴素的数据迁移，根据预缩放矩阵设计缩放后编码矩阵方案（ii），然后使用选定的后缩放编码矩阵优化数据迁移过程；（iii）最后将最大距离可分离（MDS）属性应用于设计的数据迁移过程，以进一步优化迁移I / Os。本文的主要贡献如下。 </p>
+<ul>
+<li>我们将CRS代码的缩放过程公式化为由后缩放编码矩阵和数据迁移策略组成的优化模型。基于此模型，我们提出了一种针对CRS代码的三相优化缩放方案。</li>
+<li>我们提出了一种有效的方法来设计后缩放编码矩阵，该矩阵优化了CRS缩放的I / O开销和网络流量。</li>
+<li>我们提出一种搜索算法来设计有效的在线数据迁移方案，从而进一步降低CRS扩展的I / O成本。</li>
+<li>我们开发了一种新方案，与现有的最小数据迁移方案相比，可以进一步减少对数据块的读取，同时仍可以使用奇偶校验块对所需的数据块进行解码，从而确保迁移的数据量最少。通过这种方案，可以进一步降低CRS缩放的I / O成本。</li>
+<li>我们在实际的网络文件系统之上实施缩放方案，并通过广泛的评估证明，在实际的系统设置下，我们的缩放方案比过渡方案减少了缩放时间。 </li>
+</ul>
+<h2 id="Background-On-CRS-Code"><a href="#Background-On-CRS-Code" class="headerlink" title="Background On CRS Code"></a>Background On CRS Code</h2><p>首先来看CRS编码的背景。一个使用CRS的存储系统可以被表示成三元组(k, m, w)。存储系统由n = k + m个磁盘组成，其中k个磁盘保存数据块，剩余的m个磁盘存储奇偶校验块。CRS代码类具有所需的属性，即系统可以容忍n个磁盘故障中的任何m个，并且此属性称为“最大距离可分离”属性。 每个磁盘都分成固定大小的条带。 每个条带存储w个数据块或奇偶校验块。  编码在条带内执行。 对于实际部署，数据和奇偶校验磁盘的标识跨不同的条带旋转以减轻可能出现的热点，因为奇偶校验磁盘通常比数据磁盘更多地被访问。</p>
+<p>一个CRS编码可以通过一个nw×kw的编码矩阵来表示。它首先通过m × k的柯西矩阵构造一个n × k的分布式编码矩阵。令X = {x<sub>0</sub>, …, x<sub>m-1</sub>}，Y = {y<sub>0</sub>, … y<sub>k-1</sub>}，柯西矩阵的第i行第j列的元素为1/(xi + yj)。分布矩阵由前k行的单位矩阵和后m行的柯西矩阵组成。 该算法在GF(2<sup>w</sup>)上执行，其中加法是简单的按位异或（XOR），而乘法则更复杂，通常使用乘法表或离散对数表来实现</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/01/28/paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes/" data-id="ckm30em7q000um9t3gdi60hf8"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/" rel="tag">论文学习</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">[paper] Toward Optimal Storage Scaling via Network Coding: From Theory to Practice</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 Kyle&#39;s blog</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="Kyle&#39;s blog"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

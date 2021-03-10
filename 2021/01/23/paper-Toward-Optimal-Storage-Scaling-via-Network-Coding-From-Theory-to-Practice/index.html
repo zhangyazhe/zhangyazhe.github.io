@@ -197,12 +197,19 @@
 </li>
 </ul>
 </li>
+<li><p>讨论</p>
+<p>到目前位置我们都在关注扩容的情况，对于缩容，我们通过将s个节点中的数据进行迁移并重新分发到n个节点、计算奇偶校验增量块并且更新PG中的奇偶校验块，来将算法2中的步骤逆序。并且，我们需要为PG中的条带重构新的奇偶校验块。我们暂时不讨论对于缩容情况的优化，这将是我们未来的工作。</p>
+</li>
 </ol>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>对于RAID-0, RAID-5, RAID-6的扩容方法已经被提出。这些扩容方法关注的是将数据块的迁移以及奇偶校验块的更新最小化，同时保持相同的RAID配置，并且保持相同的容错数。但是，这些方法都只适用于RAID磁盘阵列，并且不能容超过两个的错误。</p>
+<p>Scale-RS是最接近我们的工作的，他在分布式存储系统中提出了扩容问题，并且通过RS编码使得可以容一般数量的错误。Wu等人采用CRS编码来处理扩容问题，但是使用了一个中心节点去协助扩容过程。与此对应的，Scale-RS和NCScale都通过去中心化的方法来解决扩容问题。然而，目前已有的RAID扩容方法和Scale-RS都不能将扩容时的带宽最小化。</p>
+<p>一些研究探讨了冗余方法之间的有效过渡。 AutoRAID利用访问模式在热数据复制和RAID-5冷数据之间切换。 DiskReduce和EAR解决了过渡复制问题，以擦除HDFS中的编码。 HACFS扩展了HDFS，以支持在两个擦除代码之间进行切换，以在存储冗余和访问性能之间进行权衡。 Rai等提出了用于在擦除编码参数（n，k）之间切换的自适应擦除码，但是它们仅描述了一些缩放情况，而没有形式分析。 我们的工作着重于分析和实现网络编码如何帮助实现存储扩展的最优性。</p>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h2><p>我们从理论和实践两个维度研究了如果将网络编码应用于存储扩展。我们通过信息流图证明了最小的扩容带宽。接着，我们构建了NCScale，它实现基于网络编码的分布式存储扩展。 数值分析和云实验都证明了NCScale的缩放效率。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" data-id="ckkg914bj000yfft3dd3y6xud"
+      <a data-url="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/" data-id="ckm30em7r000wm9t30nc7ah8q"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/" rel="tag">论文学习</a></li></ul>
@@ -214,6 +221,15 @@
   
     
   <nav class="article-nav">
+    
+      <a href="/2021/01/28/paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            [paper] I/O-Efficient Scaling Schemes for Distributed Storage Systems with CRS Codes
+          
+        </div>
+      </a>
     
     
       <a href="/2020/09/18/Cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-nav-link">

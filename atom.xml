@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-01-28T02:20:55.554Z</updated>
+  <updated>2021-01-29T09:31:33.682Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,31 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>[paper] I/O-Efficient Scaling Schemes for Distributed Storage Systems with CRS Codes</title>
+    <link href="http://yoursite.com/2021/01/28/paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes/"/>
+    <id>http://yoursite.com/2021/01/28/paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes/</id>
+    <published>2021-01-28T03:19:41.000Z</published>
+    <updated>2021-01-29T09:31:33.682Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;具有CRS代码的分布式存储系统的I / O有效扩展方案 &lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="论文学习" scheme="http://yoursite.com/tags/%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[paper] Toward Optimal Storage Scaling via Network Coding: From Theory to Practice</title>
     <link href="http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/"/>
     <id>http://yoursite.com/2021/01/23/paper-Toward-Optimal-Storage-Scaling-via-Network-Coding-From-Theory-to-Practice/</id>
     <published>2021-01-23T10:01:40.000Z</published>
-    <updated>2021-01-28T02:20:55.554Z</updated>
+    <updated>2021-03-10T05:35:26.680Z</updated>
     
     <summary type="html">
     
@@ -384,26 +404,6 @@
     
       &lt;p&gt;摘要：&lt;/p&gt;
 &lt;p&gt;最小生成树 prim算法&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>csp 201409_4 最优配餐</title>
-    <link href="http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/"/>
-    <id>http://yoursite.com/2020/02/06/csp-201409-4-%E6%9C%80%E4%BC%98%E9%85%8D%E9%A4%90/</id>
-    <published>2020-02-06T05:32:17.000Z</published>
-    <updated>2020-03-16T02:46:34.613Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;摘要：&lt;/p&gt;
-&lt;p&gt;多源最短路径 bfs&lt;/p&gt;
     
     </summary>
     

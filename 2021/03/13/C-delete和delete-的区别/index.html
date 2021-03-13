@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="课程笔记, 算法, 随笔, git, linux, Qt, Java, Big Data, 论文学习, 面经, C++">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    C++ delete和delete[]的区别 |
+    
+    Kyle&#39;s blog</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Kyle's blog" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-C-delete和delete-的区别" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++ delete和delete[]的区别
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/03/13/C-delete%E5%92%8Cdelete-%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2021-03-13T03:39:53.000Z" itemprop="datePublished">2021-03-13</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <p>摘要：</p>
+<p>转载自<strong><em><a href="https://blog.csdn.net/cbNotes/article/details/38900799" target="_blank" rel="noopener">https://blog.csdn.net/cbNotes/article/details/38900799</a></em></strong></p>
+<a id="more"></a>
+
+<p>c++中对new申请的内存的释放方式有delete和delete[两种方式，到底这两者有什么区别呢？</p>
+<ol>
+<li><p>我们通常从教科书上看到这样的说明：<br>delete 释放new分配的单个对象指针指向的内存<br>delete[] 释放new分配的对象数组指针指向的内存<br>那么，按照教科书的理解，我们看下下面的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">delete</span> a;        <span class="comment">//方式1</span></span><br><span class="line"><span class="keyword">delete</span> [] a;     <span class="comment">//方式2</span></span><br></pre></td></tr></table></figure>
+
+<p>肯定会有很多人说方式1肯定存在内存泄漏，是这样吗？</p>
+<ul>
+<li><p>针对简单类型 使用new分配后的不管是数组还是非数组形式内存空间用两种方式均可 如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">delete</span> a;</span><br><span class="line"><span class="keyword">delete</span> [] a;</span><br></pre></td></tr></table></figure>
+
+<p>此种情况中的释放效果相同，原因在于：分配简单类型内存时，内存大小已经确定，系统可以记忆并且进行管理，在析构时，系统并不会调用析构函数，它直接通过指针可以获取实际分配的内存空间，哪怕是一个数组内存空间(在分配过程中 系统会记录分配内存的大小等信息，此信息保存在结构体_CrtMemBlockHeader中，具体情况可参看VC安装目录下CRT\SRC\DBGDEL.cpp)</p>
+</li>
+<li><p>针对类Class，两种方式体现出具体差异 ，当你通过下列方式分配一个类对象数组：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">   &#123;</span></span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">      <span class="keyword">char</span> *m_cBuffer;</span><br><span class="line">      <span class="keyword">int</span> m_nLen;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      A()&#123; m_cBuffer = <span class="keyword">new</span> <span class="keyword">char</span>[m_nLen]; &#125;</span><br><span class="line">      ~A() &#123; <span class="keyword">delete</span> [] m_cBuffer; &#125;</span><br><span class="line">   &#125;;</span><br><span class="line">   A *a = <span class="keyword">new</span> A[<span class="number">10</span>];</span><br><span class="line">   <span class="keyword">delete</span> a;         <span class="comment">//仅释放了a指针指向的全部内存空间 但是只调用了a[0]对象的析构函数 剩下的从a[1]到a[9]这9个用户自行分配的m_cBuffer对应内存空间将不能释放 从而造成内存泄漏</span></span><br><span class="line">   <span class="keyword">delete</span> [] a;      <span class="comment">//调用使用类对象的析构函数释放用户自己分配内存空间并且   释放了a指针指向的全部内存空间</span></span><br></pre></td></tr></table></figure>
+
+<p>所以总结下就是，如果ptr代表一个用new申请的内存返回的内存空间地址，即所谓的指针，那么：<br>  delete   ptr   代表用来释放内存，且只用来释放ptr指向的内存。<br>  delete[]   rg   用来释放rg指向的内存，！！还逐一调用数组中每个对象的destructor！！<br>  对于像int/char/long/int*/struct等等简单数据类型，由于对象没有destructor，所以用delete 和delete [] 是一样的！但是如果是C++对象数组就不同了！</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>关于 new[] 和 delete[]，其中又分为两种情况：(1) 为基本数据类型分配和回收空间；(2) 为自定义类型分配和回收空间。 </p>
+<p>对于 (1)，上面提供的程序已经证明了 delete[] 和 delete 是等同的。但是对于 (2)，情况就发生了变化。</p>
+<p>我们来看下面的例子，通过例子的学习了解C++中的delete和delete[]的使用方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">/<span class="class"><span class="keyword">class</span> <span class="title">Babe</span></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Babe</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Babe()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; \<span class="string">"Create a Babe to talk with me\" &lt;&lt; endl;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    ~Babe()</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">        cout &lt;&lt; \"Babe don\'t go away,listen to me\" &lt;&lt; endl;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;;</span></span><br><span class="line"><span class="string">//main function</span></span><br><span class="line"><span class="string">int main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    Babe* pbabe = new Babe[3];</span></span><br><span class="line"><span class="string">    delete pbabe;</span></span><br><span class="line"><span class="string">    pbabe = new Babe[3];</span></span><br><span class="line"><span class="string">    delete pbabe[];</span></span><br><span class="line"><span class="string">    return 0;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Create a babe to talk with me</span><br><span class="line"></span><br><span class="line">Create a babe to talk with me</span><br><span class="line"></span><br><span class="line">Create a babe to talk with me</span><br><span class="line"></span><br><span class="line">Babe don\&#39;t go away,listen to me</span><br><span class="line"></span><br><span class="line">Create a babe to talk with me</span><br><span class="line"></span><br><span class="line">Create a babe to talk with me</span><br><span class="line"></span><br><span class="line">Create a babe to talk with me</span><br><span class="line"></span><br><span class="line">Babe don\&#39;t go away,listen to me</span><br><span class="line"></span><br><span class="line">Babe don\&#39;t go away,listen to me</span><br><span class="line"></span><br><span class="line">Babe don\&#39;t go away,listen to me</span><br></pre></td></tr></table></figure>
+
+<p>大家都看到了，只使用delete的时候只出现一个 Babe don&#39;t go away,listen to me，而使用delete[]的时候出现3个 Babe don&#39;t go away,listen to me。不过不管使用delete还是delete[]那三个对象的在内存中都被删除，既存储位置都标记为可写，但是使用delete的时候只调用了pbabe[0]的析构函数，而使用了delete[]则调用了3个Babe对象的析构函数。你一定会问，反正不管怎样都是把存储空间释放了，有什么区别。答：关键在于调用析构函数上。此程序的类没有使用操作系统的系统资源（比如：Socket、File、Thread等），所以不会造成明显恶果。如果你的类使用了操作系统资源，单纯把类的对象从内存中删除是不妥当的，因为没有调用对象的析构函数会导致系统资源不被释放，如果是Socket则会造成Socket资源不被释放，最明显的就是端口号不被释放，系统最大的端口号是65535(216 _ 1，因为还有0)，如果端口号被占用了，你就不能上网了，呵呵。如果File资源不被释放，你就永远不能修改这个文件，甚至不能读这个文件(除非注销或重器系统)。如果线程不被释放，这它总在后台运行，浪费内存和CPU资源。这些资源的释放必须依靠这些类的析构函数。所以，在用这些类生成对象数组的时候，用delete[]来释放它们才是王道。而用delete来释放也许不会出问题，也许后果很严重，具体要看类的代码了.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/03/13/C-delete%E5%92%8Cdelete-%E7%9A%84%E5%8C%BA%E5%88%AB/" data-id="ckm76uqj60000rlt32fzp0aug"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2021/01/28/paper-I-O-Efficient-Scaling-Schemes-for-Distributed-Storage-Systems-with-CRS-Codes/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">[paper] I/O-Efficient Scaling Schemes for Distributed Storage Systems with CRS Codes</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+    
+  <div class="gitalk" id="gitalk-container"></div>
+  
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '77424c281e336f5d09b3',
+      clientSecret: '7d8c854fef95db82c20d7e4820001abd45995754',
+      repo: 'zyz_talk',
+      owner: 'zhangyazhe',
+      admin: ['zhangyazhe'],
+      // id: location.pathname,      // Ensure uniqueness and length less than 50
+      id: md5(location.pathname),
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+      pagerDirection: 'last'
+    })
+
+  gitalk.render('gitalk-container')
+  </script>
+
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 Kyle&#39;s blog</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/head.svg" alt="Kyle&#39;s blog"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
